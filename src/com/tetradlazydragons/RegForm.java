@@ -1,7 +1,4 @@
-package com.tetradlazydragons;
-
 import javax.swing.*;
-
 public class RegForm {
     JLabel l1,l2,l3,l4,l5,l6,a1,a2,a3;
     JTextField t1,t2,t3,t4,ta1,ta2,ta3;
@@ -9,6 +6,8 @@ public class RegForm {
     JButton b;
     RegForm(){
         JFrame f = new JFrame("Registration Form");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         l1 = new JLabel("Name:");
         l1.setBounds(50,100,150,20);
         t1 = new JTextField();
@@ -42,6 +41,10 @@ public class RegForm {
         a2.setBounds(50,310,150,20);
         ta2 = new JTextField();
         ta2.setBounds(200,310,200,20);
+        a3 = new JLabel("State:");
+        a3.setBounds(50,340,150,20);
+        ta3 = new JTextField();
+        ta3.setBounds(200,340,200,20);
 
         b = new JButton("Submit");
         b.setBounds(50,500,150,40);
@@ -60,8 +63,10 @@ public class RegForm {
         f.add(l6);
         f.add(a1);
         f.add(a2);
+        f.add(a3);
         f.add(ta1);
         f.add(ta2);
+        f.add(ta3);
         f.add(b);
 
         ButtonGroup bg = new ButtonGroup();
