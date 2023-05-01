@@ -1,37 +1,53 @@
 <project name="UniManager" default="dist" basedir=".">
+    <description>
+		Create a Java Project (JAR) with Ant build script
+	</description>
     <property name="src" location="src"/>
-    <property name="build" location="build"/>
-    <property name="dist" location="dist"/>
-    <property name="lib" location="lib"/>
+    <property name="build.dir" location="build"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="lib.dir" location="lib"/>
     <property name="DatePicker" value="jdatepicker-1.3.4.jar"/>
     <property name="JdbcDriver" value="mysql-connector-j-8.0.33.jar"/>
+    
+    <path id="class.path">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+    </path>
+
+    <manifestclasspath property="manifest.classpath" jarfile="${dist.dir}/UniManager.jar">
+        <classpath refid="class.path"/>
+    </manifestclasspath>
+
     <target name="init">
         <tstamp/>
-        <mkdir dir="${build}"/>
+        <mkdir dir="${build.dir}"/>
     </target>
     
     <target name="compile" depends="init" description="compile the source">
-    <javac srcdir="${src}" destdir="${build}"/>
+        <javac debug="on" srcdir="${src}" destdir="${build.dir}" classpathref="class.path"/>
     </target>
 
     <target name="dist" depends="compile" description="generate the distribution">
-    <mkdir dir="${dist}"/>
+        <mkdir dir="${dist.dir}"/>
 
-    <jar jarfile="${dist}/UniManager.jar" basedir="${build}">
-        <manifest>
-            <attribute name="Main-Class" value="com.tetradlazydragons.RegForm"/>
-            <attribute name="Class-Path-Date" value="${DatePicker}"/>
-            <attribute name="Class-Path-Jdbc" value="${JdbcDriver}"/>
-        </manifest>
-    </jar>
+        <jar jarfile="${dist.dir}/UniManager.jar" basedir="${build.dir}">
+            <manifest>
+                <!-- 
+                <attribute name="Class-Path" value="${DatePicker}"/>
+                <attribute name="Class-Path-Jdbc" value="${JdbcDriver}"/> -->
+                <attribute name="Main-Class" value="com.tetradlazydragons.RegForm"/>
+                <attribute name="Manifest-Version" value="${manifest-version}"/>
+                <attribute name="Created-By" value="${ant.java.version}"/>
+                <attribute name="Class-Path" value="${manifest.classpath}"/>
+            </manifest>
+        </jar>
 
-    <copy file="${lib}\${DatePicker}" todir="${dist}" overwrite="true" />
-    <copy file="${lib}\${JdbcDriver}" todir="${dist}" overwrite="true" />
+        <copy file="${lib.dir}\${DatePicker}" todir="${dist.dir}" overwrite="true" />
+        <copy file="${lib.dir}\${JdbcDriver}" todir="${dist.dir}" overwrite="true" />
 
     </target>
 
     <target name="clean" description="clean up">
-        <delete dir="${build}"/>
-        <delete dir="${dist}"/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
     </target>
 </project>
