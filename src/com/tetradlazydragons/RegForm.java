@@ -17,8 +17,8 @@ import org.jdatepicker.impl.UtilDateModel;
 
 public class RegForm implements ActionListener {
     JLabel head, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, a1, a2, a3, a4, a5, a6, lc, lc1, lc2, lc3;
-    JTextField t1, t2, t3, t4, t8, t9, t10, ta1, ta2, ta4, ta5, ct1,ct2,ct3;
-    JRadioButton r1, r2;
+    JTextField t1, t2, t3, t4, t8, t9, t10, ta1, ta2, ta4, ta5, ct1, ct2, ct3;
+    JRadioButton r1, r2, r3;
     JComboBox c1, c2;
     JComboBox<String> deptComboBox;
     JComboBox<String> courseComboBox;
@@ -33,7 +33,7 @@ public class RegForm implements ActionListener {
 
         head = new JLabel("NEW STUDENT REGISTRATION ");
         head.setFont(new Font("Courier", Font.BOLD, 30));
-        head.setBounds(300, 20, 600, 30);
+        head.setBounds(400, 20, 600, 30);
         f.add(head);
 
         l1 = new JLabel("Name:");
@@ -81,15 +81,19 @@ public class RegForm implements ActionListener {
         l5 = new JLabel("Gender:");
         l5.setBounds(50, 220, 150, 20);
         r1 = new JRadioButton(" Male");
-        r1.setBounds(200, 220, 100, 20);
+        r1.setBounds(190, 220, 100, 20);
         r2 = new JRadioButton(" Female");
-        r2.setBounds(360, 220, 100, 20);
+        r2.setBounds(260, 220, 100, 20);
+        r3 = new JRadioButton(" Gender-fluid");
+        r3.setBounds(340, 220, 150, 20);
         f.add(l5);
         f.add(r1);
         f.add(r2);
+        f.add(r3);
         ButtonGroup bg = new ButtonGroup();
         bg.add(r1);
         bg.add(r2);
+        bg.add(r3);
 
         l6 = new JLabel("Present Address:");
         l6.setBounds(50, 250, 150, 20);
@@ -111,7 +115,8 @@ public class RegForm implements ActionListener {
 
         a3 = new JLabel("State:");
         a3.setBounds(50, 340, 150, 20);
-        String states[] = {"Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
+        String states[] = { "Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+                "Goa", "Gujarat",
                 "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerela",
                 "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
                 "Rajasthan", "Sikkim", "Tamil Nadu", "Telengana", "Tripura", "Uttar Pradesh", "Uttrakhand",
@@ -171,7 +176,7 @@ public class RegForm implements ActionListener {
         lc.setBounds(50, 370, 150, 20);
         f.add(lc);
 
- lc1 = new JLabel("Registration No:");
+        lc1 = new JLabel("Registration No:");
         lc1.setBounds(50, 400, 150, 20);
         ct1 = new JTextField();
         ct1.setBounds(200, 400, 250, 20);
@@ -213,7 +218,7 @@ public class RegForm implements ActionListener {
         deptComboBox.setBounds(800, 430, 250, 20);
         deptComboBox.addActionListener(this);
 
-        deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
+        // deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
         f.add(deptComboBox);
 
         lc3 = new JLabel("Course:");
