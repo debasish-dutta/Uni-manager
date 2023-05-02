@@ -15,17 +15,26 @@ import org.jdatepicker.*;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import java.sql.*;
+import java.sql.DriverManager;
+
 public class RegForm implements ActionListener {
-    JLabel head, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, a1, a2, a3, a4, a5, a6, lc, lc1, lc2, lc3;
-    JTextField t1, t2, t3, t4, t8, t9, t10, ta1, ta2, ta4, ta5, ct1, ct2, ct3;
-    JRadioButton r1, r2, r3;
-    JComboBox c1, c2;
-    JComboBox<String> deptComboBox;
-    JComboBox<String> courseComboBox;
-    JButton b, b1;
+    JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, presaddrlabel, permaddrlabel, fatherlabel,
+            motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
+            permdistlabel,
+            permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel, courselabel;
+    JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst, spermdist,
+            spermpin, reg, roll,
+            batch;
+    JRadioButton maleradio, femaleradio, genderfradio;
+    JComboBox<String> presstatecombo, permstatecombo;
+    JComboBox<String> deptComboBox, courseComboBox;
+    JButton submitbtn, clearbtn;
     JDatePanelImpl datePanel;
     JDatePickerImpl datePicker;
     Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
+    Connection con = null;
+    PreparedStatement pst = null;
 
     RegForm() {
         JFrame f = new JFrame("Registration Form");
@@ -36,19 +45,19 @@ public class RegForm implements ActionListener {
         head.setBounds(400, 20, 600, 30);
         f.add(head);
 
-        l1 = new JLabel("Name:");
-        l1.setBounds(50, 100, 150, 20);
-        t1 = new JTextField();
-        t1.setBounds(200, 100, 250, 20);
-        f.add(l1);
-        f.add(t1);
+        namelabel = new JLabel("Name:");
+        namelabel.setBounds(50, 100, 150, 20);
+        sname = new JTextField();
+        sname.setBounds(200, 100, 250, 20);
+        f.add(namelabel);
+        f.add(sname);
 
-        l2 = new JLabel("DOB:");
-        l2.setBounds(50, 130, 150, 20);
-        // t2 = new JTextField();
-        // t2.setBounds(200, 130, 200, 20);
-        f.add(l2);
-        // f.add(t2);
+        doblabel = new JLabel("DOB:");
+        doblabel.setBounds(50, 130, 150, 20);
+        // sdob = new JTextField();
+        // sdob.setBounds(200, 130, 200, 20);
+        f.add(doblabel);
+        // f.add(sdob);
 
         /* Adding JDatePicker date picker */
         UtilDateModel model = new UtilDateModel();
@@ -64,142 +73,156 @@ public class RegForm implements ActionListener {
         f.add(datePicker);
         /* End Date picker */
 
-        l3 = new JLabel("Phone No:");
-        l3.setBounds(50, 160, 150, 20);
-        t3 = new JTextField();
-        t3.setBounds(200, 160, 250, 20);
-        f.add(l3);
-        f.add(t3);
+        phonelabel = new JLabel("Phone No:");
+        phonelabel.setBounds(50, 160, 150, 20);
+        sphone = new JTextField();
+        sphone.setBounds(200, 160, 250, 20);
+        f.add(phonelabel);
+        f.add(sphone);
 
-        l4 = new JLabel("Email:");
-        l4.setBounds(50, 190, 150, 20);
-        t4 = new JTextField();
-        t4.setBounds(200, 190, 250, 20);
-        f.add(l4);
-        f.add(t4);
+        emaillabel = new JLabel("Email:");
+        emaillabel.setBounds(50, 190, 150, 20);
+        semail = new JTextField();
+        semail.setBounds(200, 190, 250, 20);
+        f.add(emaillabel);
+        f.add(semail);
 
-        l5 = new JLabel("Gender:");
-        l5.setBounds(50, 220, 150, 20);
-        r1 = new JRadioButton(" Male");
-        r1.setBounds(190, 220, 100, 20);
-        r2 = new JRadioButton(" Female");
-        r2.setBounds(260, 220, 100, 20);
-        r3 = new JRadioButton(" Gender-fluid");
-        r3.setBounds(340, 220, 150, 20);
-        f.add(l5);
-        f.add(r1);
-        f.add(r2);
-        f.add(r3);
+        genderlabel = new JLabel("Gender:");
+        genderlabel.setBounds(50, 220, 150, 20);
+        maleradio = new JRadioButton(" Male");
+        maleradio.setBounds(190, 220, 100, 20);
+        femaleradio = new JRadioButton(" Female");
+        femaleradio.setBounds(260, 220, 100, 20);
+        genderfradio = new JRadioButton(" Gender-fluid");
+        genderfradio.setBounds(340, 220, 150, 20);
+        f.add(genderlabel);
+        f.add(maleradio);
+        f.add(femaleradio);
+        f.add(genderfradio);
         ButtonGroup bg = new ButtonGroup();
-        bg.add(r1);
-        bg.add(r2);
-        bg.add(r3);
+        bg.add(maleradio);
+        bg.add(femaleradio);
+        bg.add(genderfradio);
 
-        l6 = new JLabel("Present Address:");
-        l6.setBounds(50, 250, 150, 20);
-        f.add(l6);
+        presaddrlabel = new JLabel("Present Address:");
+        presaddrlabel.setBounds(50, 250, 150, 20);
+        f.add(presaddrlabel);
 
-        a1 = new JLabel("Street:");
-        a1.setBounds(50, 280, 150, 20);
-        ta1 = new JTextField();
-        ta1.setBounds(200, 280, 250, 20);
-        f.add(a1);
-        f.add(ta1);
+        presstlabel = new JLabel("Street:");
+        presstlabel.setBounds(50, 280, 150, 20);
+        spresst = new JTextField();
+        spresst.setBounds(200, 280, 250, 20);
+        f.add(presstlabel);
+        f.add(spresst);
 
-        a2 = new JLabel("District:");
-        a2.setBounds(50, 310, 150, 20);
-        ta2 = new JTextField();
-        ta2.setBounds(200, 310, 250, 20);
-        f.add(a2);
-        f.add(ta2);
+        presdistlabel = new JLabel("District:");
+        presdistlabel.setBounds(50, 310, 150, 20);
+        spresdist = new JTextField();
+        spresdist.setBounds(200, 310, 250, 20);
+        f.add(presdistlabel);
+        f.add(spresdist);
 
-        a3 = new JLabel("State:");
-        a3.setBounds(50, 340, 150, 20);
+        prespinlabel = new JLabel("Pin:");
+        prespinlabel.setBounds(50, 370, 150, 20);
+        sprespin = new JTextField();
+        sprespin.setBounds(200, 370, 250, 20);
+        f.add(prespinlabel);
+        f.add(sprespin);
+
+        presstatlabel = new JLabel("State:");
+        presstatlabel.setBounds(50, 340, 150, 20);
         String states[] = { "Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
                 "Goa", "Gujarat",
                 "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerela",
                 "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
                 "Rajasthan", "Sikkim", "Tamil Nadu", "Telengana", "Tripura", "Uttar Pradesh", "Uttrakhand",
                 "West Bengal" };
-        c1 = new JComboBox(states);
-        c1.setBounds(200, 340, 250, 20);
-        f.add(a3);
-        f.add(c1);
+        presstatecombo = new JComboBox(states);
+        presstatecombo.setBounds(200, 340, 250, 20);
+        f.add(presstatlabel);
+        f.add(presstatecombo);
 
-        l7 = new JLabel("Permanent Address:");
-        l7.setBounds(600, 250, 150, 20);
-        f.add(l7);
+        permaddrlabel = new JLabel("Permanent Address:");
+        permaddrlabel.setBounds(600, 250, 150, 20);
+        f.add(permaddrlabel);
 
-        a4 = new JLabel("Street:");
-        a4.setBounds(600, 280, 150, 20);
-        ta4 = new JTextField();
-        ta4.setBounds(800, 280, 250, 20);
-        f.add(a4);
-        f.add(ta4);
+        permstlabel = new JLabel("Street:");
+        permstlabel.setBounds(600, 280, 150, 20);
+        spermst = new JTextField();
+        spermst.setBounds(800, 280, 250, 20);
+        f.add(permstlabel);
+        f.add(spermst);
 
-        a5 = new JLabel("District:");
-        a5.setBounds(600, 310, 150, 20);
-        ta5 = new JTextField();
-        ta5.setBounds(800, 310, 250, 20);
-        f.add(a5);
-        f.add(ta5);
+        permdistlabel = new JLabel("District:");
+        permdistlabel.setBounds(600, 310, 150, 20);
+        spermdist = new JTextField();
+        spermdist.setBounds(800, 310, 250, 20);
+        f.add(permdistlabel);
+        f.add(spermdist);
 
-        a6 = new JLabel("State:");
-        a6.setBounds(600, 340, 150, 20);
-        c2 = new JComboBox(states);
-        c2.setBounds(800, 340, 250, 20);
-        f.add(a6);
-        f.add(c2);
+        permstatlabel = new JLabel("State:");
+        permstatlabel.setBounds(600, 340, 150, 20);
+        permstatecombo = new JComboBox(states);
+        permstatecombo.setBounds(800, 340, 250, 20);
+        f.add(permstatlabel);
+        f.add(permstatecombo);
 
-        l8 = new JLabel("Father's Name:");
-        l8.setBounds(600, 100, 150, 20);
-        t8 = new JTextField();
-        t8.setBounds(800, 100, 250, 20);
-        f.add(l8);
-        f.add(t8);
+        permpinlabel = new JLabel("Pin:");
+        permpinlabel.setBounds(600, 370, 150, 20);
+        spermpin = new JTextField();
+        spermpin.setBounds(800, 370, 250, 20);
+        f.add(permpinlabel);
+        f.add(spermpin);
 
-        l9 = new JLabel("Mother's Name:");
-        l9.setBounds(600, 130, 150, 20);
-        t9 = new JTextField();
-        t9.setBounds(800, 130, 250, 20);
-        f.add(l9);
-        f.add(t9);
+        fatherlabel = new JLabel("Father's Name:");
+        fatherlabel.setBounds(600, 100, 150, 20);
+        fname = new JTextField();
+        fname.setBounds(800, 100, 250, 20);
+        f.add(fatherlabel);
+        f.add(fname);
 
-        l10 = new JLabel("Guardian's Phone No:");
-        l10.setBounds(600, 160, 150, 20);
-        t10 = new JTextField();
-        t10.setBounds(800, 160, 250, 20);
-        f.add(l10);
-        f.add(t10);
+        motherlabel = new JLabel("Mother's Name:");
+        motherlabel.setBounds(600, 130, 150, 20);
+        mname = new JTextField();
+        mname.setBounds(800, 130, 250, 20);
+        f.add(motherlabel);
+        f.add(mname);
 
-        lc = new JLabel("Course Details:");
-        lc.setBounds(50, 370, 150, 20);
-        f.add(lc);
+        gphonelabel = new JLabel("Guardian's Phone No:");
+        gphonelabel.setBounds(600, 160, 150, 20);
+        gphone = new JTextField();
+        gphone.setBounds(800, 160, 250, 20);
+        f.add(gphonelabel);
+        f.add(gphone);
 
-        lc1 = new JLabel("Registration No:");
-        lc1.setBounds(50, 400, 150, 20);
-        ct1 = new JTextField();
-        ct1.setBounds(200, 400, 250, 20);
-        f.add(lc1);
-        f.add(ct1);
+        courseheaderlabel = new JLabel("Course Details:");
+        courseheaderlabel.setBounds(50, 400, 150, 20);
+        f.add(courseheaderlabel);
 
-        lc2 = new JLabel("Roll No:");
-        lc2.setBounds(50, 430, 150, 20);
-        ct2 = new JTextField();
-        ct2.setBounds(200, 430, 250, 20);
-        f.add(lc2);
-        f.add(ct2);
+        reglabel = new JLabel("Registration No:");
+        reglabel.setBounds(50, 430, 150, 20);
+        reg = new JTextField();
+        reg.setBounds(200, 430, 250, 20);
+        f.add(reglabel);
+        f.add(reg);
 
-        lc3 = new JLabel("Batch:");
-        lc3.setBounds(50, 460, 150, 20);
-        ct3 = new JTextField();
-        ct3.setBounds(200, 460, 250, 20);
-        f.add(lc3);
-        f.add(ct3);
+        rolllabel = new JLabel("Roll No:");
+        rolllabel.setBounds(50, 460, 150, 20);
+        roll = new JTextField();
+        roll.setBounds(200, 460, 250, 20);
+        f.add(rolllabel);
+        f.add(roll);
 
-        lc2 = new JLabel("Department:");
-        lc2.setBounds(600, 430, 150, 20);
-        f.add(lc2);
+        batchlabel = new JLabel("Batch:");
+        batchlabel.setBounds(50, 490, 150, 20);
+        batch = new JTextField();
+        batch.setBounds(200, 490, 250, 20);
+        f.add(batchlabel);
+        f.add(batch);
+
+        deptlabel = new JLabel("Department:");
+        deptlabel.setBounds(600, 460, 150, 20);
+        f.add(deptlabel);
         String[] dept = { "Select Department", "Arabic", "Assamese", "Bengali", "Bodo", "Communication & Journalism",
                 "Economics", "Education", "English", "English Language Teaching", "Foreign Language", "Hindi",
                 "History", "Library & Information Science", "Linguistics", "Modern Indian Language & Literary Studies",
@@ -215,17 +238,17 @@ public class RegForm implements ActionListener {
 
                 "Commerce", "Business Administration", "Law" };
         deptComboBox = new JComboBox<String>(dept);
-        deptComboBox.setBounds(800, 430, 250, 20);
+        deptComboBox.setBounds(800, 460, 250, 20);
         deptComboBox.addActionListener(this);
 
-        // deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
+        deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
         f.add(deptComboBox);
 
-        lc3 = new JLabel("Course:");
-        lc3.setBounds(600, 460, 150, 20);
-        f.add(lc3);
+        courselabel = new JLabel("Course:");
+        courselabel.setBounds(600, 490, 150, 20);
+        f.add(courselabel);
         courseComboBox = new JComboBox<String>();
-        courseComboBox.setBounds(800, 460, 250, 20);
+        courseComboBox.setBounds(800, 490, 250, 20);
         courseComboBox.setPrototypeDisplayValue("XXXXXXXXXX");
         f.add(courseComboBox);
 
@@ -332,12 +355,14 @@ public class RegForm implements ActionListener {
         String[] subItems42 = { "Select Course", "LL.B.", "LL.M." };
         subItems.put(dept[42], subItems42);
 
-        b = new JButton("Submit");
-        b.setBounds(300, 500, 150, 40);
-        f.add(b);
-        b1 = new JButton("Clear");
-        b1.setBounds(600, 500, 150, 40);
-        f.add(b1);
+        submitbtn = new JButton("Submit");
+        submitbtn.setBounds(300, 569, 150, 40);
+        f.add(submitbtn);
+        submitbtn.addActionListener(this);
+
+        clearbtn = new JButton("Clear");
+        clearbtn.setBounds(600, 569, 150, 40);
+        f.add(clearbtn);
 
         f.setSize(1200, 800);
         f.setLayout(null);
@@ -366,11 +391,89 @@ public class RegForm implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String item = (String) deptComboBox.getSelectedItem();
         Object o = subItems.get(item);
+        String data = "";
+        if (e.getSource().getClass().equals(JComboBox.class)) {
+            if (o == null) {
+                courseComboBox.setModel(new DefaultComboBoxModel());
+            } else {
+                courseComboBox.setModel(new DefaultComboBoxModel((String[]) o));
+            }
+            System.out.println("course ->" + courseComboBox.getSelectedIndex() + " "
+                    + courseComboBox.getSelectedObjects().toString() + " ");
+        }
 
-        if (o == null) {
-            courseComboBox.setModel(new DefaultComboBoxModel());
-        } else {
-            courseComboBox.setModel(new DefaultComboBoxModel((String[]) o));
+        if (e.getSource().getClass().equals(JButton.class)) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String query = "INSERT INTO `student_data`(id, `roll no`, `name`, `date of birth`, `phone`, email, gender, `present address`, `registration no`, `father name`, `mother name`, `guardian phone`, `permanent address`, degree, batch, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_management_system?useSSL=false",
+                        "root",
+                        "111222344");
+                pst = con.prepareStatement(query);
+
+                String id = java.util.UUID.randomUUID().toString();
+                Date dob = (Date) datePicker.getModel().getValue();
+                // java.sql.Date dob = (java.sql.Date) datePicker.getModel().getValue();
+                String sgender = "";
+                if (maleradio.isSelected()) {
+                    sgender = "Male";
+                } else if (femaleradio.isSelected()) {
+                    sgender = "Female";
+                } else if (genderfradio.isSelected()) {
+                    sgender = "Gender-Fluid";
+                } else {
+                    sgender = "";
+                }
+                String presAdd = spresst.getText() + "' " + spresdist.getText()
+                        + "' " + presstatecombo.getItemAt(presstatecombo.getSelectedIndex()) + ", "
+                        + sprespin.getText();
+                String permAdd = spermst.getText() + "' "
+                        + spermdist.getText()
+                        + "' " + permstatecombo.getItemAt(permstatecombo.getSelectedIndex()) + "' "
+                        + spermpin.getText();
+                String course = courseComboBox.getItemAt(courseComboBox.getSelectedIndex());
+                String degree = course.replaceAll("(?<=\s).*", "");
+
+                pst.setString(1, id);
+                pst.setString(2, roll.getText());
+                pst.setString(3, sname.getText());
+                pst.setDate(4, new java.sql.Date(dob.getTime()));
+                pst.setString(5, sphone.getText());
+                pst.setString(6, semail.getText());
+                pst.setString(7, sgender);
+                pst.setString(8, presAdd);
+                pst.setString(9, reg.getText());
+                pst.setString(10, fname.getText());
+                pst.setString(11, mname.getText());
+                pst.setString(12, gphone.getText());
+                pst.setString(13, permAdd);
+                pst.setString(14, degree);
+                pst.setString(15, batch.getText());
+                pst.setString(16, deptComboBox.getItemAt(deptComboBox.getSelectedIndex()));
+
+                data = id + roll + sname.getText() + dob + sphone.getText() + semail.getText() + sgender
+                        + presAdd + reg.getText() + fname.getText() + mname.getText() + gphone.getText() + permAdd
+                        + degree
+                        + batch.getText() + deptComboBox.getItemAt(deptComboBox.getSelectedIndex()) + course;
+                // if (sname.getText().equals("") || sentry.getText().equals("") ||
+                // semail.getText().equals("")
+                // || scontact.getText().equals("") || shome.getText().equals("")) {
+                // JOptionPane.showMessageDialog(null, "Fill all the details :(");
+                // } else {
+                int result = pst.executeUpdate();
+                System.out.println(result + " records affected");
+                con.close();
+                JOptionPane.showMessageDialog(null, "Student added Successfully :)");
+                // dispose();
+                // Menu menu = new Menu();
+                // menu.show();
+                // }
+            } catch (Exception ex) {
+                System.out.println(ex);
+                System.out.println(data);
+                System.out.println(pst);
+                JOptionPane.showMessageDialog(null, ex);
+            }
         }
     }
 
