@@ -13,9 +13,6 @@
         <fileset dir="${lib.dir}" includes="*.jar"/>
     </path>
 
-    <manifestclasspath property="manifest.classpath" jarfile="${dist.dir}/UniManager.jar">
-        <classpath refid="class.path"/>
-    </manifestclasspath>
 
     <target name="init">
         <tstamp/>
@@ -23,18 +20,21 @@
     </target>
     
     <target name="compile" depends="init" description="compile the source">
-        <javac debug="on" srcdir="${src}" destdir="${build.dir}" classpathref="class.path"/>
+        <javac target="19" source="19" debug="on" srcdir="${src}" destdir="${build.dir}" classpathref="class.path"/>
     </target>
 
     <target name="dist" depends="compile" description="generate the distribution">
         <mkdir dir="${dist.dir}"/>
 
+    <!-- <manifestclasspath property="manifest.classpath" jarfile="${dist.dir}/UniManager.jar">
+        <classpath refid="class.path"/>
+    </manifestclasspath> -->
         <jar jarfile="${dist.dir}/UniManager.jar" basedir="${build.dir}">
             <manifest>
                 <!-- 
                 <attribute name="Class-Path" value="${DatePicker}"/>
                 <attribute name="Class-Path-Jdbc" value="${JdbcDriver}"/> -->
-                <attribute name="Main-Class" value="com.tetradlazydragons.RegForm"/>
+                <attribute name="Main-Class" value="com.tetradlazydragons.Home"/>
                 <attribute name="Manifest-Version" value="${manifest-version}"/>
                 <attribute name="Created-By" value="${ant.java.version}"/>
                 <attribute name="Class-Path" value="${manifest.classpath}"/>
