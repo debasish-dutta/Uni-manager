@@ -17,7 +17,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 public class RegForm implements ActionListener {
     JLabel head, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, a1, a2, a3, a4, a5, a6, lc, lc1, lc2, lc3;
-    JTextField t1, t2, t3, t4, t8, t9, t10, ta1, ta2, ta4, ta5, ct1;
+    JTextField t1, t2, t3, t4, t8, t9, t10, ta1, ta2, ta4, ta5, ct1,ct2,ct3;
     JRadioButton r1, r2;
     JComboBox c1, c2;
     JComboBox<String> deptComboBox;
@@ -33,13 +33,13 @@ public class RegForm implements ActionListener {
 
         head = new JLabel("NEW STUDENT REGISTRATION ");
         head.setFont(new Font("Courier", Font.BOLD, 30));
-        head.setBounds(260, 20, 600, 30);
+        head.setBounds(300, 20, 600, 30);
         f.add(head);
 
         l1 = new JLabel("Name:");
         l1.setBounds(50, 100, 150, 20);
         t1 = new JTextField();
-        t1.setBounds(200, 100, 200, 20);
+        t1.setBounds(200, 100, 250, 20);
         f.add(l1);
         f.add(t1);
 
@@ -60,21 +60,21 @@ public class RegForm implements ActionListener {
         p.put("text.year", "Year");
         datePanel = new JDatePanelImpl(model, p);
         datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-        datePicker.setBounds(200, 130, 200, 20);
+        datePicker.setBounds(200, 130, 250, 20);
         f.add(datePicker);
         /* End Date picker */
 
         l3 = new JLabel("Phone No:");
         l3.setBounds(50, 160, 150, 20);
         t3 = new JTextField();
-        t3.setBounds(200, 160, 200, 20);
+        t3.setBounds(200, 160, 250, 20);
         f.add(l3);
         f.add(t3);
 
         l4 = new JLabel("Email:");
         l4.setBounds(50, 190, 150, 20);
         t4 = new JTextField();
-        t4.setBounds(200, 190, 200, 20);
+        t4.setBounds(200, 190, 250, 20);
         f.add(l4);
         f.add(t4);
 
@@ -98,72 +98,72 @@ public class RegForm implements ActionListener {
         a1 = new JLabel("Street:");
         a1.setBounds(50, 280, 150, 20);
         ta1 = new JTextField();
-        ta1.setBounds(200, 280, 200, 20);
+        ta1.setBounds(200, 280, 250, 20);
         f.add(a1);
         f.add(ta1);
 
         a2 = new JLabel("District:");
         a2.setBounds(50, 310, 150, 20);
         ta2 = new JTextField();
-        ta2.setBounds(200, 310, 200, 20);
+        ta2.setBounds(200, 310, 250, 20);
         f.add(a2);
         f.add(ta2);
 
         a3 = new JLabel("State:");
         a3.setBounds(50, 340, 150, 20);
-        String states[] = { "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
+        String states[] = {"Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
                 "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerela",
                 "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
                 "Rajasthan", "Sikkim", "Tamil Nadu", "Telengana", "Tripura", "Uttar Pradesh", "Uttrakhand",
                 "West Bengal" };
         c1 = new JComboBox(states);
-        c1.setBounds(200, 340, 200, 20);
+        c1.setBounds(200, 340, 250, 20);
         f.add(a3);
         f.add(c1);
 
         l7 = new JLabel("Permanent Address:");
-        l7.setBounds(500, 250, 150, 20);
+        l7.setBounds(600, 250, 150, 20);
         f.add(l7);
 
         a4 = new JLabel("Street:");
-        a4.setBounds(500, 280, 150, 20);
+        a4.setBounds(600, 280, 150, 20);
         ta4 = new JTextField();
-        ta4.setBounds(700, 280, 200, 20);
+        ta4.setBounds(800, 280, 250, 20);
         f.add(a4);
         f.add(ta4);
 
         a5 = new JLabel("District:");
-        a5.setBounds(500, 310, 150, 20);
+        a5.setBounds(600, 310, 150, 20);
         ta5 = new JTextField();
-        ta5.setBounds(700, 310, 200, 20);
+        ta5.setBounds(800, 310, 250, 20);
         f.add(a5);
         f.add(ta5);
 
         a6 = new JLabel("State:");
-        a6.setBounds(500, 340, 150, 20);
+        a6.setBounds(600, 340, 150, 20);
         c2 = new JComboBox(states);
-        c2.setBounds(700, 340, 200, 20);
+        c2.setBounds(800, 340, 250, 20);
         f.add(a6);
         f.add(c2);
 
         l8 = new JLabel("Father's Name:");
-        l8.setBounds(500, 100, 150, 20);
+        l8.setBounds(600, 100, 150, 20);
         t8 = new JTextField();
-        t8.setBounds(700, 100, 200, 20);
+        t8.setBounds(800, 100, 250, 20);
         f.add(l8);
         f.add(t8);
 
         l9 = new JLabel("Mother's Name:");
-        l9.setBounds(500, 130, 150, 20);
+        l9.setBounds(600, 130, 150, 20);
         t9 = new JTextField();
-        t9.setBounds(700, 130, 200, 20);
+        t9.setBounds(800, 130, 250, 20);
         f.add(l9);
         f.add(t9);
 
         l10 = new JLabel("Guardian's Phone No:");
-        l10.setBounds(500, 160, 150, 20);
+        l10.setBounds(600, 160, 150, 20);
         t10 = new JTextField();
-        t10.setBounds(700, 160, 200, 20);
+        t10.setBounds(800, 160, 250, 20);
         f.add(l10);
         f.add(t10);
 
@@ -171,15 +171,29 @@ public class RegForm implements ActionListener {
         lc.setBounds(50, 370, 150, 20);
         f.add(lc);
 
-        lc1 = new JLabel("Batch:");
+ lc1 = new JLabel("Registration No:");
         lc1.setBounds(50, 400, 150, 20);
         ct1 = new JTextField();
-        ct1.setBounds(200, 400, 200, 20);
+        ct1.setBounds(200, 400, 250, 20);
         f.add(lc1);
         f.add(ct1);
 
-        lc2 = new JLabel("Department:");
+        lc2 = new JLabel("Roll No:");
         lc2.setBounds(50, 430, 150, 20);
+        ct2 = new JTextField();
+        ct2.setBounds(200, 430, 250, 20);
+        f.add(lc2);
+        f.add(ct2);
+
+        lc3 = new JLabel("Batch:");
+        lc3.setBounds(50, 460, 150, 20);
+        ct3 = new JTextField();
+        ct3.setBounds(200, 460, 250, 20);
+        f.add(lc3);
+        f.add(ct3);
+
+        lc2 = new JLabel("Department:");
+        lc2.setBounds(600, 430, 150, 20);
         f.add(lc2);
         String[] dept = { "Select Department", "Arabic", "Assamese", "Bengali", "Bodo", "Communication & Journalism",
                 "Economics", "Education", "English", "English Language Teaching", "Foreign Language", "Hindi",
@@ -196,17 +210,17 @@ public class RegForm implements ActionListener {
 
                 "Commerce", "Business Administration", "Law" };
         deptComboBox = new JComboBox<String>(dept);
-        deptComboBox.setBounds(200, 430, 250, 20);
+        deptComboBox.setBounds(800, 430, 250, 20);
         deptComboBox.addActionListener(this);
 
         deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
         f.add(deptComboBox);
 
         lc3 = new JLabel("Course:");
-        lc3.setBounds(50, 460, 150, 20);
+        lc3.setBounds(600, 460, 150, 20);
         f.add(lc3);
         courseComboBox = new JComboBox<String>();
-        courseComboBox.setBounds(200, 460, 250, 20);
+        courseComboBox.setBounds(800, 460, 250, 20);
         courseComboBox.setPrototypeDisplayValue("XXXXXXXXXX");
         f.add(courseComboBox);
 
@@ -317,10 +331,10 @@ public class RegForm implements ActionListener {
         b.setBounds(300, 500, 150, 40);
         f.add(b);
         b1 = new JButton("Clear");
-        b1.setBounds(500, 500, 150, 40);
+        b1.setBounds(600, 500, 150, 40);
         f.add(b1);
 
-        f.setSize(1000, 800);
+        f.setSize(1200, 800);
         f.setLayout(null);
         f.setVisible(true);
     }
