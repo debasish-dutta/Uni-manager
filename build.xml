@@ -21,14 +21,14 @@
     
     <target name="compile" depends="init" description="compile the source">
         <javac target="19" source="19" debug="on" srcdir="${src}" destdir="${build.dir}" classpathref="class.path"/>
+        <mkdir dir="${dist.dir}"/>
     </target>
+    <manifestclasspath property="manifest.classpath" jarfile="${dist.dir}/UniManager.jar">
+        <classpath refid="class.path"/>
+    </manifestclasspath>
 
     <target name="dist" depends="compile" description="generate the distribution">
-        <mkdir dir="${dist.dir}"/>
 
-    <!-- <manifestclasspath property="manifest.classpath" jarfile="${dist.dir}/UniManager.jar">
-        <classpath refid="class.path"/>
-    </manifestclasspath> -->
         <jar jarfile="${dist.dir}/UniManager.jar" basedir="${build.dir}">
             <manifest>
                 <!-- 
@@ -47,7 +47,7 @@
     </target>
 
     <target name="clean" description="clean up">
-        <delete dir="${build.dir}"/>
-        <delete dir="${dist.dir}"/>
+        <delete dir="${build.dir}/"/>
+        <delete dir="${dist.dir}/"/>
     </target>
 </project>

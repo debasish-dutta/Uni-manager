@@ -26,21 +26,21 @@ public class DbConnect implements ActionListener {
         f.add(head);
 
         urlLabel = new JLabel("url:");
-        urlLabel.setBounds(50, 100, 150, 20);
+        urlLabel.setBounds(50, 100, 100, 20);
         urlF = new JTextField();
         urlF.setBounds(200, 100, 250, 20);
         f.add(urlLabel);
         f.add(urlF);
 
         usrLabel = new JLabel("user:");
-        usrLabel.setBounds(50, 100, 150, 20);
+        usrLabel.setBounds(50, 200, 100, 20);
         usrF = new JTextField();
-        usrF.setBounds(200, 100, 250, 20);
-        f.add(urlLabel);
+        usrF.setBounds(200, 200, 250, 20);
+        f.add(usrLabel);
         f.add(usrF);
 
         pwdLabel = new JLabel("password:");
-        pwdLabel.setBounds(50, 300, 150, 20);
+        pwdLabel.setBounds(50, 300, 100, 20);
         pwdF = new JTextField();
         pwdF.setBounds(200, 300, 250, 20);
         f.add(pwdLabel);
@@ -53,7 +53,7 @@ public class DbConnect implements ActionListener {
 
         f.setSize(1200, 800);
         f.setLayout(null);
-        f.setVisible(false);
+        f.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -73,9 +73,9 @@ public class DbConnect implements ActionListener {
         }
     }
 
-    public static void main(String args[]) {
-        // DbConnect db = new DbConnect();
-        // db.setVisible(true);
-        new DbConnect();
-    }
+    // public static void main(String args[]) {
+    // // DbConnect db = new DbConnect();
+    // // db.setVisible(true);
+    // new DbConnect();
+    // }
 }

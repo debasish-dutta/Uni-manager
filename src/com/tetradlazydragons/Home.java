@@ -1,11 +1,21 @@
 package com.tetradlazydragons;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.Font;
 import java.text.*;
+
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JFormattedTextField.AbstractFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.*;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import java.sql.*;
+import java.sql.DriverManager;
 
 public class Home {
     JLabel head;
@@ -27,9 +37,10 @@ public class Home {
         DB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                DbConnect db = new DbConnect();
+                new DbConnect();
                 // db.show();
-                db.setVisible(true);
+                // db.setVisible(true);
+                f.setVisible(false);
                 // dispose();
 
             }
@@ -41,9 +52,9 @@ public class Home {
         reg.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                RegForm studentDetails = new RegForm();
-                studentDetails.setVisible(true);
-
+                new RegForm();
+                f.setVisible(false);
+                // studentDetails.setVisible(true);
                 // dispose();
 
             }

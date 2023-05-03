@@ -379,7 +379,7 @@ public class RegForm implements ActionListener {
 
                 f.setSize(1200, 800);
                 f.setLayout(null);
-                f.setVisible(false);
+                f.setVisible(true);
         }
 
         public class DateLabelFormatter extends AbstractFormatter {
@@ -495,9 +495,9 @@ public class RegForm implements ActionListener {
                 }
         }
 
-        public static void main(String args[]) {
-                // RegForm std = new RegForm();
-                new RegForm();
-                // std.setVisible(true);
-        }
+        // public static void main(String args[]) {
+        // // RegForm std = new RegForm();
+        // new RegForm();
+        // // std.setVisible(true);
+        // }
 }
