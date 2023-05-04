@@ -31,7 +31,7 @@ public class RegForm implements ActionListener {
         JRadioButton maleradio, femaleradio, genderfradio;
         JComboBox<String> presstatecombo, permstatecombo;
         JComboBox<String> deptComboBox, courseComboBox;
-        JButton submitbtn, clearbtn;
+        JButton submitbtn, clearbtn, backbtn;
         JDatePanelImpl datePanel;
         JDatePickerImpl datePicker;
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
@@ -369,13 +369,23 @@ public class RegForm implements ActionListener {
                 subItems.put(dept[42], subItems42);
 
                 submitbtn = new JButton("Submit");
-                submitbtn.setBounds(300, 569, 150, 40);
+                submitbtn.setBounds(500, 569, 150, 40);
                 f.add(submitbtn);
                 submitbtn.addActionListener(this);
 
                 clearbtn = new JButton("Clear");
-                clearbtn.setBounds(600, 569, 150, 40);
+                clearbtn.setBounds(300, 569, 150, 40);
                 f.add(clearbtn);
+
+                backbtn = new JButton("Back");
+                backbtn.setBounds(700, 569, 150, 40);
+                f.add(backbtn);
+                backbtn.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                                Home home = new Home();
+                                f.dispose();
+                        }
+                });
 
                 f.setSize(1200, 800);
                 f.setLayout(null);

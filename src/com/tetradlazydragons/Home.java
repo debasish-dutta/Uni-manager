@@ -19,44 +19,77 @@ import java.sql.DriverManager;
 
 public class Home {
     JLabel head;
-    JButton DB, reg;
+    JButton DBbtn, regbtn, searchbtn, updatebtn, exitbtn;
 
     Home() {
         JFrame f = new JFrame("Uni Manager");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        head = new JLabel("UNi MANAGER ");
+        head = new JLabel("UNI MANAGER ");
         head.setFont(new Font("Courier", Font.BOLD, 30));
         head.setBounds(400, 20, 600, 30);
         f.add(head);
 
-        DB = new JButton("Connect DataBase");
-        DB.setBounds(400, 169, 200, 200);
-        f.add(DB);
+        DBbtn = new JButton("Connect DataBase");
+        DBbtn.setBounds(60, 469, 200, 200);
+        f.add(DBbtn);
 
-        DB.addActionListener(new ActionListener() {
+        DBbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                new DbConnect();
+                DbConnect db = new DbConnect();
                 // db.show();
                 // db.setVisible(true);
-                f.setVisible(false);
-                // dispose();
+                f.dispose();
 
             }
         });
 
-        reg = new JButton("Add Student");
-        reg.setBounds(400, 469, 200, 200);
-        f.add(reg);
-        reg.addActionListener(new ActionListener() {
+        regbtn = new JButton("Add Student");
+        regbtn.setBounds(360, 469, 200, 200);
+        f.add(regbtn);
+        regbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                new RegForm();
-                f.setVisible(false);
+                RegForm reg = new RegForm();
                 // studentDetails.setVisible(true);
-                // dispose();
+                f.dispose();
 
+            }
+        });
+
+        searchbtn = new JButton("Search Student");
+        searchbtn.setBounds(660, 469, 200, 200);
+        f.add(searchbtn);
+        searchbtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                SearchForm reg = new SearchForm();
+                // studentDetails.setVisible(true);
+                f.dispose();
+
+            }
+        });
+
+        updatebtn = new JButton("Update");
+        updatebtn.setBounds(960, 469, 200, 200);
+        f.add(updatebtn);
+        updatebtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                UpdateForm reg = new UpdateForm();
+                // studentDetails.setVisible(true);
+                f.dispose();
+
+            }
+        });
+
+        exitbtn = new JButton("Exit");
+        exitbtn.setBounds(539, 689, 169, 69);
+        f.add(exitbtn);
+        exitbtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                f.dispose();
             }
         });
 
