@@ -9,3 +9,12 @@ This is a simple student management system done using Java and Swing package.
 ![connect db form](assets/ss/connect_db.png)
 ![search form](assets/ss/search_std.png)
 ![update form](assets/ss/update_std.png)
+
+## Build
+
+To build the app from source, use the following commands:
+
+```bash
+    ant
+    java  -jar dist/UniManager.jar  
+```

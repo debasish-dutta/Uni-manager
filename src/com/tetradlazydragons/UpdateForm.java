@@ -43,6 +43,8 @@ public class UpdateForm implements ActionListener {
     UpdateForm() {
         JFrame f = new JFrame("Search Student");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        MenuBar menu = new MenuBar();
+        f.setJMenuBar(menu.createMenuBar());
 
         head = new JLabel("UPDATE STUDENT ");
         head.setFont(new Font("Courier", Font.BOLD, 30));

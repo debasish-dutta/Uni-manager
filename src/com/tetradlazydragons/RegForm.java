@@ -41,6 +41,8 @@ public class RegForm implements ActionListener {
         RegForm() {
                 JFrame f = new JFrame("Registration Form");
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                MenuBar menu = new MenuBar();
+                f.setJMenuBar(menu.createMenuBar());
 
                 head = new JLabel("NEW STUDENT REGISTRATION ");
                 head.setFont(new Font("Courier", Font.BOLD, 30));

@@ -20,6 +20,8 @@ public class DbConnect implements ActionListener {
     DbConnect() {
         JFrame f = new JFrame("DataBase Connect Form");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        MenuBar menu = new MenuBar();
+        f.setJMenuBar(menu.createMenuBar());
 
         head = new JLabel("CONNECT DATABASE ");
         head.setFont(new Font("Courier", Font.BOLD, 30));

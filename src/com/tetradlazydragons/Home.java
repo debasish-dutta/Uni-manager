@@ -24,6 +24,8 @@ public class Home {
     Home() {
         JFrame f = new JFrame("Uni Manager");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        MenuBar menu = new MenuBar();
+        f.setJMenuBar(menu.createMenuBar());
 
         head = new JLabel("UNI MANAGER ");
         head.setFont(new Font("Courier", Font.BOLD, 30));
