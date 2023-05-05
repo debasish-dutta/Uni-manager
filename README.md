@@ -1,5 +1,11 @@
-# Uni-manager
+# Uni Manager
+
+This is a simple student management system done using Java and Swing package.
 
 ## Screenshots
 
-![basic reg form](assets/ss/baisc-form.png)
+![home](assets/ss/homepage.png)
+![add student form](assets/ss/new_std.png)
+![connect db form](assets/ss/connect_db.png)
+![search form](assets/ss/search_std.png)
+![update form](assets/ss/update_std.png)
