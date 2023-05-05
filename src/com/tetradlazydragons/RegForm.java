@@ -406,9 +406,9 @@ public class RegForm implements ActionListener {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String query = "INSERT INTO `student_data`(id, `roll no`, `name`, `date of birth`, `phone`, email, gender, `present address`, `registration no`, `father name`, `mother name`, `guardian phone`, `permanent address`, degree, batch, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student_management_system?useSSL=false",
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/studentdb?useSSL=false",
                         "root",
-                        "111222344");
+                        "8145");
                 pst = con.prepareStatement(query);
 
                 String id = java.util.UUID.randomUUID().toString();
