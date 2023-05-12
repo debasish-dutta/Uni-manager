@@ -8,7 +8,6 @@ CREATE TABLE student_data (
 	gender VARCHAR(50),
 	`present address` VARCHAR(150),
 	`registration no` VARCHAR(50),
-	`class roll no` VARCHAR(50),
 	`father name` VARCHAR(50),
 	`mother name` VARCHAR(50),
 	`guardian phone` VARCHAR(50),
@@ -16,7 +15,6 @@ CREATE TABLE student_data (
 	degree VARCHAR(5),
 	batch VARCHAR(50),
 	department VARCHAR(25),
-	stream VARCHAR(25),
 	PRIMARY KEY (id, `roll no`)
 );
 -- INSERT INTO student_data (
@@ -29,7 +27,6 @@ CREATE TABLE student_data (
 -- 		gender,
 -- 		`present address`,
 -- 		`registration no`,
--- 		`class roll no`,
 -- 		`father name`,
 -- 		`mother name`,
 -- 		`guardian phone`,
@@ -37,8 +34,7 @@ CREATE TABLE student_data (
 -- 		degree,
 -- 		batch,
 -- 		department,
--- 		stream
--- 	)
+pp_img -- 	)
 -- values (
 -- 		'0cd742c7-e218-485c-8bfa-5830e3b0b2d7',
 -- 		'HJ-703-482-4928',

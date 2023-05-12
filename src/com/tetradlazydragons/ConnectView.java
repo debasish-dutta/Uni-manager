@@ -10,15 +10,15 @@ import java.text.*;
 import java.sql.*;
 import java.sql.DriverManager;
 
-public class DbConnect implements ActionListener {
+public class ConnectView implements ActionListener {
     JLabel head, hostLabel, portLabel, dbLabel, usrLabel, pwdLabel, sslLabel;
     JTextField hostF, portF, dbF, usrF, pwdF;
     Checkbox ssl;
     String useSsl;
     JButton connectBtn, backBtn;
+    JFrame f = new JFrame("DataBase Connect Form");
 
-    DbConnect() {
-        JFrame f = new JFrame("DataBase Connect Form");
+    ConnectView() {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
@@ -32,6 +32,7 @@ public class DbConnect implements ActionListener {
         hostLabel.setBounds(50, 150, 100, 20);
         hostF = new JTextField();
         hostF.setBounds(200, 150, 250, 20);
+        hostF.setText("localhost");
         f.add(hostLabel);
         f.add(hostF);
 
@@ -39,6 +40,7 @@ public class DbConnect implements ActionListener {
         portLabel.setBounds(50, 180, 100, 20);
         portF = new JTextField();
         portF.setBounds(200, 180, 250, 20);
+        portF.setText("3306");
         f.add(portLabel);
         f.add(portF);
 
@@ -46,6 +48,7 @@ public class DbConnect implements ActionListener {
         dbLabel.setBounds(50, 210, 100, 20);
         dbF = new JTextField();
         dbF.setBounds(200, 210, 250, 20);
+        dbF.setText("student_management_system");
         f.add(dbLabel);
         f.add(dbF);
 
@@ -53,6 +56,7 @@ public class DbConnect implements ActionListener {
         usrLabel.setBounds(50, 240, 100, 20);
         usrF = new JTextField();
         usrF.setBounds(200, 240, 250, 20);
+        usrF.setText("root");
         f.add(usrLabel);
         f.add(usrF);
 
@@ -60,6 +64,7 @@ public class DbConnect implements ActionListener {
         pwdLabel.setBounds(50, 270, 100, 20);
         pwdF = new JTextField();
         pwdF.setBounds(200, 270, 250, 20);
+        pwdF.setText(" ");
         f.add(pwdLabel);
         f.add(pwdF);
 
@@ -98,17 +103,32 @@ public class DbConnect implements ActionListener {
             String port = portF.getText();
             String db = dbF.getText();
             String user = usrF.getText();
-            String pwd = pwdF.getText();
+            final String pwd = pwdF.getText();
+            if (useSsl == null)
+                useSsl = "false";
 
-            String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=" + useSsl;
+            String databaseUrl = "jdbc:mysql://" + host + ":" + port + "/" + db
+                    + "?&useSSL=" + useSsl;
+            // System.out.println(databaseUrl);
+            if (user.equals("") || pwd.equals("") || databaseUrl.equals("")) {
+                JOptionPane.showMessageDialog(new JFrame(), "Fill empty fields", "Warning", JOptionPane.ERROR_MESSAGE);
+            } else {
+                DBHandler.setLogin(user);
+                DBHandler.setPassword(pwd);
+                DBHandler.setDatabaseUrl(databaseUrl);
+            }
 
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con = DriverManager.getConnection(url, user, pwd);
-                System.out.println(con);
-            } catch (Exception ex) {
-                System.out.println(ex);
-                JOptionPane.showMessageDialog(null, ex);
+            if (DBHandler.createTables()) {
+                JOptionPane.showMessageDialog(new JFrame(), "connectionEstablished",
+                        "success", JOptionPane.INFORMATION_MESSAGE);
+
+                // Open a new window where you can manage the table and close the old one
+                new Home();
+                f.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "connection not established", "error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
     }
