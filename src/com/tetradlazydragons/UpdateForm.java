@@ -54,7 +54,7 @@ public class UpdateForm implements ActionListener {
         search = new JTextField();
         search.setBounds(450, 69, 350, 20);
         searchbtn = new JButton("Search");
-        searchbtn.setBounds(830, 69, 69, 20);
+        searchbtn.setBounds(830, 69, 100, 20);
         f.add(searchlabel);
         f.add(search);
         f.add(searchbtn);
