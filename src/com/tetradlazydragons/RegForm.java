@@ -6,6 +6,10 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.Font;
 import java.text.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -19,28 +23,35 @@ import java.sql.*;
 import java.sql.DriverManager;
 
 public class RegForm implements ActionListener {
-        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, presaddrlabel, permaddrlabel,
+        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, piclabel, presaddrlabel, permaddrlabel,
                         fatherlabel,
                         motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
                         permdistlabel,
                         permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel,
                         courselabel;
-        JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst, spermdist,
+        static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
+                        spermdist,
                         spermpin, reg, roll,
                         batch;
-        JRadioButton maleradio, femaleradio, genderfradio;
-        JComboBox<String> presstatecombo, permstatecombo;
-        JComboBox<String> deptComboBox, courseComboBox;
+        static JRadioButton maleradio, femaleradio, genderfradio;
+        static JComboBox<String> presstatecombo, permstatecombo;
+        static JComboBox<String> deptComboBox, courseComboBox;
         JButton submitbtn, clearbtn, backbtn;
         JDatePanelImpl datePanel;
-        JDatePickerImpl datePicker;
+        static JDatePickerImpl datePicker;
+        JButton uploadPic;
+        static File photoFile;
+        static String filename;
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
 
+        JFrame f = new JFrame("Registration Form");
+
         RegForm() {
-                JFrame f = new JFrame("Registration Form");
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                MenuBar menu = new MenuBar();
+                f.setJMenuBar(menu.createMenuBar());
 
                 head = new JLabel("NEW STUDENT REGISTRATION ");
                 head.setFont(new Font("Courier", Font.BOLD, 30));
@@ -105,6 +116,14 @@ public class RegForm implements ActionListener {
                 bg.add(maleradio);
                 bg.add(femaleradio);
                 bg.add(genderfradio);
+
+                piclabel = new JLabel();
+                piclabel.setBounds(1000, 80, 150, 150);
+                uploadPic = new JButton("Upload");
+                uploadPic.setBounds(1040, 235, 100, 20);
+                f.add(piclabel);
+                f.add(uploadPic);
+                uploadPic.addActionListener(this);
 
                 presaddrlabel = new JLabel("Present Address:");
                 presaddrlabel.setBounds(50, 250, 150, 20);
@@ -180,23 +199,23 @@ public class RegForm implements ActionListener {
                 f.add(spermpin);
 
                 fatherlabel = new JLabel("Father's Name:");
-                fatherlabel.setBounds(600, 100, 150, 20);
+                fatherlabel.setBounds(500, 100, 150, 20);
                 fname = new JTextField();
-                fname.setBounds(800, 100, 250, 20);
+                fname.setBounds(700, 100, 250, 20);
                 f.add(fatherlabel);
                 f.add(fname);
 
                 motherlabel = new JLabel("Mother's Name:");
-                motherlabel.setBounds(600, 130, 150, 20);
+                motherlabel.setBounds(500, 130, 150, 20);
                 mname = new JTextField();
-                mname.setBounds(800, 130, 250, 20);
+                mname.setBounds(700, 130, 250, 20);
                 f.add(motherlabel);
                 f.add(mname);
 
                 gphonelabel = new JLabel("Guardian's Phone No:");
-                gphonelabel.setBounds(600, 160, 150, 20);
+                gphonelabel.setBounds(500, 160, 150, 20);
                 gphone = new JTextField();
-                gphone.setBounds(800, 160, 250, 20);
+                gphone.setBounds(700, 160, 250, 20);
                 f.add(gphonelabel);
                 f.add(gphone);
 
@@ -425,6 +444,7 @@ public class RegForm implements ActionListener {
                                         + courseComboBox.getSelectedObjects().toString() + " ");
                 }
 
+<<<<<<< HEAD
                 if (e.getSource().getClass().equals(JButton.class)) {
                         try {
                                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -434,68 +454,113 @@ public class RegForm implements ActionListener {
                                                 "root",
                                                 "8145");
                                 pst = con.prepareStatement(query);
+=======
+                if (e.getSource() == uploadPic) {
+                        JFileChooser fileChooser = new JFileChooser();
+                        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                        int result = fileChooser.showOpenDialog(null);
+                        if (result == JFileChooser.APPROVE_OPTION) {
+                                try {
+                                        photoFile = fileChooser.getSelectedFile();
+                                        filename = photoFile.getAbsolutePath();
+                                        BufferedImage picture = ImageIO.read(photoFile);
+>>>>>>> 910df7aa6535fc3e780b3e6ac9058318eac8f941
 
-                                String id = java.util.UUID.randomUUID().toString();
-                                Date dob = (Date) datePicker.getModel().getValue();
-                                // java.sql.Date dob = (java.sql.Date) datePicker.getModel().getValue();
-                                String sgender = "";
-                                if (maleradio.isSelected()) {
-                                        sgender = "Male";
-                                } else if (femaleradio.isSelected()) {
-                                        sgender = "Female";
-                                } else if (genderfradio.isSelected()) {
-                                        sgender = "Gender-Fluid";
-                                } else {
-                                        sgender = "";
+                                        piclabel.setIcon(new ImageIcon(picture));
+                                        f.add(piclabel);
+                                } catch (IOException ioe) {
+                                        ioe.printStackTrace();
+                                        JOptionPane.showMessageDialog(null, "ERROR");
                                 }
-                                String presAdd = spresst.getText() + "' " + spresdist.getText()
-                                                + "' " + presstatecombo.getItemAt(presstatecombo.getSelectedIndex())
-                                                + ", "
-                                                + sprespin.getText();
-                                String permAdd = spermst.getText() + "' "
-                                                + spermdist.getText()
-                                                + "' " + permstatecombo.getItemAt(permstatecombo.getSelectedIndex())
-                                                + "' "
-                                                + spermpin.getText();
-                                String course = courseComboBox.getItemAt(courseComboBox.getSelectedIndex());
-                                String degree = course.replaceAll("(?<=\s).*", "");
+                        }
+                }
 
-                                pst.setString(1, id);
-                                pst.setString(2, roll.getText());
-                                pst.setString(3, sname.getText());
-                                pst.setDate(4, new java.sql.Date(dob.getTime()));
-                                pst.setString(5, sphone.getText());
-                                pst.setString(6, semail.getText());
-                                pst.setString(7, sgender);
-                                pst.setString(8, presAdd);
-                                pst.setString(9, reg.getText());
-                                pst.setString(10, fname.getText());
-                                pst.setString(11, mname.getText());
-                                pst.setString(12, gphone.getText());
-                                pst.setString(13, permAdd);
-                                pst.setString(14, degree);
-                                pst.setString(15, batch.getText());
-                                pst.setString(16, deptComboBox.getItemAt(deptComboBox.getSelectedIndex()));
+                if (e.getSource() == submitbtn) {
+                        try {
+                                // Class.forName("com.mysql.cj.jdbc.Driver");
+                                // String query = "INSERT INTO `student_data`(id, `roll no`, `name`, `date of
+                                // birth`, `phone`, email, gender, `present address`, `registration no`, `father
+                                // name`, `mother name`, `guardian phone`, `permanent address`, degree, batch,
+                                // department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                                // con = DriverManager.getConnection(
+                                // "jdbc:mysql://localhost:3306/student_management_system?useSSL=false",
+                                // "root",
+                                // "111222344");
+                                // pst = con.prepareStatement(query);
 
-                                data = id + roll + sname.getText() + dob + sphone.getText() + semail.getText() + sgender
-                                                + presAdd + reg.getText() + fname.getText() + mname.getText()
-                                                + gphone.getText() + permAdd
-                                                + degree
-                                                + batch.getText()
-                                                + deptComboBox.getItemAt(deptComboBox.getSelectedIndex()) + course;
-                                // if (sname.getText().equals("") || sentry.getText().equals("") ||
-                                // semail.getText().equals("")
-                                // || scontact.getText().equals("") || shome.getText().equals("")) {
-                                // JOptionPane.showMessageDialog(null, "Fill all the details :(");
+                                // String id = java.util.UUID.randomUUID().toString();
+                                // Date dob = (Date) datePicker.getModel().getValue();
+                                // // java.sql.Date dob = (java.sql.Date) datePicker.getModel().getValue();
+                                // String sgender = "";
+                                // if (maleradio.isSelected()) {
+                                // sgender = "Male";
+                                // } else if (femaleradio.isSelected()) {
+                                // sgender = "Female";
+                                // } else if (genderfradio.isSelected()) {
+                                // sgender = "Gender-Fluid";
                                 // } else {
-                                int result = pst.executeUpdate();
-                                System.out.println(result + " records affected");
-                                con.close();
-                                JOptionPane.showMessageDialog(null, "Student added Successfully :)");
+                                // sgender = "";
+                                // }
+                                // String presAdd = spresst.getText() + "' " + spresdist.getText()
+                                // + "' " + presstatecombo.getItemAt(presstatecombo.getSelectedIndex())
+                                // + ", "
+                                // + sprespin.getText();
+                                // String permAdd = spermst.getText() + "' "
+                                // + spermdist.getText()
+                                // + "' " + permstatecombo.getItemAt(permstatecombo.getSelectedIndex())
+                                // + "' "
+                                // + spermpin.getText();
+                                // String course = courseComboBox.getItemAt(courseComboBox.getSelectedIndex());
+                                // String degree = course.replaceAll("(?<=\s).*", "");
+
+                                // pst.setString(1, id);
+                                // pst.setString(2, roll.getText());
+                                // pst.setString(3, sname.getText());
+                                // pst.setDate(4, new java.sql.Date(dob.getTime()));
+                                // pst.setString(5, sphone.getText());
+                                // pst.setString(6, semail.getText());
+                                // pst.setString(7, sgender);
+                                // pst.setString(8, presAdd);
+                                // pst.setString(9, reg.getText());
+                                // pst.setString(10, fname.getText());
+                                // pst.setString(11, mname.getText());
+                                // pst.setString(12, gphone.getText());
+                                // pst.setString(13, permAdd);
+                                // pst.setString(14, degree);
+                                // pst.setString(15, batch.getText());
+                                // pst.setString(16, deptComboBox.getItemAt(deptComboBox.getSelectedIndex()));
+
+                                // data = id + roll + sname.getText() + dob + sphone.getText() +
+                                // semail.getText() + sgender
+                                // + presAdd + reg.getText() + fname.getText() + mname.getText()
+                                // + gphone.getText() + permAdd
+                                // + degree
+                                // + batch.getText()
+                                // + deptComboBox.getItemAt(deptComboBox.getSelectedIndex()) + course;
+                                // // if (sname.getText().equals("") || sentry.getText().equals("") ||
+                                // // semail.getText().equals("")
+                                // // || scontact.getText().equals("") || shome.getText().equals("")) {
+                                // // JOptionPane.showMessageDialog(null, "Fill all the details :(");
+                                // // } else {
+                                // int result = pst.executeUpdate();
+                                // System.out.println(result + " records affected");
+                                // con.close();
+                                // JOptionPane.showMessageDialog(null, "Student added Successfully :)");
                                 // dispose();
                                 // Menu menu = new Menu();
                                 // menu.show();
                                 // }
+
+                                if (DBHandler.addStudent()) {
+                                        JOptionPane.showMessageDialog(null,
+                                                        "studentSuccessfullyAdded",
+                                                        "success",
+                                                        JOptionPane.INFORMATION_MESSAGE);
+                                } else {
+                                        JOptionPane.showMessageDialog(null,
+                                                        "somethingWrongInput",
+                                                        "error", JOptionPane.ERROR_MESSAGE);
+                                }
                         } catch (Exception ex) {
                                 System.out.println(ex);
                                 System.out.println(data);
