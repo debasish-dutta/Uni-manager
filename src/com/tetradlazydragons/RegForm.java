@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import java.awt.Font;
+
 import java.text.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -45,6 +45,7 @@ public class RegForm implements ActionListener {
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
+        JPanel headingPanel, studentPanel, addressPanel, coursPanel;
 
         JFrame f = new JFrame("Registration Form");
 
@@ -117,7 +118,7 @@ public class RegForm implements ActionListener {
                 bg.add(femaleradio);
                 bg.add(genderfradio);
 
-                piclabel = new JLabel();
+                piclabel = new JLabel("Photograph");
                 piclabel.setBounds(1000, 80, 150, 150);
                 uploadPic = new JButton("Upload");
                 uploadPic.setBounds(1040, 235, 100, 20);
@@ -443,18 +444,7 @@ public class RegForm implements ActionListener {
                         System.out.println("course ->" + courseComboBox.getSelectedIndex() + " "
                                         + courseComboBox.getSelectedObjects().toString() + " ");
                 }
-
-<<<<<<< HEAD
-                if (e.getSource().getClass().equals(JButton.class)) {
-                        try {
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                String query = "INSERT INTO `student_data`(id, `roll no`, `name`, `date of birth`, `phone`, email, gender, `present address`, `registration no`, `father name`, `mother name`, `guardian phone`, `permanent address`, degree, batch, department) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                                con = DriverManager.getConnection(
-                                                "jdbc:mysql://localhost:3306/studentdb?useSSL=false",
-                                                "root",
-                                                "8145");
-                                pst = con.prepareStatement(query);
-=======
+          
                 if (e.getSource() == uploadPic) {
                         JFileChooser fileChooser = new JFileChooser();
                         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -464,8 +454,6 @@ public class RegForm implements ActionListener {
                                         photoFile = fileChooser.getSelectedFile();
                                         filename = photoFile.getAbsolutePath();
                                         BufferedImage picture = ImageIO.read(photoFile);
->>>>>>> 910df7aa6535fc3e780b3e6ac9058318eac8f941
-
                                         piclabel.setIcon(new ImageIcon(picture));
                                         f.add(piclabel);
                                 } catch (IOException ioe) {

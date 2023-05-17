@@ -52,7 +52,7 @@ public class UpdateForm implements ActionListener {
                 head.setBounds(400, 20, 600, 30);
                 f.add(head);
 
-<<<<<<< HEAD
+
         searchlabel = new JLabel("Search:");
         searchlabel.setBounds(300, 69, 150, 20);
         search = new JTextField();
@@ -62,7 +62,7 @@ public class UpdateForm implements ActionListener {
         f.add(searchlabel);
         f.add(search);
         f.add(searchbtn);
-=======
+
                 searchlabel = new JLabel("Search:");
                 searchlabel.setBounds(300, 69, 150, 20);
                 search = new JTextField();
@@ -72,7 +72,7 @@ public class UpdateForm implements ActionListener {
                 f.add(searchlabel);
                 f.add(search);
                 f.add(searchbtn);
->>>>>>> 910df7aa6535fc3e780b3e6ac9058318eac8f941
+
 
                 namelabel = new JLabel("Name:");
                 namelabel.setBounds(50, 100, 150, 20);
