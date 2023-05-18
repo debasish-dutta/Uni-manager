@@ -34,7 +34,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "111222344";
+        password = "8145";
         studentsTable = "student_data";
     }
 
@@ -218,9 +218,9 @@ public class DBHandler {
         }
     }
 
-    public static Object searchStudents(String searchQuery) {
+    public static java.util.List<Object[]> searchStudents(String searchQuery) {
 
-        Object studentData = null;
+        java.util.List<Object[]> studentData = new java.util.ArrayList<>();
         int howManyColumns = 0, currentColumn = 0;
 
         try {
@@ -264,12 +264,8 @@ public class DBHandler {
             ResultSetMetaData rsmData = resultSet.getMetaData();
             howManyColumns = rsmData.getColumnCount();
 
-            // System.out.println(rsmData);
-            System.out.println(howManyColumns);
-            System.out.println("-------------");
             while (resultSet.next()) {
-                Vector columnData = new Vector();
-
+                
                 String id = resultSet.getString(1);
                 String rollNo = resultSet.getString(2);
                 String name = resultSet.getString(3);
@@ -288,8 +284,8 @@ public class DBHandler {
                 String dept = resultSet.getString(16);
                 String pp_blob = resultSet.getString(17);
                 // Sets Records in TextFields
-                System.out.println(id + rollNo + name + dob + ph + eml + gn + pAddr + regNo + fName + mName + gPh
-                        + prAddr + deg + batch + dept);
+                Object columnData[]={rollNo,name,dob,ph,eml,gn,dept};
+                studentData.add(columnData);
             }
             // else {
             // // JOptionPane.showMessageDialog(null, "Name not Found");

@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import java.awt.Font;
+
 import java.text.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -45,6 +45,7 @@ public class RegForm implements ActionListener {
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
+        JPanel headingPanel, studentPanel, addressPanel, coursPanel;
 
         JFrame f = new JFrame("Registration Form");
 
@@ -117,7 +118,7 @@ public class RegForm implements ActionListener {
                 bg.add(femaleradio);
                 bg.add(genderfradio);
 
-                piclabel = new JLabel();
+                piclabel = new JLabel("Photograph");
                 piclabel.setBounds(1000, 80, 150, 150);
                 uploadPic = new JButton("Upload");
                 uploadPic.setBounds(1040, 235, 100, 20);
@@ -443,7 +444,7 @@ public class RegForm implements ActionListener {
                         System.out.println("course ->" + courseComboBox.getSelectedIndex() + " "
                                         + courseComboBox.getSelectedObjects().toString() + " ");
                 }
-
+          
                 if (e.getSource() == uploadPic) {
                         JFileChooser fileChooser = new JFileChooser();
                         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -453,7 +454,6 @@ public class RegForm implements ActionListener {
                                         photoFile = fileChooser.getSelectedFile();
                                         filename = photoFile.getAbsolutePath();
                                         BufferedImage picture = ImageIO.read(photoFile);
-
                                         piclabel.setIcon(new ImageIcon(picture));
                                         f.add(piclabel);
                                 } catch (IOException ioe) {
