@@ -99,9 +99,33 @@ public class SearchForm implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+
         if (e.getActionCommand().equals("Delete")) {
+            Object rollNo = 0;
+            int selectedRowIndex = viewTable.getSelectedRow();
+            if (selectedRowIndex == -1) {
+                JOptionPane.showMessageDialog(null, "Nothing is selected", "Alert", JOptionPane.WARNING_MESSAGE);
+            } else {
+                rollNo = viewTable.getValueAt(selectedRowIndex, 0);
+            }
+            Boolean del = false;
             String adminPwd = JOptionPane.showInputDialog(null, "Enter Admin Password.", "Alert",
                     JOptionPane.WARNING_MESSAGE);
+            if (adminPwd.equals("123")) {
+                int yes = JOptionPane.showConfirmDialog(null, "Are you sure", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+
+                if (yes == JOptionPane.YES_OPTION) {
+                    if (DBHandler.deleteStudent(rollNo.toString())) {
+                        JOptionPane.showMessageDialog(null, "Successfully Deleted.", "Alert",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error", "Alert", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Wrong password", "Alert", JOptionPane.ERROR_MESSAGE);
+            }
         }
         if (e.getActionCommand().equals("Search")) {
             while (tableModel.getRowCount() > 0) {
@@ -113,8 +137,14 @@ public class SearchForm implements ActionListener {
             }
         }
         if (e.getActionCommand().equals("View")) {
+            // Object rollNo = viewTable.getValueAt(selectedRowIndex, 0);
+            Object rollNo = null;
             int selectedRowIndex = viewTable.getSelectedRow();
-            Object rollNo = viewTable.getValueAt(selectedRowIndex, 0);
+            if (selectedRowIndex == -1) {
+                JOptionPane.showMessageDialog(null, "Nothing is selected", "Alert", JOptionPane.WARNING_MESSAGE);
+            } else {
+                rollNo = viewTable.getValueAt(selectedRowIndex, 0);
+            }
             // System.out.println(rollNo);
 
             ViewCard card = new ViewCard(rollNo);

@@ -416,39 +416,39 @@ public class DBHandler {
      * 
      * @return True if no exception has been thrown, false otherwise
      */
-    public static boolean deleteStudent() {
+    public static boolean deleteStudent(String rollNo) {
         // Getting row that user selected
         // DefaultTableModel recordTable = (DefaultTableModel)
         // UpdateForm.table.getModel();
         // int selectedRow = UpdateForm.table.getSelectedRow();
         // UpdateForm.table.clearSelection();
 
-        // try {
-        // Geting the ID of the student in the selected row
-        // final int ID = Integer.parseInt(recordTable.getValueAt(selectedRow,
-        // 0).toString());
+        try {
+            // Geting the ID of the student in the selected row
+            // final int ID = Integer.parseInt(recordTable.getValueAt(selectedRow,
+            // 0).toString());
 
-        // Connection connection = DriverManager.getConnection(databaseUrl, login,
-        // password);
-        // PreparedStatement preparedStatement = connection
-        // .prepareStatement("delete from " + studentsTable + " where id = ?");
+            Connection connection = DriverManager.getConnection(databaseUrl, login,
+                    password);
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("delete from " + studentsTable + " where `roll no` = ?;");
 
-        // preparedStatement.setInt(1, ID);
-        // preparedStatement.executeUpdate();
+            preparedStatement.setString(1, rollNo);
+            preparedStatement.executeUpdate();
 
-        // connection.close();
-        // preparedStatement.close();
+            connection.close();
+            preparedStatement.close();
 
-        // updateStudents();
+            // updateStudents();
 
-        // Return true if no exception has been thrown
-        return true;
-        // } catch (SQLException e) {
-        // e.printStackTrace();
+            // Return true if no exception has been thrown
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-        // // Return false if exception has been thrown
-        // return false;
-        // }
+            // Return false if exception has been thrown
+            return false;
+        }
     }
 
 }
