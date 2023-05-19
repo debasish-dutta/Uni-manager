@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Vector;
@@ -34,7 +35,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "8145";
+        password = "111222344";
         studentsTable = "student_data";
     }
 
@@ -243,29 +244,29 @@ public class DBHandler {
                     "batch LIKE ?" + " OR " +
                     "department LIKE ?" + " ;");
 
-            preparedStatement.setString(1, searchQuery);
-            preparedStatement.setString(2, searchQuery);
-            preparedStatement.setString(3, searchQuery);
-            preparedStatement.setString(4, searchQuery);
-            preparedStatement.setString(5, searchQuery);
-            preparedStatement.setString(6, searchQuery);
-            preparedStatement.setString(7, searchQuery);
-            preparedStatement.setString(8, searchQuery);
-            preparedStatement.setString(9, searchQuery);
-            preparedStatement.setString(10, searchQuery);
-            preparedStatement.setString(11, searchQuery);
-            preparedStatement.setString(12, searchQuery);
-            preparedStatement.setString(13, searchQuery);
-            preparedStatement.setString(14, searchQuery);
-            preparedStatement.setString(15, searchQuery);
-            preparedStatement.setString(16, searchQuery);
+            preparedStatement.setString(1, "%" + searchQuery + "%");
+            preparedStatement.setString(2, "%" + searchQuery + "%");
+            preparedStatement.setString(3, "%" + searchQuery + "%");
+            preparedStatement.setString(4, "%" + searchQuery + "%");
+            preparedStatement.setString(5, "%" + searchQuery + "%");
+            preparedStatement.setString(6, "%" + searchQuery + "%");
+            preparedStatement.setString(7, "%" + searchQuery + "%");
+            preparedStatement.setString(8, "%" + searchQuery + "%");
+            preparedStatement.setString(9, "%" + searchQuery + "%");
+            preparedStatement.setString(10, "%" + searchQuery + "%");
+            preparedStatement.setString(11, "%" + searchQuery + "%");
+            preparedStatement.setString(12, "%" + searchQuery + "%");
+            preparedStatement.setString(13, "%" + searchQuery + "%");
+            preparedStatement.setString(14, "%" + searchQuery + "%");
+            preparedStatement.setString(15, "%" + searchQuery + "%");
+            preparedStatement.setString(16, "%" + searchQuery + "%");
             // Reading data from table
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData rsmData = resultSet.getMetaData();
             howManyColumns = rsmData.getColumnCount();
 
             while (resultSet.next()) {
-                
+
                 String id = resultSet.getString(1);
                 String rollNo = resultSet.getString(2);
                 String name = resultSet.getString(3);
@@ -284,7 +285,7 @@ public class DBHandler {
                 String dept = resultSet.getString(16);
                 String pp_blob = resultSet.getString(17);
                 // Sets Records in TextFields
-                Object columnData[]={rollNo,name,dob,ph,eml,gn,dept};
+                Object columnData[] = { rollNo, name, dob, ph, eml, gn, dept };
                 studentData.add(columnData);
             }
             // else {
@@ -297,6 +298,67 @@ public class DBHandler {
         }
 
         return studentData;
+    }
+
+    public static Object[] viewStudent(String rollNo) {
+
+        try {
+            Connection connection = DriverManager.getConnection(databaseUrl, login, password);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from " + studentsTable
+                    + " WHERE `roll no` = ? ;");
+
+            preparedStatement.setString(1, rollNo);
+
+            // Reading data from table
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // ResultSetMetaData rsmData = resultSet.getMetaData();
+            // howManyColumns = rsmData.getColumnCount();
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString(1);
+                String rollno = resultSet.getString(2);
+                String name = resultSet.getString(3);
+                String dob = resultSet.getString(4);
+                String ph = resultSet.getString(5);
+                String eml = resultSet.getString(6);
+                String gn = resultSet.getString(7);
+                String pAddr = resultSet.getString(8);
+                String regNo = resultSet.getString(9);
+                String fName = resultSet.getString(10);
+                String mName = resultSet.getString(11);
+                String gPh = resultSet.getString(12);
+                String prAddr = resultSet.getString(13);
+                String deg = resultSet.getString(14);
+                String batch = resultSet.getString(15);
+                String dept = resultSet.getString(16);
+                Blob pp_blob = resultSet.getBlob(17);
+                // Sets Records in TextFields
+                Object[] studentData;
+                if (pp_blob != null) {
+                    int blobLength = (int) pp_blob.length();
+                    byte[] blobData = pp_blob.getBytes(1, blobLength);
+                    pp_blob.free();
+                    studentData = new Object[] { id, rollno, name, dob, ph, eml, gn, pAddr, regNo, fName, mName, gPh,
+                            prAddr,
+                            deg, batch, dept, blobData };
+                } else {
+                    studentData = new Object[] { id, rollno, name, dob, ph, eml, gn, pAddr, regNo, fName, mName, gPh,
+                            prAddr,
+                            deg, batch, dept, null };
+                }
+
+                return studentData;
+            }
+            // else {
+            // // JOptionPane.showMessageDialog(null, "Name not Found");
+            // }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+        return null;
     }
 
     public static boolean updateStudents() {

@@ -22,14 +22,14 @@ public class SearchForm implements ActionListener {
     JButton submitbtn, delbtn, viewbtn, backbtn;
     static JTable viewTable;
     static DefaultTableModel tableModel;
-    JPanel headingPanel, searchPanel, tablepanel, buttonsPanel;    
+    JPanel headingPanel, searchPanel, tablepanel, buttonsPanel;
 
     SearchForm() {
         JFrame f = new JFrame("Search Student");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
-        
+
         head = new JLabel("FIND STUDENT ");
         head.setFont(new Font("Courier", Font.BOLD, 40));
         head.setBounds(450, 20, 600, 40);
@@ -39,12 +39,12 @@ public class SearchForm implements ActionListener {
         searchPanel.setBounds(170, 80, 800, 30);
         searchPanel.setLayout(new GridLayout(1, 3, 50, 5));
 
-        searchlabel = new JLabel("Search:",JLabel.RIGHT);   
-        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));     
-        searchtf = new JTextField();        
+        searchlabel = new JLabel("Search:", JLabel.RIGHT);
+        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));
+        searchtf = new JTextField();
         searchPanel.add(searchlabel);
         searchPanel.add(searchtf);
-        submitbtn = new JButton("Search");        
+        submitbtn = new JButton("Search");
         searchPanel.add(submitbtn);
         submitbtn.addActionListener(this);
         f.add(searchPanel);
@@ -62,20 +62,20 @@ public class SearchForm implements ActionListener {
         tableModel.addColumn("Gender");
         tableModel.addColumn("Department");
         TableColumn column;
-            for (int i = 0; i < viewTable.getColumnCount(); i++) {
-                column = viewTable.getColumnModel().getColumn(i);
-                column.setPreferredWidth(200); // Set the preferred width of columns
-        }        
-        
+        for (int i = 0; i < viewTable.getColumnCount(); i++) {
+            column = viewTable.getColumnModel().getColumn(i);
+            column.setPreferredWidth(200); // Set the preferred width of columns
+        }
+
         JScrollPane scrollPane = new JScrollPane(viewTable);
         scrollPane.setPreferredSize(new Dimension(1000, 300));
-        tablepanel.add(scrollPane);        
+        tablepanel.add(scrollPane);
         f.add(tablepanel);
 
         buttonsPanel = new JPanel();
         buttonsPanel.setBounds(300, 600, 600, 40);
         buttonsPanel.setLayout(new GridLayout(1, 3, 20, 5));
-        delbtn = new JButton("Delete");        
+        delbtn = new JButton("Delete");
         buttonsPanel.add(delbtn);
         delbtn.addActionListener(this);
 
@@ -90,13 +90,14 @@ public class SearchForm implements ActionListener {
                 Home home = new Home();
                 f.dispose();
             }
-        });       
+        });
         f.add(buttonsPanel);
 
         f.setSize(1200, 800);
         f.setLayout(null);
         f.setVisible(true);
     }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Delete")) {
             String adminPwd = JOptionPane.showInputDialog(null, "Enter Admin Password.", "Alert",
@@ -107,9 +108,17 @@ public class SearchForm implements ActionListener {
                 tableModel.removeRow(0);
             }
             java.util.List<Object[]> studentData = DBHandler.searchStudents(searchtf.getText());
-            for(Object[] objArray : studentData){
+            for (Object[] objArray : studentData) {
                 tableModel.addRow(objArray);
             }
         }
+        if (e.getActionCommand().equals("View")) {
+            int selectedRowIndex = viewTable.getSelectedRow();
+            Object rollNo = viewTable.getValueAt(selectedRowIndex, 0);
+            // System.out.println(rollNo);
+
+            ViewCard card = new ViewCard(rollNo);
+        }
+
     }
 }
