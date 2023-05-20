@@ -38,7 +38,17 @@ public class MenuBar implements ActionListener {
         licenseItem = new JMenuItem("View License");
         licenseItem.addActionListener(this);
         codeItem = new JMenuItem("View Code");
-        codeItem.addActionListener(this);
+        codeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String url = "https://github.com/debasish-dutta/Uni-manager/tree/master/src/com/tetradlazydragons";
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         ImageIcon githubIcon = new ImageIcon("assets/icons/github-mark.png");
         Image ic = githubIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
@@ -50,8 +60,35 @@ public class MenuBar implements ActionListener {
         menuBar.add(Box.createHorizontalGlue());
         ghM = new JMenu("");
         ghM.setIcon(githubIcon);
+        ghM.setFocusable(false);
         menuBar.add(ghM);
-        ghM.addActionListener(this);
+        ghM.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String url = "https://github.com/debasish-dutta/Uni-manager/tree/master/src/com/tetradlazydragons";
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
 
         fileM.add(saveItem);
         fileM.add(connectItem);
@@ -74,7 +111,7 @@ public class MenuBar implements ActionListener {
 
         }
         if (e.getSource() == connectItem) {
-
+            new ConnectView();
         }
         if (e.getSource() == disconnectItem) {
 
@@ -83,36 +120,22 @@ public class MenuBar implements ActionListener {
 
         }
         if (e.getSource() == addItem) {
-
+            new RegForm();
         }
         if (e.getSource() == updateItem) {
-
+            new SearchForm();
         }
         if (e.getSource() == searchItem) {
-
+            new SearchForm();
         }
         if (e.getSource() == deleItem) {
-
+            new SearchForm();
         }
         if (e.getSource() == infoItem) {
 
         }
         if (e.getSource() == licenseItem) {
-
-        }
-        if (e.getSource() == codeItem) {
-
-        }
-        if (e.getSource() == ghM) {
-            System.out.println("btn");
-            try {
-                String url = "github.com"; // capture the URL when the user presses the button.
-                Desktop desktop = java.awt.Desktop.getDesktop();
-                URI oURL = new URI(url);
-                desktop.browse(oURL);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            new License();
         }
     }
 }
