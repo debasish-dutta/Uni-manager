@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.text.*;
@@ -22,8 +23,10 @@ import java.sql.*;
 import java.sql.DriverManager;
 
 public class ViewCard implements ActionListener {
-    JLabel head, rollNolabel, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel, permaddrlabel,
-           fatherlabel, motherlabel, gphonelabel, courseheaderlabel, reglabel, deptlabel, batchlabel, courselabel, addressLabel;
+    JLabel head, rollNolabel, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel,
+            presaddrlabel, permaddrlabel,
+            fatherlabel, motherlabel, gphonelabel, courseheaderlabel, reglabel, deptlabel, batchlabel, courselabel,
+            addressLabel;
     JButton backbtn, printbtn;
 
     JPanel f, leftPanel, rightPanel, buttonsPanel;
@@ -40,7 +43,6 @@ public class ViewCard implements ActionListener {
         for (Object objArray : studentData) {
             System.out.println(objArray);
         }
-        
 
         head = new JLabel("STUDENT DETAILS");
         head.setFont(new Font("Courier", Font.BOLD, 40));
@@ -48,28 +50,33 @@ public class ViewCard implements ActionListener {
         f.add(head);
 
         rollNolabel = new JLabel("Roll No. : " + rollNo.toString());
-        namelabel = new JLabel("Name : "+ studentData[2]);
-        doblabel = new JLabel("Date of Birth : " +studentData[3] );
+        namelabel = new JLabel("Name : " + studentData[2]);
+        doblabel = new JLabel("Date of Birth : " + studentData[3]);
         phonelabel = new JLabel("Phone No : " + studentData[4]);
-        emaillabel = new JLabel("Email : " + studentData[5] );
+        emaillabel = new JLabel("Email : " + studentData[5]);
         genderlabel = new JLabel("Gender : " + studentData[6]);
         fatherlabel = new JLabel("Father's Name : " + studentData[9]);
-        motherlabel = new JLabel("Mother's Name : " + studentData[10] );
+        motherlabel = new JLabel("Mother's Name : " + studentData[10]);
         gphonelabel = new JLabel("Guardian Phone No : " + studentData[11]);
         addressLabel = new JLabel("Address");
         addressLabel.setFont(new Font("Courier", Font.BOLD, 20));
         presaddrlabel = new JLabel("Present Address : " + studentData[7]);
         permaddrlabel = new JLabel("Permanent Address : " + studentData[12]);
 
-        //piclabel.setIcon(new ImageIcon(studentData[16]));
+        // piclabel.setIcon(new ImageIcon(studentData[16]));
         BufferedImage img = DBHandler.viewImage(rollNo.toString());
-        ImageIcon icon = new ImageIcon(img);
+        ImageIcon icon;
+        if (img != null) {
+            icon = new ImageIcon(img);
+        } else {
+            icon = new ImageIcon("assets/icons/user.png");
+        }
         piclabel = new JLabel(icon);
         courseheaderlabel = new JLabel("Course Details");
         courseheaderlabel.setFont(new Font("Courier", Font.BOLD, 20));
-        reglabel = new JLabel("Registration No : "+ studentData[8]);
-        batchlabel = new JLabel("Batch : "+ studentData[14]);
-        deptlabel = new JLabel("Course : "+ studentData[13]+" "+ studentData[15]);
+        reglabel = new JLabel("Registration No : " + studentData[8]);
+        batchlabel = new JLabel("Batch : " + studentData[14]);
+        deptlabel = new JLabel("Course : " + studentData[13] + " " + studentData[15]);
 
         namelabel.setBounds(50, 100, 260, 10);
         f.add(namelabel);
@@ -93,7 +100,7 @@ public class ViewCard implements ActionListener {
         f.add(presaddrlabel);
         permaddrlabel.setBounds(50, 340, 300, 20);
         f.add(permaddrlabel);
-       
+
         piclabel.setBounds(350, 120, 260, 120);
         f.add(piclabel);
         courseheaderlabel.setBounds(400, 260, 260, 30);
@@ -104,7 +111,7 @@ public class ViewCard implements ActionListener {
         f.add(batchlabel);
         deptlabel.setBounds(400, 340, 260, 10);
         f.add(deptlabel);
-        
+
         buttonsPanel = new JPanel();
         buttonsPanel.setBounds(250, 500, 300, 40);
         buttonsPanel.setLayout(new GridLayout(1, 3, 20, 5));
