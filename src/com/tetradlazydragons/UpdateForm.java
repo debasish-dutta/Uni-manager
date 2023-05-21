@@ -4,9 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-import java.awt.Font;
+
 import java.text.*;
 
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JFormattedTextField.AbstractFormatter;
@@ -20,29 +24,32 @@ import java.sql.DriverManager;
 
 public class UpdateForm implements ActionListener {
 
-        JLabel head, searchlabel, namelabel, doblabel, phonelabel, emaillabel, genderlabel, presaddrlabel,
-                        permaddrlabel,
+        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, presaddrlabel,
+                        piclabel, permaddrlabel,
                         fatherlabel,
                         motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
                         permdistlabel,
                         permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel,
                         courselabel;
-        JTextField search, sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
+        static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
                         spermdist,
                         spermpin, reg, roll,
                         batch;
-        JRadioButton maleradio, femaleradio, genderfradio;
-        JComboBox<String> presstatecombo, permstatecombo;
-        JComboBox<String> deptComboBox, courseComboBox;
-        JButton searchbtn, submitbtn, clearbtn, backbtn;
+        static JRadioButton maleradio, femaleradio, genderfradio;
+        static JComboBox<String> presstatecombo, permstatecombo;
+        static JComboBox<String> deptComboBox, courseComboBox;
+        JButton submitbtn, clearbtn, backbtn, uploadbtn;
         JDatePanelImpl datePanel;
-        JDatePickerImpl datePicker;
+        static JDatePickerImpl datePicker;
+        static File photoFile;
+        static String fileName;
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
 
+        JFrame f = new JFrame("Update Student");
+
         UpdateForm() {
-                JFrame f = new JFrame("Search Student");
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
@@ -51,28 +58,6 @@ public class UpdateForm implements ActionListener {
                 head.setFont(new Font("Courier", Font.BOLD, 30));
                 head.setBounds(400, 20, 600, 30);
                 f.add(head);
-
-
-        searchlabel = new JLabel("Search:");
-        searchlabel.setBounds(300, 69, 150, 20);
-        search = new JTextField();
-        search.setBounds(450, 69, 350, 20);
-        searchbtn = new JButton("Search");
-        searchbtn.setBounds(830, 69, 100, 20);
-        f.add(searchlabel);
-        f.add(search);
-        f.add(searchbtn);
-
-                searchlabel = new JLabel("Search:");
-                searchlabel.setBounds(300, 69, 150, 20);
-                search = new JTextField();
-                search.setBounds(450, 69, 350, 20);
-                searchbtn = new JButton("Search");
-                searchbtn.setBounds(830, 69, 69, 20);
-                f.add(searchlabel);
-                f.add(search);
-                f.add(searchbtn);
-
 
                 namelabel = new JLabel("Name:");
                 namelabel.setBounds(50, 100, 150, 20);
@@ -132,6 +117,14 @@ public class UpdateForm implements ActionListener {
                 bg.add(maleradio);
                 bg.add(femaleradio);
                 bg.add(genderfradio);
+
+                piclabel = new JLabel("Photograph");
+                piclabel.setBounds(1000, 80, 150, 150);
+                uploadbtn = new JButton("Upload");
+                uploadbtn.setBounds(1040, 235, 100, 20);
+                f.add(piclabel);
+                f.add(uploadbtn);
+                uploadbtn.addActionListener(this);
 
                 presaddrlabel = new JLabel("Present Address:");
                 presaddrlabel.setBounds(50, 250, 150, 20);
@@ -207,23 +200,23 @@ public class UpdateForm implements ActionListener {
                 f.add(spermpin);
 
                 fatherlabel = new JLabel("Father's Name:");
-                fatherlabel.setBounds(600, 100, 150, 20);
+                fatherlabel.setBounds(500, 100, 150, 20);
                 fname = new JTextField();
-                fname.setBounds(800, 100, 250, 20);
+                fname.setBounds(700, 100, 250, 20);
                 f.add(fatherlabel);
                 f.add(fname);
 
                 motherlabel = new JLabel("Mother's Name:");
-                motherlabel.setBounds(600, 130, 150, 20);
+                motherlabel.setBounds(500, 130, 150, 20);
                 mname = new JTextField();
-                mname.setBounds(800, 130, 250, 20);
+                mname.setBounds(700, 130, 250, 20);
                 f.add(motherlabel);
                 f.add(mname);
 
                 gphonelabel = new JLabel("Guardian's Phone No:");
-                gphonelabel.setBounds(600, 160, 150, 20);
+                gphonelabel.setBounds(500, 160, 150, 20);
                 gphone = new JTextField();
-                gphone.setBounds(800, 160, 250, 20);
+                gphone.setBounds(700, 160, 250, 20);
                 f.add(gphonelabel);
                 f.add(gphone);
 
@@ -239,9 +232,10 @@ public class UpdateForm implements ActionListener {
                 f.add(reg);
 
                 rolllabel = new JLabel("Roll No:");
-                rolllabel.setBounds(50, 460, 150, 20);
+                rolllabel.setBounds(350, 69, 150, 20);
                 roll = new JTextField();
-                roll.setBounds(200, 460, 250, 20);
+                roll.setBounds(500, 69, 250, 20);
+                roll.setEditable(false);
                 f.add(rolllabel);
                 f.add(roll);
 
@@ -453,9 +447,43 @@ public class UpdateForm implements ActionListener {
                                         + courseComboBox.getSelectedObjects().toString() + " ");
                 }
 
+                if (e.getSource() == uploadbtn) {
+                        JFileChooser fileChooser = new JFileChooser();
+                        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                        int result = fileChooser.showOpenDialog(null);
+                        if (result == JFileChooser.APPROVE_OPTION) {
+                                try {
+                                        photoFile = fileChooser.getSelectedFile();
+                                        fileName = photoFile.getAbsolutePath();
+                                        BufferedImage picture = ImageIO.read(photoFile);
+                                        piclabel.setIcon(new ImageIcon(picture));
+                                        f.add(piclabel);
+                                } catch (IOException ioe) {
+                                        ioe.printStackTrace();
+                                        JOptionPane.showMessageDialog(null, "ERROR");
+                                }
+                        }
+                }
+
                 if (e.getActionCommand().equals("Submit")) {
                         String adminPwd = JOptionPane.showInputDialog(null, "Enter Admin Password.", "Alert",
                                         JOptionPane.WARNING_MESSAGE);
+                }
+
+                try {
+                        if (DBHandler.updateStudents(roll.getText())) {
+                                JOptionPane.showMessageDialog(null,
+                                                "studentSuccessfullyAdded",
+                                                "success",
+                                                JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                                JOptionPane.showMessageDialog(null,
+                                                "somethingWrongInput",
+                                                "error", JOptionPane.ERROR_MESSAGE);
+                        }
+                } catch (HeadlessException | FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
                 }
         }
 

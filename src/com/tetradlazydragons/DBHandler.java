@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.Date;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -383,12 +384,15 @@ public class DBHandler {
         return im;
     }
 
-    public static boolean updateStudents() {
+    public static boolean updateStudents(String rollNo) throws FileNotFoundException {
         int howManyColumns = 0, currentColumn = 0;
 
         try {
             Connection connection = DriverManager.getConnection(databaseUrl, login, password);
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from " + studentsTable);
+            PreparedStatement preparedStatement = connection.prepareStatement("update " + studentsTable
+                    + " set `name` = ?, `date of birth` = ?, `phone` = ?, email = ?, gender = ?, `present address` = ?, `registration no` = ?"
+                    + "`father name` = ?, `mother name` = ?, `guardian phone` = ?, `permanent address` = ?, degree = ?, batch, = ? department = ?, pp_blob = ?"
+                    + "where `roll no` = ?");
 
             // Reading data from table
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -396,32 +400,59 @@ public class DBHandler {
 
             howManyColumns = rsmData.getColumnCount();
 
-            // DefaultTableModel recordTable = (DefaultTableModel)
-            // UpdateForm.table.getModel();
-            // recordTable.setRowCount(0);
+            // String id = java.util.UUID.randomUUID().toString();
+            Date dob = (Date) UpdateForm.datePicker.getModel().getValue();
+            // java.sql.Date dob = (java.sql.Date) datePicker.getModel().getValue();
+            String sgender = "";
+            if (UpdateForm.maleradio.isSelected()) {
+                sgender = "Male";
+            } else if (UpdateForm.femaleradio.isSelected()) {
+                sgender = "Female";
+            } else if (UpdateForm.genderfradio.isSelected()) {
+                sgender = "Gender-Fluid";
+            } else {
+                sgender = "";
+            }
+            String presAdd = UpdateForm.spresst.getText() + "' " + UpdateForm.spresdist.getText()
+                    + "' " + UpdateForm.presstatecombo.getItemAt(
+                            UpdateForm.presstatecombo.getSelectedIndex())
+                    + ", "
+                    + UpdateForm.sprespin.getText();
+            String permAdd = UpdateForm.spermst.getText() + "' "
+                    + UpdateForm.spermdist.getText()
+                    + "' " + UpdateForm.permstatecombo.getItemAt(
+                            UpdateForm.permstatecombo.getSelectedIndex())
+                    + "' "
+                    + UpdateForm.spermpin.getText();
+            String course = UpdateForm.courseComboBox.getItemAt(UpdateForm.courseComboBox.getSelectedIndex());
+            String degree = course.replaceAll("(?<=\s).*", "");
+            InputStream in = new FileInputStream(UpdateForm.fileName);
 
-            // while (resultSet.next()) {
-            // Vector columnData = new Vector();
+            // preparedStatement.setString(1, id);
+            preparedStatement.setString(1, UpdateForm.sname.getText());
+            preparedStatement.setDate(2, new java.sql.Date(dob.getTime()));
+            preparedStatement.setString(3, UpdateForm.sphone.getText());
+            preparedStatement.setString(4, UpdateForm.semail.getText());
+            preparedStatement.setString(5, sgender);
+            preparedStatement.setString(6, presAdd);
+            preparedStatement.setString(7, UpdateForm.reg.getText());
+            preparedStatement.setString(8, UpdateForm.fname.getText());
+            preparedStatement.setString(9, UpdateForm.mname.getText());
+            preparedStatement.setString(10, UpdateForm.gphone.getText());
+            preparedStatement.setString(11, permAdd);
+            preparedStatement.setString(12, degree);
+            preparedStatement.setString(13, UpdateForm.batch.getText());
+            preparedStatement.setString(14, UpdateForm.deptComboBox.getItemAt(
+                    UpdateForm.deptComboBox.getSelectedIndex()));
+            preparedStatement.setBinaryStream(15, in);
+            preparedStatement.setString(16, rollNo);
 
-            // for (currentColumn = 1; currentColumn <= howManyColumns; currentColumn++) {
-            // columnData.add(resultSet.getString("ID"));
-            // columnData.add(resultSet.getString("Name"));
-            // columnData.add(resultSet.getString("Surname"));
-            // columnData.add(resultSet.getString("Age"));
-            // columnData.add(resultSet.getString("Gender"));
-            // columnData.add(resultSet.getString("Course"));
-            // columnData.add(resultSet.getString("Started"));
-            // columnData.add(resultSet.getString("Graduation"));
-            // }
+            int result = preparedStatement.executeUpdate();
+            System.out.println(result + " records affected");
+            connection.close();
+            preparedStatement.close();
 
-            // recordTable.addRow(columnData);
-            // }
-
-            // updateAttendees();
-
-            // connection.close();
-            // preparedStatement.close();
-            // resultSet.close();
+            // updateStudents();
 
             // Return true if no exception has been thrown
             return true;
