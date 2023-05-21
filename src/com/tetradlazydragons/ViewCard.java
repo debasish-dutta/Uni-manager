@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.text.*;
@@ -22,9 +23,11 @@ import java.sql.*;
 import java.sql.DriverManager;
 
 public class ViewCard implements ActionListener {
+
     JLabel head, rollNolabel, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel, permaddrlabel,
            fatherlabel, motherlabel, gphonelabel, courseheaderlabel, reglabel, deptlabel, batchlabel, courselabel, addressLabel;
     JTextArea sname, sdob, sphone, semail,sgender, fname, mname, gphone, spreadd, spermadd, reg, roll, batch, dept, course;       
+
     JButton backbtn, printbtn;
 
     JPanel f, leftPanel, rightPanel, buttonsPanel;
@@ -41,7 +44,6 @@ public class ViewCard implements ActionListener {
         for (Object objArray : studentData) {
             System.out.println(objArray);
         }
-        
 
         head = new JLabel("STUDENT DETAILS");
         head.setFont(new Font("Courier", Font.BOLD, 40));
@@ -57,17 +59,26 @@ public class ViewCard implements ActionListener {
         fatherlabel = new JLabel("Father's Name : " );
         motherlabel = new JLabel("Mother's Name : " );
         gphonelabel = new JLabel("Guardian Phone No : " );
+
         addressLabel = new JLabel("Address");
         addressLabel.setFont(new Font("Courier", Font.BOLD, 20));
         presaddrlabel = new JLabel("Present Address : " );
         permaddrlabel = new JLabel("Permanent Address : " );
 
+
         photolabel = new JLabel("Passport Photo : ");
+
         BufferedImage img = DBHandler.viewImage(rollNo.toString());
-        ImageIcon icon = new ImageIcon(img);
+        ImageIcon icon;
+        if (img != null) {
+            icon = new ImageIcon(img);
+        } else {
+            icon = new ImageIcon("assets/icons/user.png");
+        }
         piclabel = new JLabel(icon);
         courseheaderlabel = new JLabel("Course Details");
         courseheaderlabel.setFont(new Font("Courier", Font.BOLD, 20));
+
         reglabel = new JLabel("Registration No : ");
         batchlabel = new JLabel("Batch : ");
         deptlabel = new JLabel("Department : ");
@@ -100,6 +111,7 @@ public class ViewCard implements ActionListener {
         photolabel.setBounds(400, 100, 260, 15);
         f.add(photolabel);
         piclabel.setBounds(350, 120, 260, 140);
+
         f.add(piclabel);
         courseheaderlabel.setBounds(400, 280, 150, 30);
         f.add(courseheaderlabel);
@@ -109,6 +121,7 @@ public class ViewCard implements ActionListener {
         f.add(batchlabel);
         deptlabel.setBounds(400, 360, 150, 15);
         f.add(deptlabel);
+
         courselabel.setBounds(400, 380, 150, 15);
         f.add(courselabel);
 
@@ -188,6 +201,7 @@ public class ViewCard implements ActionListener {
         course.setBounds(550, 380, 150, 15);
         course.setEditable(false);
         f.add(course);
+
 
         buttonsPanel = new JPanel();
         buttonsPanel.setBounds(250, 500, 300, 40);

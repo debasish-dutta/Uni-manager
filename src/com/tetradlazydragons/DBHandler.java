@@ -40,7 +40,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "8145";
+        password = "111222344";
         studentsTable = "student_data";
     }
 
@@ -169,16 +169,16 @@ public class DBHandler {
             } else {
                 sgender = "";
             }
-            String presAdd = RegForm.spresst.getText() + "' " + RegForm.spresdist.getText()
-                    + "' " + RegForm.presstatecombo.getItemAt(
+            String presAdd = RegForm.spresst.getText() + ", " + RegForm.spresdist.getText()
+                    + ", " + RegForm.presstatecombo.getItemAt(
                             RegForm.presstatecombo.getSelectedIndex())
                     + ", "
                     + RegForm.sprespin.getText();
-            String permAdd = RegForm.spermst.getText() + "' "
+            String permAdd = RegForm.spermst.getText() + ", "
                     + RegForm.spermdist.getText()
-                    + "' " + RegForm.permstatecombo.getItemAt(
+                    + ", " + RegForm.permstatecombo.getItemAt(
                             RegForm.permstatecombo.getSelectedIndex())
-                    + "' "
+                    + ", "
                     + RegForm.spermpin.getText();
             String course = RegForm.courseComboBox.getItemAt(RegForm.courseComboBox.getSelectedIndex());
             String degree = course.replaceAll("(?<=\s).*", "");
@@ -363,7 +363,7 @@ public class DBHandler {
         }
         return null;
     }
-   
+
     public static BufferedImage viewImage(String rollNo) {
         BufferedImage im = null;
         try {
