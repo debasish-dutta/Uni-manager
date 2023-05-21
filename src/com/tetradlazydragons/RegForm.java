@@ -4,12 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-
+import java.awt.Font;
 import java.text.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,11 +25,9 @@ import java.sql.*;
 import java.sql.DriverManager;
 
 public class RegForm implements ActionListener {
-        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, piclabel, presaddrlabel, permaddrlabel,
-                        fatherlabel,
-                        motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
-                        permdistlabel,
-                        permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel,
+        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel, permaddrlabel,
+                        fatherlabel, motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
+                        permdistlabel, permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel,
                         courselabel;
         static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
                         spermdist,
@@ -45,11 +45,12 @@ public class RegForm implements ActionListener {
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
-        JPanel headingPanel, studentPanel, addressPanel, coursPanel;
 
         JFrame f = new JFrame("Registration Form");
+        JPanel studentPanel, picPanel, addressPanel, coursePanel;
 
         RegForm() {
+                
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
@@ -58,6 +59,11 @@ public class RegForm implements ActionListener {
                 head.setFont(new Font("Courier", Font.BOLD, 30));
                 head.setBounds(400, 20, 600, 30);
                 f.add(head);
+
+                studentPanel = new JPanel();
+                Border blackline = BorderFactory.createTitledBorder("Student Details:");
+                studentPanel.setBounds(20, 60, 940, 200);
+                studentPanel.setBorder(blackline);
 
                 namelabel = new JLabel("Name:");
                 namelabel.setBounds(50, 100, 150, 20);
@@ -118,87 +124,6 @@ public class RegForm implements ActionListener {
                 bg.add(femaleradio);
                 bg.add(genderfradio);
 
-                piclabel = new JLabel("Photograph");
-                piclabel.setBounds(1000, 80, 150, 150);
-                uploadPic = new JButton("Upload");
-                uploadPic.setBounds(1040, 235, 100, 20);
-                f.add(piclabel);
-                f.add(uploadPic);
-                uploadPic.addActionListener(this);
-
-                presaddrlabel = new JLabel("Present Address:");
-                presaddrlabel.setBounds(50, 250, 150, 20);
-                f.add(presaddrlabel);
-
-                presstlabel = new JLabel("Street:");
-                presstlabel.setBounds(50, 280, 150, 20);
-                spresst = new JTextField();
-                spresst.setBounds(200, 280, 250, 20);
-                f.add(presstlabel);
-                f.add(spresst);
-
-                presdistlabel = new JLabel("District:");
-                presdistlabel.setBounds(50, 310, 150, 20);
-                spresdist = new JTextField();
-                spresdist.setBounds(200, 310, 250, 20);
-                f.add(presdistlabel);
-                f.add(spresdist);
-
-                prespinlabel = new JLabel("Pin:");
-                prespinlabel.setBounds(50, 370, 150, 20);
-                sprespin = new JTextField();
-                sprespin.setBounds(200, 370, 250, 20);
-                f.add(prespinlabel);
-                f.add(sprespin);
-
-                presstatlabel = new JLabel("State:");
-                presstatlabel.setBounds(50, 340, 150, 20);
-                String states[] = { "Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
-                                "Chhattisgarh",
-                                "Goa", "Gujarat",
-                                "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerela",
-                                "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland",
-                                "Odisha", "Punjab",
-                                "Rajasthan", "Sikkim", "Tamil Nadu", "Telengana", "Tripura", "Uttar Pradesh",
-                                "Uttrakhand",
-                                "West Bengal" };
-                presstatecombo = new JComboBox(states);
-                presstatecombo.setBounds(200, 340, 250, 20);
-                f.add(presstatlabel);
-                f.add(presstatecombo);
-
-                permaddrlabel = new JLabel("Permanent Address:");
-                permaddrlabel.setBounds(600, 250, 150, 20);
-                f.add(permaddrlabel);
-
-                permstlabel = new JLabel("Street:");
-                permstlabel.setBounds(600, 280, 150, 20);
-                spermst = new JTextField();
-                spermst.setBounds(800, 280, 250, 20);
-                f.add(permstlabel);
-                f.add(spermst);
-
-                permdistlabel = new JLabel("District:");
-                permdistlabel.setBounds(600, 310, 150, 20);
-                spermdist = new JTextField();
-                spermdist.setBounds(800, 310, 250, 20);
-                f.add(permdistlabel);
-                f.add(spermdist);
-
-                permstatlabel = new JLabel("State:");
-                permstatlabel.setBounds(600, 340, 150, 20);
-                permstatecombo = new JComboBox(states);
-                permstatecombo.setBounds(800, 340, 250, 20);
-                f.add(permstatlabel);
-                f.add(permstatecombo);
-
-                permpinlabel = new JLabel("Pin:");
-                permpinlabel.setBounds(600, 370, 150, 20);
-                spermpin = new JTextField();
-                spermpin.setBounds(800, 370, 250, 20);
-                f.add(permpinlabel);
-                f.add(spermpin);
-
                 fatherlabel = new JLabel("Father's Name:");
                 fatherlabel.setBounds(500, 100, 150, 20);
                 fname = new JTextField();
@@ -220,33 +145,125 @@ public class RegForm implements ActionListener {
                 f.add(gphonelabel);
                 f.add(gphone);
 
-                courseheaderlabel = new JLabel("Course Details:");
-                courseheaderlabel.setBounds(50, 400, 150, 20);
-                f.add(courseheaderlabel);
+                photolabel= new JLabel("Photo");
+                photolabel.setBounds(1040, 60, 150, 20);
+                piclabel = new JLabel();
+                piclabel.setBounds(1000, 80, 150, 150);
+                uploadPic = new JButton("Upload");
+                uploadPic.setBounds(1020, 235, 100, 20);
+                f.add(photolabel);
+                f.add(piclabel);
+                f.add(uploadPic);
+                uploadPic.addActionListener(this);
+
+                addressPanel = new JPanel();
+                Border blackline2 = BorderFactory.createTitledBorder("Address Details:");
+                addressPanel.setBounds(20, 270, 1140, 150);
+                addressPanel.setBorder(blackline2);
+
+                presaddrlabel = new JLabel("Present Address:");
+                presaddrlabel.setBounds(100, 280, 150, 20);
+                f.add(presaddrlabel);
+
+                presstlabel = new JLabel("Street:");
+                presstlabel.setBounds(100, 305, 150, 20);
+                spresst = new JTextField();
+                spresst.setBounds(250, 305, 250, 20);
+                f.add(presstlabel);
+                f.add(spresst);
+
+                presdistlabel = new JLabel("District:");
+                presdistlabel.setBounds(100, 330, 150, 20);
+                spresdist = new JTextField();
+                spresdist.setBounds(250, 330, 250, 20);
+                f.add(presdistlabel);
+                f.add(spresdist);
+
+                prespinlabel = new JLabel("Pin:");
+                prespinlabel.setBounds(100, 380, 150, 20);
+                sprespin = new JTextField();
+                sprespin.setBounds(250, 380, 250, 20);
+                f.add(prespinlabel);
+                f.add(sprespin);
+
+                presstatlabel = new JLabel("State:");
+                presstatlabel.setBounds(100, 355, 150, 20);
+                String states[] = { "Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+                                "Chhattisgarh",
+                                "Goa", "Gujarat",
+                                "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerela",
+                                "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland",
+                                "Odisha", "Punjab",
+                                "Rajasthan", "Sikkim", "Tamil Nadu", "Telengana", "Tripura", "Uttar Pradesh",
+                                "Uttrakhand",
+                                "West Bengal" };
+
+                presstatecombo = new JComboBox(states);
+                presstatecombo.setBounds(250, 355, 250, 20);
+                f.add(presstatlabel);
+                f.add(presstatecombo);
+
+                permaddrlabel = new JLabel("Permanent Address:");
+                permaddrlabel.setBounds(600, 280, 150, 20);
+                f.add(permaddrlabel);
+
+                permstlabel = new JLabel("Street:");
+                permstlabel.setBounds(600, 305, 150, 20);
+                spermst = new JTextField();
+                spermst.setBounds(800, 305, 250, 20);
+                f.add(permstlabel);
+                f.add(spermst);
+
+                permdistlabel = new JLabel("District:");
+                permdistlabel.setBounds(600, 330, 150, 20);
+                spermdist = new JTextField();
+                spermdist.setBounds(800, 330, 250, 20);
+                f.add(permdistlabel);
+                f.add(spermdist);
+
+                permstatlabel = new JLabel("State:");
+                permstatlabel.setBounds(600, 355, 150, 20);
+                permstatecombo = new JComboBox(states);
+                permstatecombo.setBounds(800, 355, 250, 20);
+                f.add(permstatlabel);
+                f.add(permstatecombo);
+
+                permpinlabel = new JLabel("Pin:");
+                permpinlabel.setBounds(600, 380, 150, 20);
+                spermpin = new JTextField();
+                spermpin.setBounds(800, 380, 250, 20);
+                f.add(permpinlabel);
+                f.add(spermpin);
+
+                coursePanel = new JPanel();
+                Border blackline3 = BorderFactory.createTitledBorder("Course Details:");
+                coursePanel.setBounds(20, 420, 1140, 150);
+                coursePanel.setBorder(blackline3);
+
 
                 reglabel = new JLabel("Registration No:");
-                reglabel.setBounds(50, 430, 150, 20);
+                reglabel.setBounds(100, 455, 150, 20);
                 reg = new JTextField();
-                reg.setBounds(200, 430, 250, 20);
+                reg.setBounds(250, 455, 250, 20);
                 f.add(reglabel);
                 f.add(reg);
 
                 rolllabel = new JLabel("Roll No:");
-                rolllabel.setBounds(50, 460, 150, 20);
+                rolllabel.setBounds(100, 480, 150, 20);
                 roll = new JTextField();
-                roll.setBounds(200, 460, 250, 20);
+                roll.setBounds(250, 480, 250, 20);
                 f.add(rolllabel);
                 f.add(roll);
 
                 batchlabel = new JLabel("Batch:");
-                batchlabel.setBounds(50, 490, 150, 20);
+                batchlabel.setBounds(100, 505, 150, 20);
                 batch = new JTextField();
-                batch.setBounds(200, 490, 250, 20);
+                batch.setBounds(250, 505, 250, 20);
                 f.add(batchlabel);
                 f.add(batch);
 
                 deptlabel = new JLabel("Department:");
-                deptlabel.setBounds(600, 460, 150, 20);
+                deptlabel.setBounds(600, 480, 150, 20);
                 f.add(deptlabel);
                 String[] dept = { "Select Department", "Arabic", "Assamese", "Bengali", "Bodo",
                                 "Communication & Journalism",
@@ -269,17 +286,17 @@ public class RegForm implements ActionListener {
 
                                 "Commerce", "Business Administration", "Law" };
                 deptComboBox = new JComboBox<String>(dept);
-                deptComboBox.setBounds(800, 460, 250, 20);
+                deptComboBox.setBounds(800, 480, 250, 20);
                 deptComboBox.addActionListener(this);
 
                 deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
                 f.add(deptComboBox);
 
                 courselabel = new JLabel("Course:");
-                courselabel.setBounds(600, 490, 150, 20);
+                courselabel.setBounds(600, 505, 150, 20);
                 f.add(courselabel);
                 courseComboBox = new JComboBox<String>();
-                courseComboBox.setBounds(800, 490, 250, 20);
+                courseComboBox.setBounds(800, 505, 250, 20);
                 courseComboBox.setPrototypeDisplayValue("XXXXXXXXXX");
                 f.add(courseComboBox);
 
@@ -389,16 +406,16 @@ public class RegForm implements ActionListener {
                 subItems.put(dept[42], subItems42);
 
                 submitbtn = new JButton("Submit");
-                submitbtn.setBounds(500, 569, 150, 40);
+                submitbtn.setBounds(500, 600, 150, 40);
                 f.add(submitbtn);
                 submitbtn.addActionListener(this);
 
                 clearbtn = new JButton("Clear");
-                clearbtn.setBounds(300, 569, 150, 40);
+                clearbtn.setBounds(300, 600, 150, 40);
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
-                backbtn.setBounds(700, 569, 150, 40);
+                backbtn.setBounds(700, 600, 150, 40);
                 f.add(backbtn);
                 backbtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
@@ -407,6 +424,10 @@ public class RegForm implements ActionListener {
                         }
                 });
 
+                f.add(studentPanel);
+                f.add(addressPanel);
+                f.add(coursePanel);
+                
                 f.setSize(1200, 800);
                 f.setLayout(null);
                 f.setVisible(true);
@@ -444,7 +465,7 @@ public class RegForm implements ActionListener {
                         System.out.println("course ->" + courseComboBox.getSelectedIndex() + " "
                                         + courseComboBox.getSelectedObjects().toString() + " ");
                 }
-          
+
                 if (e.getSource() == uploadPic) {
                         JFileChooser fileChooser = new JFileChooser();
                         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -454,6 +475,7 @@ public class RegForm implements ActionListener {
                                         photoFile = fileChooser.getSelectedFile();
                                         filename = photoFile.getAbsolutePath();
                                         BufferedImage picture = ImageIO.read(photoFile);
+
                                         piclabel.setIcon(new ImageIcon(picture));
                                         f.add(piclabel);
                                 } catch (IOException ioe) {

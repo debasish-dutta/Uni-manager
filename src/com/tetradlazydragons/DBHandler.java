@@ -16,6 +16,10 @@ import java.util.Date;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -36,7 +40,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "111222344";
+        password = "8145";
         studentsTable = "student_data";
     }
 
@@ -341,12 +345,10 @@ public class DBHandler {
                     byte[] blobData = pp_blob.getBytes(1, blobLength);
                     pp_blob.free();
                     studentData = new Object[] { id, rollno, name, dob, ph, eml, gn, pAddr, regNo, fName, mName, gPh,
-                            prAddr,
-                            deg, batch, dept, blobData };
+                            prAddr, deg, batch, dept, blobData };
                 } else {
                     studentData = new Object[] { id, rollno, name, dob, ph, eml, gn, pAddr, regNo, fName, mName, gPh,
-                            prAddr,
-                            deg, batch, dept, null };
+                            prAddr, deg, batch, dept, null };
                 }
 
                 return studentData;
@@ -360,6 +362,26 @@ public class DBHandler {
             return null;
         }
         return null;
+    }
+   
+    public static BufferedImage viewImage(String rollNo) {
+        BufferedImage im = null;
+        try {
+            Connection connection = DriverManager.getConnection(databaseUrl, login, password);
+            PreparedStatement preparedStatement = connection.prepareStatement("select pp_blob from " + studentsTable
+                    + " WHERE `roll no` = ? ;");
+
+            preparedStatement.setString(1, rollNo);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            im = ImageIO.read(resultSet.getBinaryStream("pp_blob"));
+            // return im;
+        } catch (Exception err) {
+            // JOptionPane.showMessageDialog(this, err.getMessage("No Photo Found"));
+            System.out.println(err);
+            // im = null;
+        }
+        return im;
     }
 
     public static boolean updateStudents(String rollNo) throws FileNotFoundException {

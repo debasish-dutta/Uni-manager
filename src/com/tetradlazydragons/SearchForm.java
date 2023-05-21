@@ -39,9 +39,9 @@ public class SearchForm implements ActionListener {
         searchPanel.setBounds(170, 80, 800, 30);
         searchPanel.setLayout(new GridLayout(1, 3, 50, 5));
 
-        searchlabel = new JLabel("Search:", JLabel.RIGHT);
-        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));
-        searchtf = new JTextField();
+        searchlabel = new JLabel("Search:",JLabel.RIGHT);   
+        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));     
+        searchtf = new JTextField();        
         searchPanel.add(searchlabel);
         searchPanel.add(searchtf);
         submitbtn = new JButton("Search");
