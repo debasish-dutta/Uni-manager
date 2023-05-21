@@ -241,10 +241,6 @@ public class RegForm implements ActionListener {
                 coursePanel.setBorder(blackline3);
 
 
-                courseheaderlabel = new JLabel("Course Details:");
-                courseheaderlabel.setBounds(100, 430, 150, 20);
-                f.add(courseheaderlabel);
-
                 reglabel = new JLabel("Registration No:");
                 reglabel.setBounds(100, 455, 150, 20);
                 reg = new JTextField();

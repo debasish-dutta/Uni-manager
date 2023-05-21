@@ -8,12 +8,17 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.Date;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -243,29 +248,29 @@ public class DBHandler {
                     "batch LIKE ?" + " OR " +
                     "department LIKE ?" + " ;");
 
-            preparedStatement.setString(1, searchQuery);
-            preparedStatement.setString(2, searchQuery);
-            preparedStatement.setString(3, searchQuery);
-            preparedStatement.setString(4, searchQuery);
-            preparedStatement.setString(5, searchQuery);
-            preparedStatement.setString(6, searchQuery);
-            preparedStatement.setString(7, searchQuery);
-            preparedStatement.setString(8, searchQuery);
-            preparedStatement.setString(9, searchQuery);
-            preparedStatement.setString(10, searchQuery);
-            preparedStatement.setString(11, searchQuery);
-            preparedStatement.setString(12, searchQuery);
-            preparedStatement.setString(13, searchQuery);
-            preparedStatement.setString(14, searchQuery);
-            preparedStatement.setString(15, searchQuery);
-            preparedStatement.setString(16, searchQuery);
+            preparedStatement.setString(1, "%" + searchQuery + "%");
+            preparedStatement.setString(2, "%" + searchQuery + "%");
+            preparedStatement.setString(3, "%" + searchQuery + "%");
+            preparedStatement.setString(4, "%" + searchQuery + "%");
+            preparedStatement.setString(5, "%" + searchQuery + "%");
+            preparedStatement.setString(6, "%" + searchQuery + "%");
+            preparedStatement.setString(7, "%" + searchQuery + "%");
+            preparedStatement.setString(8, "%" + searchQuery + "%");
+            preparedStatement.setString(9, "%" + searchQuery + "%");
+            preparedStatement.setString(10, "%" + searchQuery + "%");
+            preparedStatement.setString(11, "%" + searchQuery + "%");
+            preparedStatement.setString(12, "%" + searchQuery + "%");
+            preparedStatement.setString(13, "%" + searchQuery + "%");
+            preparedStatement.setString(14, "%" + searchQuery + "%");
+            preparedStatement.setString(15, "%" + searchQuery + "%");
+            preparedStatement.setString(16, "%" + searchQuery + "%");
             // Reading data from table
             ResultSet resultSet = preparedStatement.executeQuery();
             ResultSetMetaData rsmData = resultSet.getMetaData();
             howManyColumns = rsmData.getColumnCount();
 
             while (resultSet.next()) {
-                
+
                 String id = resultSet.getString(1);
                 String rollNo = resultSet.getString(2);
                 String name = resultSet.getString(3);
@@ -284,7 +289,7 @@ public class DBHandler {
                 String dept = resultSet.getString(16);
                 String pp_blob = resultSet.getString(17);
                 // Sets Records in TextFields
-                Object columnData[]={rollNo,name,dob,ph,eml,gn,dept};
+                Object columnData[] = { rollNo, name, dob, ph, eml, gn, dept };
                 studentData.add(columnData);
             }
             // else {
@@ -297,6 +302,85 @@ public class DBHandler {
         }
 
         return studentData;
+    }
+
+    public static Object[] viewStudent(String rollNo) {
+
+        try {
+            Connection connection = DriverManager.getConnection(databaseUrl, login, password);
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from " + studentsTable
+                    + " WHERE `roll no` = ? ;");
+
+            preparedStatement.setString(1, rollNo);
+
+            // Reading data from table
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // ResultSetMetaData rsmData = resultSet.getMetaData();
+            // howManyColumns = rsmData.getColumnCount();
+
+            while (resultSet.next()) {
+
+                String id = resultSet.getString(1);
+                String rollno = resultSet.getString(2);
+                String name = resultSet.getString(3);
+                String dob = resultSet.getString(4);
+                String ph = resultSet.getString(5);
+                String eml = resultSet.getString(6);
+                String gn = resultSet.getString(7);
+                String pAddr = resultSet.getString(8);
+                String regNo = resultSet.getString(9);
+                String fName = resultSet.getString(10);
+                String mName = resultSet.getString(11);
+                String gPh = resultSet.getString(12);
+                String prAddr = resultSet.getString(13);
+                String deg = resultSet.getString(14);
+                String batch = resultSet.getString(15);
+                String dept = resultSet.getString(16);
+                Blob pp_blob = resultSet.getBlob(17);
+                // Sets Records in TextFields
+                Object[] studentData;
+                if (pp_blob != null) {
+                    int blobLength = (int) pp_blob.length();
+                    byte[] blobData = pp_blob.getBytes(1, blobLength);
+                    pp_blob.free();
+                    studentData = new Object[] { id, rollno, name, dob, ph, eml, gn, pAddr, regNo, fName, mName, gPh,
+                            prAddr, deg, batch, dept, blobData };
+                } else {
+                    studentData = new Object[] { id, rollno, name, dob, ph, eml, gn, pAddr, regNo, fName, mName, gPh,
+                            prAddr, deg, batch, dept, null };
+                }
+
+                return studentData;
+            }
+            // else {
+            // // JOptionPane.showMessageDialog(null, "Name not Found");
+            // }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+        return null;
+    }
+   
+    public static BufferedImage viewImage(String rollNo) {
+        BufferedImage im = null;
+        try {
+            Connection connection = DriverManager.getConnection(databaseUrl, login, password);
+            PreparedStatement preparedStatement = connection.prepareStatement("select pp_blob from " + studentsTable
+                    + " WHERE `roll no` = ? ;");
+
+            preparedStatement.setString(1, rollNo);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            im = ImageIO.read(resultSet.getBinaryStream("pp_blob"));
+            // return im;
+        } catch (Exception err) {
+            // JOptionPane.showMessageDialog(this, err.getMessage("No Photo Found"));
+            System.out.println(err);
+            // im = null;
+        }
+        return im;
     }
 
     public static boolean updateStudents() {
@@ -354,39 +438,39 @@ public class DBHandler {
      * 
      * @return True if no exception has been thrown, false otherwise
      */
-    public static boolean deleteStudent() {
+    public static boolean deleteStudent(String rollNo) {
         // Getting row that user selected
         // DefaultTableModel recordTable = (DefaultTableModel)
         // UpdateForm.table.getModel();
         // int selectedRow = UpdateForm.table.getSelectedRow();
         // UpdateForm.table.clearSelection();
 
-        // try {
-        // Geting the ID of the student in the selected row
-        // final int ID = Integer.parseInt(recordTable.getValueAt(selectedRow,
-        // 0).toString());
+        try {
+            // Geting the ID of the student in the selected row
+            // final int ID = Integer.parseInt(recordTable.getValueAt(selectedRow,
+            // 0).toString());
 
-        // Connection connection = DriverManager.getConnection(databaseUrl, login,
-        // password);
-        // PreparedStatement preparedStatement = connection
-        // .prepareStatement("delete from " + studentsTable + " where id = ?");
+            Connection connection = DriverManager.getConnection(databaseUrl, login,
+                    password);
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("delete from " + studentsTable + " where `roll no` = ?;");
 
-        // preparedStatement.setInt(1, ID);
-        // preparedStatement.executeUpdate();
+            preparedStatement.setString(1, rollNo);
+            preparedStatement.executeUpdate();
 
-        // connection.close();
-        // preparedStatement.close();
+            connection.close();
+            preparedStatement.close();
 
-        // updateStudents();
+            // updateStudents();
 
-        // Return true if no exception has been thrown
-        return true;
-        // } catch (SQLException e) {
-        // e.printStackTrace();
+            // Return true if no exception has been thrown
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-        // // Return false if exception has been thrown
-        // return false;
-        // }
+            // Return false if exception has been thrown
+            return false;
+        }
     }
 
 }
