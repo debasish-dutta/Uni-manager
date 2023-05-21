@@ -96,6 +96,7 @@ public class SearchForm implements ActionListener {
         f.setSize(1200, 800);
         f.setLayout(null);
         f.setVisible(true);
+        f.setResizable(false);
     }
 
     public void actionPerformed(ActionEvent e) {
