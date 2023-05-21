@@ -15,6 +15,9 @@ import javax.swing.BorderFactory;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.*;
@@ -25,9 +28,12 @@ import java.sql.*;
 import java.sql.DriverManager;
 
 public class RegForm implements ActionListener {
-        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel, permaddrlabel,
-                        fatherlabel, motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
-                        permdistlabel, permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel,
+        JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel,
+                        permaddrlabel,
+                        fatherlabel, motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel,
+                        permstlabel,
+                        permdistlabel, permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel,
+                        batchlabel,
                         courselabel;
         static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
                         spermdist,
@@ -50,7 +56,7 @@ public class RegForm implements ActionListener {
         JPanel studentPanel, picPanel, addressPanel, coursePanel;
 
         RegForm() {
-                
+
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
@@ -145,7 +151,7 @@ public class RegForm implements ActionListener {
                 f.add(gphonelabel);
                 f.add(gphone);
 
-                photolabel= new JLabel("Photo");
+                photolabel = new JLabel("Photo");
                 photolabel.setBounds(1040, 60, 150, 20);
                 piclabel = new JLabel();
                 piclabel.setBounds(1000, 80, 150, 150);
@@ -239,7 +245,6 @@ public class RegForm implements ActionListener {
                 Border blackline3 = BorderFactory.createTitledBorder("Course Details:");
                 coursePanel.setBounds(20, 420, 1140, 150);
                 coursePanel.setBorder(blackline3);
-
 
                 reglabel = new JLabel("Registration No:");
                 reglabel.setBounds(100, 455, 150, 20);
@@ -427,7 +432,7 @@ public class RegForm implements ActionListener {
                 f.add(studentPanel);
                 f.add(addressPanel);
                 f.add(coursePanel);
-                
+
                 f.setSize(1200, 800);
                 f.setLayout(null);
                 f.setResizable(false);
@@ -487,6 +492,41 @@ public class RegForm implements ActionListener {
                 }
 
                 if (e.getSource() == submitbtn) {
+
+                        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+                        String phoneRegex = "^[0-9]{10}$";
+                        String pinRegex = "^[1-9][0-9]{5}$";
+
+                        Pattern emailPattern = Pattern.compile(emailRegex);
+                        Pattern phonePattern = Pattern.compile(phoneRegex);
+                        Pattern pinPattern = Pattern.compile(pinRegex);
+                        Matcher ematcher = emailPattern.matcher(semail.getText());
+                        Matcher spmatcher = phonePattern.matcher(sphone.getText());
+                        Matcher gpmatcher = phonePattern.matcher(gphone.getText());
+                        Matcher pinmatcher = pinPattern.matcher(spermpin.getText());
+                        Matcher pppinmatcher = pinPattern.matcher(sprespin.getText());
+                        if (!ematcher.matches()) {
+                                // Valid email format
+                                System.out.println("INValid email");
+                                JOptionPane.showMessageDialog(null, "Add proper email", "Alert",
+                                                JOptionPane.WARNING_MESSAGE);
+                                return;
+                        }
+                        if (!pinmatcher.matches() || !pppinmatcher.matches()) {
+                                // Valid email format
+                                System.out.println("INValid pin");
+                                JOptionPane.showMessageDialog(null, "Add proper pincode", "Alert",
+                                                JOptionPane.WARNING_MESSAGE);
+                                return;
+                        }
+                        if (!spmatcher.matches() || !gpmatcher.matches()) {
+                                // Valid email format
+                                System.out.println("INValid phone");
+                                JOptionPane.showMessageDialog(null, "Add proper phone number", "Alert",
+                                                JOptionPane.WARNING_MESSAGE);
+                                return;
+                        }
+
                         try {
                                 // Class.forName("com.mysql.cj.jdbc.Driver");
                                 // String query = "INSERT INTO `student_data`(id, `roll no`, `name`, `date of
