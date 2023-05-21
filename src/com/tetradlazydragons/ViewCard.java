@@ -172,12 +172,12 @@ public class ViewCard implements ActionListener {
 
         String studpreadd = studentData[7].toString();
         spreadd = new JTextArea(studpreadd);
-        spreadd.setBounds(200, 320, 150, 40);
+        spreadd.setBounds(200, 320, 150, 35);
         spreadd.setEditable(false);
         f.add(spreadd);
         String studperadd = studentData[12].toString();
         spermadd = new JTextArea(studperadd);
-        spermadd.setBounds(200, 360, 150, 40);
+        spermadd.setBounds(200, 360, 150, 35);
         spermadd.setEditable(false);
         f.add(spermadd);
 
