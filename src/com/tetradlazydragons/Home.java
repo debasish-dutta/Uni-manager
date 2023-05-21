@@ -3,7 +3,15 @@ package com.tetradlazydragons;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.text.*;
 
 import java.util.Calendar;
@@ -19,36 +27,42 @@ import java.sql.DriverManager;
 
 public class Home {
     JLabel head;
+    JPanel heading;
     JButton DBbtn, regbtn, searchbtn, updatebtn, exitbtn;
 
     Home() {
         JFrame f = new JFrame("Uni Manager");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        try {
+            f.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("assets/icons/unimanagerhome.jpg")))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
 
-        head = new JLabel("UNI MANAGER ");
-        head.setFont(new Font("Courier", Font.BOLD, 30));
-        head.setBounds(400, 20, 600, 30);
-        f.add(head);
+        
 
-        DBbtn = new JButton("Connect DataBase");
+    /*  DBbtn = new JButton("Connect DataBase");
         DBbtn.setBounds(60, 469, 200, 200);
         f.add(DBbtn);
 
         DBbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                ConnectView db = new ConnectView();
+               ConnectView db = new ConnectView();
                 // db.show();
                 // db.setVisible(true);
-                f.dispose();
+                //f.dispose();
 
             }
-        });
+        });*/
 
         regbtn = new JButton("Add Student");
-        regbtn.setBounds(360, 469, 200, 200);
+        regbtn.setFont(new Font("Courier", Font.BOLD, 15));
+        regbtn.setForeground(Color.WHITE);
+        regbtn.setBackground(Color.decode("#1F2E54"));
+        regbtn.setBounds(700, 100, 200, 100);
         f.add(regbtn);
         regbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,7 +75,10 @@ public class Home {
         });
 
         searchbtn = new JButton("Search Student");
-        searchbtn.setBounds(660, 469, 200, 200);
+        searchbtn.setBounds(700, 300, 200, 100);
+        searchbtn.setFont(new Font("Courier", Font.BOLD, 15));
+        searchbtn.setForeground(Color.WHITE);
+        searchbtn.setBackground(Color.decode("#1F2E54"));
         f.add(searchbtn);
         searchbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +90,7 @@ public class Home {
             }
         });
 
-        updatebtn = new JButton("Update");
+        /*updatebtn = new JButton("Update");
         updatebtn.setBounds(960, 469, 200, 200);
         f.add(updatebtn);
         updatebtn.addActionListener(new ActionListener() {
@@ -84,10 +101,13 @@ public class Home {
                 f.dispose();
 
             }
-        });
+        });*/
 
         exitbtn = new JButton("Exit");
-        exitbtn.setBounds(539, 689, 169, 69);
+        exitbtn.setBounds(700, 500, 200, 100);
+        exitbtn.setFont(new Font("Courier", Font.BOLD, 15));
+        exitbtn.setForeground(Color.WHITE);
+        exitbtn.setBackground(Color.decode("#1F2E54"));
         f.add(exitbtn);
         exitbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -98,6 +118,7 @@ public class Home {
         f.setSize(1200, 800);
         f.setLayout(null);
         f.setVisible(true);
+        f.setResizable(false);
     }
 
     // public void actionPerformed(ActionEvent e) {
