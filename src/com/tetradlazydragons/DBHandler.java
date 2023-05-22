@@ -43,7 +43,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "111222344";
+        password = "8145";
         studentsTable = "student_data";
     }
 
