@@ -32,6 +32,7 @@ public class SearchForm implements ActionListener {
 
         head = new JLabel("FIND STUDENT ");
         head.setFont(new Font("Courier", Font.BOLD, 40));
+        head.setForeground(Color.decode("#1F2E54"));
         head.setBounds(450, 20, 600, 40);
         f.add(head);
 
@@ -40,7 +41,8 @@ public class SearchForm implements ActionListener {
         searchPanel.setLayout(new GridLayout(1, 3, 50, 5));
 
         searchlabel = new JLabel("Search:",JLabel.RIGHT);   
-        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));     
+        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));   
+        searchlabel.setForeground(Color.decode("#1F2E54"));  
         searchtf = new JTextField();        
         searchPanel.add(searchlabel);
         searchPanel.add(searchtf);
