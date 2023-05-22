@@ -156,6 +156,10 @@ public class SearchForm implements ActionListener {
                 tableModel.removeRow(0);
             }
             java.util.List<Object[]> studentData = DBHandler.searchStudents(searchtf.getText());
+
+            if (studentData.isEmpty())
+                JOptionPane.showMessageDialog(null, "No data found! ", "Alert", JOptionPane.WARNING_MESSAGE);
+
             for (Object[] objArray : studentData) {
                 tableModel.addRow(objArray);
             }

@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -40,7 +43,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "8145";
+        password = "111222344";
         studentsTable = "student_data";
     }
 
@@ -131,6 +134,7 @@ public class DBHandler {
                         + " degree VARCHAR(5), "
                         + " batch VARCHAR(50), "
                         + " department VARCHAR(25), "
+                        + " pp_blob MEDIUMBLOB, "
                         + " PRIMARY KEY (id, `roll no`))");
             }
 
@@ -385,24 +389,26 @@ public class DBHandler {
         return im;
     }
 
-    public static boolean updateStudents(String rollNo) throws FileNotFoundException {
+    public static boolean updateStudents(String rollNo) throws FileNotFoundException, ParseException {
         int howManyColumns = 0, currentColumn = 0;
 
         try {
             Connection connection = DriverManager.getConnection(databaseUrl, login, password);
             PreparedStatement preparedStatement = connection.prepareStatement("update " + studentsTable
-                    + " set `name` = ?, `date of birth` = ?, `phone` = ?, email = ?, gender = ?, `present address` = ?, `registration no` = ?"
-                    + "`father name` = ?, `mother name` = ?, `guardian phone` = ?, `permanent address` = ?, degree = ?, batch, = ? department = ?, pp_blob = ?"
-                    + "where `roll no` = ?");
+                    + " set `name` = ?, `date of birth` = ?, `phone` = ?, email = ?, gender = ?, `present address` = ?, `registration no` = ?, "
+                    + "`father name` = ?, `mother name` = ?, `guardian phone` = ?, `permanent address` = ?, degree = ?, batch = ?, department = ?, pp_blob = ?"
+                    + " where `roll no` = ?");
 
-            // Reading data from table
-            ResultSet resultSet = preparedStatement.executeQuery();
-            ResultSetMetaData rsmData = resultSet.getMetaData();
+            // // Reading data from table
+            // ResultSet resultSet = preparedStatement.executeQuery();
+            // ResultSetMetaData rsmData = resultSet.getMetaData();
 
-            howManyColumns = rsmData.getColumnCount();
+            // howManyColumns = rsmData.getColumnCount();
 
             // String id = java.util.UUID.randomUUID().toString();
-            Date dob = (Date) UpdateForm.datePicker.getModel().getValue();
+            // Date dob = (Date) UpdateForm.datePicker.getModel().getValue();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dob = dateFormat.parse(UpdateForm.date.getText());
             // java.sql.Date dob = (java.sql.Date) datePicker.getModel().getValue();
             String sgender = "";
             if (UpdateForm.maleradio.isSelected()) {
@@ -425,7 +431,7 @@ public class DBHandler {
                             UpdateForm.permstatecombo.getSelectedIndex())
                     + "' "
                     + UpdateForm.spermpin.getText();
-            String course = UpdateForm.courseComboBox.getItemAt(UpdateForm.courseComboBox.getSelectedIndex());
+            String course = UpdateForm.course.getText();
             String degree = course.replaceAll("(?<=\s).*", "");
             InputStream in = new FileInputStream(UpdateForm.fileName);
 

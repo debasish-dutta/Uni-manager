@@ -228,7 +228,11 @@ public class ViewCard implements ActionListener {
         buttonsPanel.setLayout(new GridLayout(1, 3, 20, 5));
         backbtn = new JButton("Cancel");
         buttonsPanel.add(backbtn);
-        backbtn.addActionListener(this);
+        backbtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                f.dispose();
+            }
+        });
 
         printbtn = new JButton("Print");
         buttonsPanel.add(printbtn);
@@ -300,7 +304,7 @@ public class ViewCard implements ActionListener {
             UpdateForm.piclabel = new JLabel(icon);
         }
         if (e.getActionCommand().equals("Cancel")) {
-
+            f.dispose();
         }
     }
 
