@@ -30,10 +30,12 @@ import java.sql.DriverManager;
 
 public class RegForm implements ActionListener {
         JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel,
-                        permaddrlabel, fatherlabel, motherlabel, gphonelabel, addresslabel, presstlabel, presdistlabel, presstatlabel, prespinlabel,
-                        permstlabel, permdistlabel, permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel,
+                        permaddrlabel, fatherlabel, motherlabel, gphonelabel, addresslabel, presstlabel, presdistlabel,
+                        presstatlabel, prespinlabel,
+                        permstlabel, permdistlabel, permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel,
+                        deptlabel,
                         batchlabel, courselabel;
-        
+
         static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
                         spermdist,
                         spermpin, reg, roll,
@@ -52,6 +54,7 @@ public class RegForm implements ActionListener {
         PreparedStatement pst = null;
         JFrame f = new JFrame("Student Registration");
         JPanel studentPanel, picPanel, addressPanel, coursePanel;
+        String bgcolor = "#1F2E54";
 
         RegForm() {
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +72,6 @@ public class RegForm implements ActionListener {
                 studentPanel.setBackground(Color.decode("#374873"));
                 studentPanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.WHITE));
                 studentPanel.setBounds(20, 60, 940, 200);
-                
 
                 namelabel = new JLabel("Name:");
                 namelabel.setBounds(50, 100, 150, 20);
@@ -123,13 +125,17 @@ public class RegForm implements ActionListener {
                 maleradio = new JRadioButton(" Male");
                 maleradio.setBounds(200, 220, 70, 20);
                 femaleradio = new JRadioButton(" Female");
-                femaleradio.setBounds(270, 220, 70, 20);
+                femaleradio.setBounds(270, 220, 90, 20);
                 genderfradio = new JRadioButton(" Gender-fluid");
-                genderfradio.setBounds(340, 220, 100, 20);
+                genderfradio.setBounds(350, 220, 120, 20);
                 f.add(genderlabel);
                 f.add(maleradio);
                 f.add(femaleradio);
                 f.add(genderfradio);
+                // regbtn.setBorderPainted(false);
+                maleradio.setOpaque(true);
+                femaleradio.setOpaque(true);
+                genderfradio.setOpaque(true);
                 ButtonGroup bg = new ButtonGroup();
                 bg.add(maleradio);
                 bg.add(femaleradio);
@@ -166,8 +172,10 @@ public class RegForm implements ActionListener {
                 piclabel.setBounds(1000, 80, 150, 150);
                 uploadPic = new JButton("Upload");
                 uploadPic.setBounds(1020, 235, 100, 20);
+                uploadPic.setBorderPainted(false);
+                uploadPic.setOpaque(true);
                 uploadPic.setForeground(Color.WHITE);
-                uploadPic.setBackground(Color.decode("#1F2E54"));
+                uploadPic.setBackground(Color.decode(bgcolor));
                 f.add(photolabel);
                 f.add(piclabel);
                 f.add(uploadPic);
@@ -181,7 +189,7 @@ public class RegForm implements ActionListener {
                 addresslabel = new JLabel("Adress Details");
                 addresslabel.setBounds(100, 280, 150, 30);
                 addresslabel.setForeground(Color.WHITE);
-                f.add(addresslabel);                
+                f.add(addresslabel);
 
                 presaddrlabel = new JLabel("Present Address:");
                 presaddrlabel.setForeground(Color.WHITE);
@@ -328,6 +336,8 @@ public class RegForm implements ActionListener {
                                 "Commerce", "Business Administration", "Law" };
                 deptComboBox = new JComboBox<String>(dept);
                 deptComboBox.setBounds(800, 550, 250, 20);
+                // deptComboBox.setBorderPainted(false);
+                deptComboBox.setOpaque(true);
                 deptComboBox.addActionListener(this);
 
                 deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
@@ -450,20 +460,26 @@ public class RegForm implements ActionListener {
                 submitbtn = new JButton("Submit");
                 submitbtn.setBounds(500, 640, 150, 40);
                 submitbtn.setForeground(Color.WHITE);
-                submitbtn.setBackground(Color.decode("#1F2E54"));
+                submitbtn.setBackground(Color.decode(bgcolor));
+                submitbtn.setBorderPainted(false);
+                submitbtn.setOpaque(true);
                 f.add(submitbtn);
                 submitbtn.addActionListener(this);
 
                 clearbtn = new JButton("Clear");
                 clearbtn.setBounds(300, 640, 150, 40);
                 clearbtn.setForeground(Color.WHITE);
-                clearbtn.setBackground(Color.decode("#1F2E54"));
+                clearbtn.setBackground(Color.decode(bgcolor));
+                clearbtn.setBorderPainted(false);
+                clearbtn.setOpaque(true);
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
                 backbtn.setBounds(700, 640, 150, 40);
                 backbtn.setForeground(Color.WHITE);
-                backbtn.setBackground(Color.decode("#1F2E54"));
+                backbtn.setBackground(Color.decode(bgcolor));
+                backbtn.setBorderPainted(false);
+                backbtn.setOpaque(true);
                 f.add(backbtn);
                 backbtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.text.*;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -24,47 +25,47 @@ import java.sql.DriverManager;
 
 public class ViewCard implements ActionListener {
 
-    JLabel head, rollNolabel, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel, presaddrlabel, permaddrlabel,
-           fatherlabel, motherlabel, gphonelabel, courseheaderlabel, reglabel, deptlabel, batchlabel, courselabel, addressLabel;
-    JTextArea sname, sdob, sphone, semail,sgender, fname, mname, gphone, spreadd, spermadd, reg, roll, batch, dept, course;       
+    JLabel head, rollNolabel, namelabel, doblabel, phonelabel, emaillabel, genderlabel, photolabel, piclabel,
+            presaddrlabel, permaddrlabel,
+            fatherlabel, motherlabel, gphonelabel, courseheaderlabel, reglabel, deptlabel, batchlabel, courselabel,
+            addressLabel;
+    JTextArea sname, sdob, sphone, semail, sgender, fname, mname, gphone, spreadd, spermadd, reg, roll, batch, dept,
+            course;
 
-    JButton backbtn, printbtn;
+    JButton backbtn, printbtn, updatebtn;
 
     JPanel buttonsPanel;
 
+    JFrame f = new JFrame("View Student");
+
     ViewCard(Object rollNo) {
 
-        JFrame f = new JFrame("View Student");
         // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // MenuBar menu = new MenuBar();
         // f.setJMenuBar(menu.createMenuBar());
         System.out.println(rollNo);
 
         Object[] studentData = DBHandler.viewStudent(rollNo.toString());
-        for (Object objArray : studentData) {
-            System.out.println(objArray);
-        }
 
         head = new JLabel("STUDENT DETAILS");
         head.setFont(new Font("Courier", Font.BOLD, 40));
         head.setBounds(200, 20, 600, 40);
         f.add(head);
 
-        rollNolabel = new JLabel("Roll No. : " );
+        rollNolabel = new JLabel("Roll No. : ");
         namelabel = new JLabel("Name : ");
-        doblabel = new JLabel("Date of Birth : " );
+        doblabel = new JLabel("Date of Birth : ");
         phonelabel = new JLabel("Phone No : ");
-        emaillabel = new JLabel("Email : " );
-        genderlabel = new JLabel("Gender : " );
-        fatherlabel = new JLabel("Father's Name : " );
-        motherlabel = new JLabel("Mother's Name : " );
-        gphonelabel = new JLabel("Guardian Phone No : " );
+        emaillabel = new JLabel("Email : ");
+        genderlabel = new JLabel("Gender : ");
+        fatherlabel = new JLabel("Father's Name : ");
+        motherlabel = new JLabel("Mother's Name : ");
+        gphonelabel = new JLabel("Guardian Phone No : ");
 
         addressLabel = new JLabel("Address");
         addressLabel.setFont(new Font("Courier", Font.BOLD, 20));
-        presaddrlabel = new JLabel("Present Address : " );
-        permaddrlabel = new JLabel("Permanent Address : " );
-
+        presaddrlabel = new JLabel("Present Address : ");
+        permaddrlabel = new JLabel("Permanent Address : ");
 
         photolabel = new JLabel("Passport Photo : ");
 
@@ -73,7 +74,7 @@ public class ViewCard implements ActionListener {
         if (img != null) {
             icon = new ImageIcon(img);
         } else {
-            icon = new ImageIcon("assets/icons/user.png");
+            icon = new ImageIcon("assets/icons/user.jpeg");
         }
         piclabel = new JLabel(icon);
         courseheaderlabel = new JLabel("Course Details");
@@ -113,7 +114,7 @@ public class ViewCard implements ActionListener {
         piclabel.setBounds(420, 120, 260, 140);
 
         f.add(piclabel);
-        courseheaderlabel.setBounds(420, 280, 150, 30);
+        courseheaderlabel.setBounds(420, 280, 250, 30);
         f.add(courseheaderlabel);
         reglabel.setBounds(420, 320, 150, 15);
         f.add(reglabel);
@@ -222,7 +223,6 @@ public class ViewCard implements ActionListener {
         course.setEditable(false);
         f.add(course);
 
-
         buttonsPanel = new JPanel();
         buttonsPanel.setBounds(250, 500, 300, 40);
         buttonsPanel.setLayout(new GridLayout(1, 3, 20, 5));
@@ -234,6 +234,10 @@ public class ViewCard implements ActionListener {
         buttonsPanel.add(printbtn);
         printbtn.addActionListener(this);
 
+        updatebtn = new JButton("Update");
+        buttonsPanel.add(updatebtn);
+        updatebtn.addActionListener(this);
+
         f.add(buttonsPanel);
         f.setSize(800, 600);
         f.setLocationRelativeTo(null);
@@ -244,7 +248,56 @@ public class ViewCard implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Update")) {
+            f.dispose();
 
+            new UpdateForm();
+            Object[] studentData = DBHandler.viewStudent(roll.getText());
+            String[] presAddr = studentData[7].toString().split(",\\s*");
+            String[] permAddr = studentData[12].toString().split(",\\s*");
+
+            UpdateForm.sname.setText(studentData[2].toString());
+            // UpdateForm.model.setDate(studentData[3].toString());
+
+            UpdateForm.sphone.setText(studentData[4].toString());
+            UpdateForm.semail.setText(studentData[5].toString());
+            UpdateForm.fname.setText(studentData[9].toString());
+            UpdateForm.mname.setText(studentData[10].toString());
+            UpdateForm.gphone.setText(studentData[11].toString());
+            UpdateForm.spresst.setText(presAddr[0].trim());
+            UpdateForm.spresdist.setText(presAddr[1].trim());
+            UpdateForm.presstatecombo.setSelectedItem(presAddr[2].trim());
+            UpdateForm.sprespin.setText(presAddr[3].trim());
+            UpdateForm.spermst.setText(permAddr[0].trim());
+            UpdateForm.spermdist.setText(permAddr[1].trim());
+            UpdateForm.permstatecombo.setSelectedItem(permAddr[2].trim());
+            UpdateForm.spermpin.setText(permAddr[3].trim());
+            UpdateForm.reg.setText(studentData[8].toString());
+            UpdateForm.batch.setText(studentData[14].toString());
+
+            UpdateForm.deptComboBox.setSelectedItem(studentData[15].toString());
+            System.out.print(studentData[13].toString());
+            UpdateForm.course.setText(studentData[13].toString() + " " + studentData[15].toString());
+            // Date dob = (Date) studentData[3];
+            UpdateForm.date.setText(studentData[3].toString());
+            // UpdateForm.datePicker.getModel().setValue(dob);
+            // UpdateForm.datePicker.getModel().setDate(1999, 01, 02);
+            // UpdateForm.datePicker.getModel().setSelected(true);
+
+            if (studentData[6].toString().equals("Male")) {
+                UpdateForm.maleradio.setSelected(true);
+            } else if (studentData[6].toString().equals("Female")) {
+                UpdateForm.femaleradio.setSelected(true);
+            } else {
+                UpdateForm.genderfradio.setSelected(true);
+            }
+            // System.out.print(studentData[6].toString());
+
+            UpdateForm.roll.setText(studentData[1].toString());
+            // UpdateForm.courseComboBox.setSelectedItem(studentData[16].toString());
+
+            BufferedImage img = DBHandler.viewImage(roll.getText());
+            ImageIcon icon = new ImageIcon(img);
+            UpdateForm.piclabel = new JLabel(icon);
         }
         if (e.getActionCommand().equals("Cancel")) {
 
