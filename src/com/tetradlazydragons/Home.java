@@ -29,6 +29,7 @@ public class Home {
     JLabel head;
     JPanel heading;
     JButton DBbtn, regbtn, searchbtn, updatebtn, exitbtn;
+    String bgColor = "#1F2E54";
 
     Home() {
         JFrame f = new JFrame("Uni Manager");
@@ -41,27 +42,29 @@ public class Home {
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
 
-        
-
-    /*  DBbtn = new JButton("Connect DataBase");
-        DBbtn.setBounds(60, 469, 200, 200);
-        f.add(DBbtn);
-
-        DBbtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-               ConnectView db = new ConnectView();
-                // db.show();
-                // db.setVisible(true);
-                //f.dispose();
-
-            }
-        });*/
+        /*
+         * DBbtn = new JButton("Connect DataBase");
+         * DBbtn.setBounds(60, 469, 200, 200);
+         * f.add(DBbtn);
+         * 
+         * DBbtn.addActionListener(new ActionListener() {
+         * public void actionPerformed(ActionEvent e) {
+         * 
+         * ConnectView db = new ConnectView();
+         * // db.show();
+         * // db.setVisible(true);
+         * //f.dispose();
+         * 
+         * }
+         * });
+         */
 
         regbtn = new JButton("Add Student");
         regbtn.setFont(new Font("Courier", Font.BOLD, 15));
+        regbtn.setBorderPainted(false);
+        regbtn.setOpaque(true);
+        regbtn.setBackground(Color.decode(bgColor));
         regbtn.setForeground(Color.WHITE);
-        regbtn.setBackground(Color.decode("#1F2E54"));
         regbtn.setBounds(700, 100, 200, 100);
         f.add(regbtn);
         regbtn.addActionListener(new ActionListener() {
@@ -77,8 +80,10 @@ public class Home {
         searchbtn = new JButton("Search Student");
         searchbtn.setBounds(700, 300, 200, 100);
         searchbtn.setFont(new Font("Courier", Font.BOLD, 15));
+        searchbtn.setBorderPainted(false);
+        searchbtn.setOpaque(true);
+        searchbtn.setBackground(Color.decode(bgColor));
         searchbtn.setForeground(Color.WHITE);
-        searchbtn.setBackground(Color.decode("#1F2E54"));
         f.add(searchbtn);
         searchbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -90,24 +95,29 @@ public class Home {
             }
         });
 
-        /*updatebtn = new JButton("Update");
-        updatebtn.setBounds(960, 469, 200, 200);
-        f.add(updatebtn);
-        updatebtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                UpdateForm reg = new UpdateForm();
-                // studentDetails.setVisible(true);
-                f.dispose();
-
-            }
-        });*/
+        /*
+         * updatebtn = new JButton("Update");
+         * updatebtn.setBounds(960, 469, 200, 200);
+         * f.add(updatebtn);
+         * updatebtn.addActionListener(new ActionListener() {
+         * public void actionPerformed(ActionEvent e) {
+         * 
+         * UpdateForm reg = new UpdateForm();
+         * // studentDetails.setVisible(true);
+         * f.dispose();
+         * 
+         * }
+         * });
+         */
 
         exitbtn = new JButton("Exit");
         exitbtn.setBounds(700, 500, 200, 100);
         exitbtn.setFont(new Font("Courier", Font.BOLD, 15));
+        exitbtn.setBorderPainted(false);
+        exitbtn.setOpaque(true);
         exitbtn.setForeground(Color.WHITE);
-        exitbtn.setBackground(Color.decode("#1F2E54"));
+        exitbtn.setBackground(Color.decode(bgColor));
+
         f.add(exitbtn);
         exitbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

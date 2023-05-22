@@ -41,15 +41,17 @@ public class SearchForm implements ActionListener {
         searchPanel.setBounds(170, 80, 800, 30);
         searchPanel.setLayout(new GridLayout(1, 3, 50, 5));
 
-        searchlabel = new JLabel("Search:",JLabel.RIGHT);   
-        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));   
-        searchlabel.setForeground(Color.decode("#1F2E54"));  
-        searchtf = new JTextField();        
+        searchlabel = new JLabel("Search:", JLabel.RIGHT);
+        searchlabel.setFont(new Font("Courier", Font.CENTER_BASELINE, 15));
+        searchlabel.setForeground(Color.decode("#1F2E54"));
+        searchtf = new JTextField();
         searchPanel.add(searchlabel);
         searchPanel.add(searchtf);
         submitbtn = new JButton("Search");
         submitbtn.setForeground(Color.WHITE);
         submitbtn.setBackground(Color.decode("#1F2E54"));
+        submitbtn.setBorderPainted(false);
+        submitbtn.setOpaque(true);
         searchPanel.add(submitbtn);
         submitbtn.addActionListener(this);
         f.add(searchPanel);
@@ -86,18 +88,25 @@ public class SearchForm implements ActionListener {
         delbtn = new JButton("Delete");
         delbtn.setForeground(Color.WHITE);
         delbtn.setBackground(Color.decode("#1F2E54"));
+        delbtn.setBorderPainted(false);
+        delbtn.setOpaque(true);
         buttonsPanel.add(delbtn);
         delbtn.addActionListener(this);
 
         viewbtn = new JButton("View");
         viewbtn.setForeground(Color.WHITE);
         viewbtn.setBackground(Color.decode("#1F2E54"));
+        viewbtn.setBorderPainted(false);
+        viewbtn.setOpaque(true);
         buttonsPanel.add(viewbtn);
         viewbtn.addActionListener(this);
 
         backbtn = new JButton("Back");
         backbtn.setForeground(Color.WHITE);
+        backbtn.setOpaque(true);
         backbtn.setBackground(Color.decode("#1F2E54"));
+        backbtn.setBorderPainted(false);
+        backbtn.setOpaque(true);
         buttonsPanel.add(backbtn);
         backbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
