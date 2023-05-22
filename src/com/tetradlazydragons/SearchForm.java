@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.JTableHeader;
 
 import java.sql.*;
 import java.sql.DriverManager;
@@ -47,6 +48,8 @@ public class SearchForm implements ActionListener {
         searchPanel.add(searchlabel);
         searchPanel.add(searchtf);
         submitbtn = new JButton("Search");
+        submitbtn.setForeground(Color.WHITE);
+        submitbtn.setBackground(Color.decode("#1F2E54"));
         searchPanel.add(submitbtn);
         submitbtn.addActionListener(this);
         f.add(searchPanel);
@@ -63,6 +66,9 @@ public class SearchForm implements ActionListener {
         tableModel.addColumn("Email");
         tableModel.addColumn("Gender");
         tableModel.addColumn("Department");
+        JTableHeader tableHeader = viewTable.getTableHeader();
+        tableHeader.setBackground(Color.decode("#374873"));
+        tableHeader.setForeground(Color.white);
         TableColumn column;
         for (int i = 0; i < viewTable.getColumnCount(); i++) {
             column = viewTable.getColumnModel().getColumn(i);
@@ -78,14 +84,20 @@ public class SearchForm implements ActionListener {
         buttonsPanel.setBounds(300, 600, 600, 40);
         buttonsPanel.setLayout(new GridLayout(1, 3, 20, 5));
         delbtn = new JButton("Delete");
+        delbtn.setForeground(Color.WHITE);
+        delbtn.setBackground(Color.decode("#1F2E54"));
         buttonsPanel.add(delbtn);
         delbtn.addActionListener(this);
 
         viewbtn = new JButton("View");
+        viewbtn.setForeground(Color.WHITE);
+        viewbtn.setBackground(Color.decode("#1F2E54"));
         buttonsPanel.add(viewbtn);
         viewbtn.addActionListener(this);
 
         backbtn = new JButton("Back");
+        backbtn.setForeground(Color.WHITE);
+        backbtn.setBackground(Color.decode("#1F2E54"));
         buttonsPanel.add(backbtn);
         backbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
