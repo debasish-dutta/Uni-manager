@@ -14,6 +14,8 @@ import javax.swing.JFileChooser;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.border.Border;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.*;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -25,16 +27,18 @@ import java.sql.DriverManager;
 public class UpdateForm implements ActionListener {
 
         JLabel head, namelabel, doblabel, phonelabel, emaillabel, genderlabel, presaddrlabel,
-                        piclabel, permaddrlabel,
+                        permaddrlabel,
+                        addresslabel,
                         fatherlabel,
                         motherlabel, gphonelabel, presstlabel, presdistlabel, presstatlabel, prespinlabel, permstlabel,
                         permdistlabel,
                         permstatlabel, permpinlabel, courseheaderlabel, reglabel, rolllabel, deptlabel, batchlabel,
                         courselabel;
+        static JLabel piclabel, piclabel2;
         static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
-                        spermdist,
+                        spermdist, date,
                         spermpin, reg, roll,
-                        batch;
+                        batch, course;
         static JRadioButton maleradio, femaleradio, genderfradio;
         static JComboBox<String> presstatecombo, permstatecombo;
         static JComboBox<String> deptComboBox, courseComboBox;
@@ -48,19 +52,29 @@ public class UpdateForm implements ActionListener {
         PreparedStatement pst = null;
 
         JFrame f = new JFrame("Update Student");
+        JPanel studentPanel, picPanel, addressPanel, coursePanel;
+        String bgcolor = "#1F2E54";
 
         UpdateForm() {
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
+                f.setBackground(Color.BLACK);
 
                 head = new JLabel("UPDATE STUDENT ");
                 head.setFont(new Font("Courier", Font.BOLD, 30));
+                head.setForeground(Color.decode("#1F2E54"));
                 head.setBounds(400, 20, 600, 30);
                 f.add(head);
 
+                studentPanel = new JPanel();
+                studentPanel.setBackground(Color.decode("#374873"));
+                studentPanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.WHITE));
+                studentPanel.setBounds(20, 60, 940, 200);
+
                 namelabel = new JLabel("Name:");
                 namelabel.setBounds(50, 100, 150, 20);
+                namelabel.setForeground(Color.WHITE);
                 sname = new JTextField();
                 sname.setBounds(200, 100, 250, 20);
                 f.add(namelabel);
@@ -68,6 +82,7 @@ public class UpdateForm implements ActionListener {
 
                 doblabel = new JLabel("DOB:");
                 doblabel.setBounds(50, 130, 150, 20);
+                doblabel.setForeground(Color.WHITE);
                 // sdob = new JTextField();
                 // sdob.setBounds(200, 130, 200, 20);
                 f.add(doblabel);
@@ -83,12 +98,16 @@ public class UpdateForm implements ActionListener {
                 p.put("text.year", "Year");
                 datePanel = new JDatePanelImpl(model, p);
                 datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-                datePicker.setBounds(200, 130, 250, 20);
+                // datePicker.setBounds(200, 130, 250, 20);
+                date = new JTextField();
+                date.setBounds(200, 130, 250, 20);
                 f.add(datePicker);
+                f.add(date);
                 /* End Date picker */
 
                 phonelabel = new JLabel("Phone No:");
                 phonelabel.setBounds(50, 160, 150, 20);
+                phonelabel.setForeground(Color.WHITE);
                 sphone = new JTextField();
                 sphone.setBounds(200, 160, 250, 20);
                 f.add(phonelabel);
@@ -96,6 +115,7 @@ public class UpdateForm implements ActionListener {
 
                 emaillabel = new JLabel("Email:");
                 emaillabel.setBounds(50, 190, 150, 20);
+                emaillabel.setForeground(Color.WHITE);
                 semail = new JTextField();
                 semail.setBounds(200, 190, 250, 20);
                 f.add(emaillabel);
@@ -103,56 +123,107 @@ public class UpdateForm implements ActionListener {
 
                 genderlabel = new JLabel("Gender:");
                 genderlabel.setBounds(50, 220, 150, 20);
+                genderlabel.setForeground(Color.WHITE);
                 maleradio = new JRadioButton(" Male");
-                maleradio.setBounds(190, 220, 100, 20);
+                maleradio.setBounds(200, 220, 70, 20);
                 femaleradio = new JRadioButton(" Female");
-                femaleradio.setBounds(260, 220, 100, 20);
+                femaleradio.setBounds(270, 220, 90, 20);
                 genderfradio = new JRadioButton(" Gender-fluid");
-                genderfradio.setBounds(340, 220, 150, 20);
+                genderfradio.setBounds(350, 220, 120, 20);
                 f.add(genderlabel);
                 f.add(maleradio);
                 f.add(femaleradio);
                 f.add(genderfradio);
+                // regbtn.setBorderPainted(false);
+                maleradio.setOpaque(true);
+                femaleradio.setOpaque(true);
+                genderfradio.setOpaque(true);
                 ButtonGroup bg = new ButtonGroup();
                 bg.add(maleradio);
                 bg.add(femaleradio);
                 bg.add(genderfradio);
 
-                piclabel = new JLabel("Photograph");
-                piclabel.setBounds(1000, 80, 150, 150);
+                fatherlabel = new JLabel("Father's Name:");
+                fatherlabel.setForeground(Color.WHITE);
+                fatherlabel.setBounds(500, 100, 150, 20);
+                fname = new JTextField();
+                fname.setBounds(700, 100, 250, 20);
+                f.add(fatherlabel);
+                f.add(fname);
+
+                motherlabel = new JLabel("Mother's Name:");
+                motherlabel.setBounds(500, 130, 150, 20);
+                motherlabel.setForeground(Color.WHITE);
+                mname = new JTextField();
+                mname.setBounds(700, 130, 250, 20);
+                f.add(motherlabel);
+                f.add(mname);
+
+                gphonelabel = new JLabel("Guardian's Phone No:");
+                gphonelabel.setBounds(500, 160, 150, 20);
+                gphonelabel.setForeground(Color.WHITE);
+                gphone = new JTextField();
+                gphone.setBounds(700, 160, 250, 20);
+                f.add(gphonelabel);
+                f.add(gphone);
+
+                piclabel = new JLabel();
+                piclabel.setBounds(1040, 60, 150, 150);
+                piclabel2 = new JLabel();
+                piclabel2.setBounds(1000, 80, 150, 150);
                 uploadbtn = new JButton("Upload");
-                uploadbtn.setBounds(1040, 235, 100, 20);
+                uploadbtn.setBounds(1020, 235, 100, 20);
+                uploadbtn.setBorderPainted(false);
+                uploadbtn.setOpaque(true);
+                uploadbtn.setForeground(Color.WHITE);
+                uploadbtn.setBackground(Color.decode(bgcolor));
                 f.add(piclabel);
+                f.add(piclabel2);
                 f.add(uploadbtn);
                 uploadbtn.addActionListener(this);
 
+                addressPanel = new JPanel();
+                addressPanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.WHITE));
+                addressPanel.setBackground(Color.decode("#374873"));
+                addressPanel.setBounds(20, 270, 1140, 200);
+
+                addresslabel = new JLabel("Adress Details");
+                addresslabel.setBounds(100, 280, 150, 30);
+                addresslabel.setForeground(Color.WHITE);
+                f.add(addresslabel);
+
                 presaddrlabel = new JLabel("Present Address:");
-                presaddrlabel.setBounds(50, 250, 150, 20);
+                presaddrlabel.setForeground(Color.WHITE);
+                presaddrlabel.setBounds(100, 330, 150, 20);
                 f.add(presaddrlabel);
 
                 presstlabel = new JLabel("Street:");
-                presstlabel.setBounds(50, 280, 150, 20);
+                presstlabel.setForeground(Color.WHITE);
+                presstlabel.setBounds(100, 360, 150, 20);
                 spresst = new JTextField();
-                spresst.setBounds(200, 280, 250, 20);
+                spresst.setBounds(250, 360, 250, 20);
                 f.add(presstlabel);
                 f.add(spresst);
 
                 presdistlabel = new JLabel("District:");
-                presdistlabel.setBounds(50, 310, 150, 20);
+                presdistlabel.setForeground(Color.WHITE);
+                presdistlabel.setBounds(100, 385, 150, 20);
                 spresdist = new JTextField();
-                spresdist.setBounds(200, 310, 250, 20);
+                spresdist.setBounds(250, 385, 250, 20);
                 f.add(presdistlabel);
                 f.add(spresdist);
 
                 prespinlabel = new JLabel("Pin:");
-                prespinlabel.setBounds(50, 370, 150, 20);
+                prespinlabel.setBounds(100, 435, 150, 20);
+                prespinlabel.setForeground(Color.WHITE);
                 sprespin = new JTextField();
-                sprespin.setBounds(200, 370, 250, 20);
+                sprespin.setBounds(250, 435, 250, 20);
                 f.add(prespinlabel);
                 f.add(sprespin);
 
                 presstatlabel = new JLabel("State:");
-                presstatlabel.setBounds(50, 340, 150, 20);
+                presstatlabel.setForeground(Color.WHITE);
+                presstatlabel.setBounds(100, 410, 150, 20);
                 String states[] = { "Select State", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
                                 "Chhattisgarh",
                                 "Goa", "Gujarat",
@@ -163,91 +234,85 @@ public class UpdateForm implements ActionListener {
                                 "Uttrakhand",
                                 "West Bengal" };
                 presstatecombo = new JComboBox(states);
-                presstatecombo.setBounds(200, 340, 250, 20);
+                presstatecombo.setBounds(250, 410, 250, 20);
                 f.add(presstatlabel);
                 f.add(presstatecombo);
 
                 permaddrlabel = new JLabel("Permanent Address:");
-                permaddrlabel.setBounds(600, 250, 150, 20);
+                permaddrlabel.setForeground(Color.WHITE);
+                permaddrlabel.setBounds(600, 330, 150, 20);
                 f.add(permaddrlabel);
 
                 permstlabel = new JLabel("Street:");
-                permstlabel.setBounds(600, 280, 150, 20);
+                permstlabel.setForeground(Color.WHITE);
+                permstlabel.setBounds(600, 360, 150, 20);
                 spermst = new JTextField();
-                spermst.setBounds(800, 280, 250, 20);
+                spermst.setBounds(800, 360, 250, 20);
                 f.add(permstlabel);
                 f.add(spermst);
 
                 permdistlabel = new JLabel("District:");
-                permdistlabel.setBounds(600, 310, 150, 20);
+                permdistlabel.setForeground(Color.WHITE);
+                permdistlabel.setBounds(600, 385, 150, 20);
                 spermdist = new JTextField();
-                spermdist.setBounds(800, 310, 250, 20);
+                spermdist.setBounds(800, 385, 250, 20);
                 f.add(permdistlabel);
                 f.add(spermdist);
 
                 permstatlabel = new JLabel("State:");
-                permstatlabel.setBounds(600, 340, 150, 20);
+                permstatlabel.setForeground(Color.WHITE);
+                permstatlabel.setBounds(600, 410, 150, 20);
                 permstatecombo = new JComboBox(states);
-                permstatecombo.setBounds(800, 340, 250, 20);
+                permstatecombo.setBounds(800, 410, 250, 20);
                 f.add(permstatlabel);
                 f.add(permstatecombo);
 
                 permpinlabel = new JLabel("Pin:");
-                permpinlabel.setBounds(600, 370, 150, 20);
+                permpinlabel.setForeground(Color.WHITE);
+                permpinlabel.setBounds(600, 435, 150, 20);
                 spermpin = new JTextField();
-                spermpin.setBounds(800, 370, 250, 20);
+                spermpin.setBounds(800, 435, 250, 20);
                 f.add(permpinlabel);
                 f.add(spermpin);
 
-                fatherlabel = new JLabel("Father's Name:");
-                fatherlabel.setBounds(500, 100, 150, 20);
-                fname = new JTextField();
-                fname.setBounds(700, 100, 250, 20);
-                f.add(fatherlabel);
-                f.add(fname);
+                coursePanel = new JPanel();
+                Border blackline3 = BorderFactory.createTitledBorder("Course Details:");
+                coursePanel.setBounds(20, 460, 1140, 150);
+                coursePanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.WHITE));
+                coursePanel.setBackground(Color.decode("#374873"));
 
-                motherlabel = new JLabel("Mother's Name:");
-                motherlabel.setBounds(500, 130, 150, 20);
-                mname = new JTextField();
-                mname.setBounds(700, 130, 250, 20);
-                f.add(motherlabel);
-                f.add(mname);
-
-                gphonelabel = new JLabel("Guardian's Phone No:");
-                gphonelabel.setBounds(500, 160, 150, 20);
-                gphone = new JTextField();
-                gphone.setBounds(700, 160, 250, 20);
-                f.add(gphonelabel);
-                f.add(gphone);
-
-                courseheaderlabel = new JLabel("Course Details:");
-                courseheaderlabel.setBounds(50, 400, 150, 20);
+                courseheaderlabel = new JLabel("Course Details");
+                courseheaderlabel.setForeground(Color.WHITE);
+                courseheaderlabel.setBounds(100, 480, 150, 30);
                 f.add(courseheaderlabel);
 
                 reglabel = new JLabel("Registration No:");
-                reglabel.setBounds(50, 430, 150, 20);
+                reglabel.setForeground(Color.WHITE);
+                reglabel.setBounds(100, 520, 150, 20);
                 reg = new JTextField();
-                reg.setBounds(200, 430, 250, 20);
+                reg.setBounds(250, 520, 250, 20);
                 f.add(reglabel);
                 f.add(reg);
 
                 rolllabel = new JLabel("Roll No:");
-                rolllabel.setBounds(350, 69, 150, 20);
+                rolllabel.setForeground(Color.WHITE);
+                rolllabel.setBounds(100, 550, 150, 20);
                 roll = new JTextField();
-                roll.setBounds(500, 69, 250, 20);
-                roll.setEditable(false);
+                roll.setBounds(250, 550, 250, 20);
                 f.add(rolllabel);
                 f.add(roll);
 
                 batchlabel = new JLabel("Batch:");
-                batchlabel.setBounds(50, 490, 150, 20);
+                batchlabel.setForeground(Color.WHITE);
+                batchlabel.setBounds(100, 580, 150, 20);
                 batch = new JTextField();
-                batch.setBounds(200, 490, 250, 20);
+                batch.setBounds(250, 580, 250, 20);
                 f.add(batchlabel);
                 f.add(batch);
 
                 deptlabel = new JLabel("Department:");
-                deptlabel.setBounds(600, 460, 150, 20);
+                deptlabel.setForeground(Color.WHITE);
+                deptlabel.setBounds(600, 550, 150, 20);
                 f.add(deptlabel);
                 String[] dept = { "Select Department", "Arabic", "Assamese", "Bengali", "Bodo",
                                 "Communication & Journalism",
@@ -270,19 +335,23 @@ public class UpdateForm implements ActionListener {
 
                                 "Commerce", "Business Administration", "Law" };
                 deptComboBox = new JComboBox<String>(dept);
-                deptComboBox.setBounds(800, 460, 250, 20);
+                deptComboBox.setBounds(800, 550, 250, 20);
+                deptComboBox.setOpaque(true);
                 deptComboBox.addActionListener(this);
 
                 deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
                 f.add(deptComboBox);
 
                 courselabel = new JLabel("Course:");
-                courselabel.setBounds(600, 490, 150, 20);
+                courselabel.setForeground(Color.WHITE);
+                courselabel.setBounds(600, 580, 150, 20);
                 f.add(courselabel);
                 courseComboBox = new JComboBox<String>();
                 courseComboBox.setBounds(800, 490, 250, 20);
                 courseComboBox.setPrototypeDisplayValue("XXXXXXXXXX");
-                f.add(courseComboBox);
+                course = new JTextField();
+                course.setBounds(800, 580, 250, 20);
+                f.add(course);
 
                 String[] subItems1 = { "Select Course", "B.A. Arabic", "M.A. Arabic" };
                 subItems.put(dept[1], subItems1);
@@ -390,23 +459,39 @@ public class UpdateForm implements ActionListener {
                 subItems.put(dept[42], subItems42);
 
                 submitbtn = new JButton("Submit");
-                submitbtn.setBounds(500, 569, 150, 40);
+                submitbtn.setBounds(500, 640, 150, 40);
+                submitbtn.setForeground(Color.WHITE);
+                submitbtn.setBackground(Color.decode(bgcolor));
+                submitbtn.setBorderPainted(false);
+                submitbtn.setOpaque(true);
                 f.add(submitbtn);
                 submitbtn.addActionListener(this);
 
                 clearbtn = new JButton("Clear");
-                clearbtn.setBounds(300, 569, 150, 40);
+                clearbtn.setBounds(300, 640, 150, 40);
+                clearbtn.setForeground(Color.WHITE);
+                clearbtn.setBackground(Color.decode(bgcolor));
+                clearbtn.setBorderPainted(false);
+                clearbtn.setOpaque(true);
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
-                backbtn.setBounds(700, 569, 150, 40);
+                backbtn.setBounds(700, 640, 150, 40);
+                backbtn.setForeground(Color.WHITE);
+                backbtn.setBackground(Color.decode(bgcolor));
+                backbtn.setBorderPainted(false);
+                backbtn.setOpaque(true);
                 f.add(backbtn);
                 backbtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                                Home home = new Home();
+                                // new SearchForm();
                                 f.dispose();
                         }
                 });
+
+                f.add(studentPanel);
+                f.add(addressPanel);
+                f.add(coursePanel);
 
                 f.setSize(1200, 800);
                 f.setLayout(null);
@@ -473,7 +558,7 @@ public class UpdateForm implements ActionListener {
                 try {
                         if (DBHandler.updateStudents(roll.getText())) {
                                 JOptionPane.showMessageDialog(null,
-                                                "studentSuccessfullyAdded",
+                                                "studentSuccessfullyUpdated",
                                                 "success",
                                                 JOptionPane.INFORMATION_MESSAGE);
                         } else {
@@ -482,6 +567,9 @@ public class UpdateForm implements ActionListener {
                                                 "error", JOptionPane.ERROR_MESSAGE);
                         }
                 } catch (HeadlessException | FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                } catch (ParseException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                 }
