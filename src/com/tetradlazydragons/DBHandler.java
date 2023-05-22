@@ -165,6 +165,7 @@ public class DBHandler {
             } else if (RegForm.femaleradio.isSelected()) {
                 sgender = "Female";
             } else if (RegForm.genderfradio.isSelected()) {
+                             
                 sgender = "Gender-Fluid";
             } else {
                 sgender = "";
