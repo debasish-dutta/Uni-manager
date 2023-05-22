@@ -51,15 +51,14 @@ public class RegForm implements ActionListener {
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
-
-        JFrame f = new JFrame("Registration Form");
+        JFrame f = new JFrame("Student Registration");
         JPanel studentPanel, picPanel, addressPanel, coursePanel;
 
         RegForm() {
-
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
+                f.setBackground(Color.decode("#374873"));
 
                 head = new JLabel("NEW STUDENT REGISTRATION ");
                 head.setFont(new Font("Courier", Font.BOLD, 30));
@@ -67,6 +66,7 @@ public class RegForm implements ActionListener {
                 f.add(head);
 
                 studentPanel = new JPanel();
+                studentPanel.setBackground(Color.decode("#374873"));
                 Border blackline = BorderFactory.createTitledBorder("Student Details:");
                 studentPanel.setBounds(20, 60, 940, 200);
                 studentPanel.setBorder(blackline);
