@@ -43,13 +43,13 @@ public class GetStarted extends JFrame {
         topic1Button.setOpaque(true);
         topic1Button.addActionListener(e -> {
             String howToContent = "The app section of UniManager is a feature that allows authorized users to edit, view, and delete student details within the system. Additionally, it provides an option to connect to a database for efficient data management."
-                    + " UniManager empowers administrators and authorized users to effectively manage student details, providing them with the necessary tools for data editing, viewing, and deletion while ensuring a secure and streamlined experience through the integration with a database.\n\n"
+                    + "\n UniManager empowers administrators and authorized users to effectively manage student details, providing them with the necessary tools for data editing, viewing, and deletion while ensuring a secure and streamlined experience through the integration with a database.\n\n"
                     + "\n Here's an overview of the functionalities in the app section:";
             howToTextArea.setText(howToContent);
         });
 
         JButton topic2Button = new JButton("Database");
-        topic2gButton.setForeground(Color.WHITE);
+        topic2Button.setForeground(Color.WHITE);
         topic2Button.setBackground(Color.decode(bgcolor2));
         topic2Button.setBorderPainted(false);
         topic2Button.setOpaque(true);
@@ -57,7 +57,7 @@ public class GetStarted extends JFrame {
             String howToContent = "UniManager offers the capability to connect to a database, which serves as a centralized storage for student data. By connecting to a database, the application can efficiently manage large amounts of information, provide data security, and enable reliable data retrieval and storage.\n"
                     +
 
-                    " Connecting to a database allows for seamless integration with other systems and provides a robust foundation for data management within UniManager. It facilitates data consistency, scalability, and ease of use.\n\n"
+                    "\n Connecting to a database allows for seamless integration with other systems and provides a robust foundation for data management within UniManager. It facilitates data consistency, scalability, and ease of use.\n\n"
                     +
                     " Step1 - Click on the File option on the menu\n" +
                     " Step2 - Select the Connect db button\n" +
@@ -72,8 +72,8 @@ public class GetStarted extends JFrame {
         topic3Button.setOpaque(true);
         topic3Button.addActionListener(e -> {
             String howToContent = "How to add a student\n" +
-                    "Step1-Connect the database\n" +
-                    "Step2-Click on search or Add student from Home\n" +
+                    "Step1 - Connect the database\n" +
+                    "Step2 - Click on search or Add student from Home\n" +
                     "Step3 - Fill in the form and click submit";
             howToTextArea.setText(howToContent);
         });
@@ -126,7 +126,7 @@ public class GetStarted extends JFrame {
         topic7Button.setBorderPainted(false);
         topic7Button.setOpaque(true);
         topic7Button.addActionListener(e -> {
-            String howToContent = "How to use Topic :\n\nDev 1: ...\nDev 2: ...\nDev 3: ...\nDev 4: ...";
+            String howToContent = "How to use Topic :\n\nDev 1: Debasish Dutta\nDev 2: Neeharika Sonowal\nDev 3: Rhituraj Deori\nDev 4: Jyotishman Bhagawati";
             howToTextArea.setText(howToContent);
         });
 
