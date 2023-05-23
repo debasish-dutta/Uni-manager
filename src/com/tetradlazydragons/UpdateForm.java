@@ -53,13 +53,13 @@ public class UpdateForm implements ActionListener {
 
         JFrame f = new JFrame("Update Student");
         JPanel studentPanel, picPanel, addressPanel, coursePanel;
-        String bgcolor = "#1F2E54";
+        String bgcolor = "#1F2E54", bgcolor2 = "#ACB1D6";
 
         UpdateForm() {
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.getContentPane().setBackground(Color.decode(bgcolor2));
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
-                f.setBackground(Color.BLACK);
 
                 head = new JLabel("UPDATE STUDENT ");
                 head.setFont(new Font("Courier", Font.BOLD, 30));
@@ -187,14 +187,16 @@ public class UpdateForm implements ActionListener {
                 addressPanel.setBackground(Color.decode("#374873"));
                 addressPanel.setBounds(20, 270, 1140, 200);
 
-                addresslabel = new JLabel("Adress Details");
-                addresslabel.setBounds(100, 280, 150, 30);
+                addresslabel = new JLabel("ADDRESS DETAILS");
+                addresslabel.setFont(new Font("Courier", Font.BOLD, 20));
+                addresslabel.setBounds(100, 290, 250, 30);
                 addresslabel.setForeground(Color.WHITE);
                 f.add(addresslabel);
 
                 presaddrlabel = new JLabel("Present Address:");
+                presaddrlabel.setFont(new Font("Courier", Font.BOLD, 15));
                 presaddrlabel.setForeground(Color.WHITE);
-                presaddrlabel.setBounds(100, 330, 150, 20);
+                presaddrlabel.setBounds(100, 325, 200, 20);
                 f.add(presaddrlabel);
 
                 presstlabel = new JLabel("Street:");
@@ -239,8 +241,9 @@ public class UpdateForm implements ActionListener {
                 f.add(presstatecombo);
 
                 permaddrlabel = new JLabel("Permanent Address:");
+                permaddrlabel.setFont(new Font("Courier", Font.BOLD, 15));
                 permaddrlabel.setForeground(Color.WHITE);
-                permaddrlabel.setBounds(600, 330, 150, 20);
+                permaddrlabel.setBounds(600, 325, 200, 20);
                 f.add(permaddrlabel);
 
                 permstlabel = new JLabel("Street:");
@@ -276,14 +279,14 @@ public class UpdateForm implements ActionListener {
                 f.add(spermpin);
 
                 coursePanel = new JPanel();
-                Border blackline3 = BorderFactory.createTitledBorder("Course Details:");
-                coursePanel.setBounds(20, 460, 1140, 150);
+                coursePanel.setBounds(20, 480, 1140, 160);
                 coursePanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.WHITE));
                 coursePanel.setBackground(Color.decode("#374873"));
 
-                courseheaderlabel = new JLabel("Course Details");
+                courseheaderlabel = new JLabel("COURSE DETAILS");
+                courseheaderlabel.setFont(new Font("Courier", Font.BOLD, 20));
                 courseheaderlabel.setForeground(Color.WHITE);
-                courseheaderlabel.setBounds(100, 480, 150, 30);
+                courseheaderlabel.setBounds(100, 490, 250, 30);
                 f.add(courseheaderlabel);
 
                 reglabel = new JLabel("Registration No:");
@@ -459,7 +462,7 @@ public class UpdateForm implements ActionListener {
                 subItems.put(dept[42], subItems42);
 
                 submitbtn = new JButton("Submit");
-                submitbtn.setBounds(500, 640, 150, 40);
+                submitbtn.setBounds(500, 660, 150, 40);
                 submitbtn.setForeground(Color.WHITE);
                 submitbtn.setBackground(Color.decode(bgcolor));
                 submitbtn.setBorderPainted(false);
@@ -468,7 +471,7 @@ public class UpdateForm implements ActionListener {
                 submitbtn.addActionListener(this);
 
                 clearbtn = new JButton("Clear");
-                clearbtn.setBounds(300, 640, 150, 40);
+                clearbtn.setBounds(300, 660, 150, 40);
                 clearbtn.setForeground(Color.WHITE);
                 clearbtn.setBackground(Color.decode(bgcolor));
                 clearbtn.setBorderPainted(false);
@@ -476,7 +479,7 @@ public class UpdateForm implements ActionListener {
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
-                backbtn.setBounds(700, 640, 150, 40);
+                backbtn.setBounds(700, 660, 150, 40);
                 backbtn.setForeground(Color.WHITE);
                 backbtn.setBackground(Color.decode(bgcolor));
                 backbtn.setBorderPainted(false);

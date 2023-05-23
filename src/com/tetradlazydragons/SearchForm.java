@@ -24,9 +24,11 @@ public class SearchForm implements ActionListener {
     static JTable viewTable;
     static DefaultTableModel tableModel;
     JPanel headingPanel, searchPanel, tablepanel, buttonsPanel;
+    String bgcolor2 = "#ACB1D6";
 
     SearchForm() {
         JFrame f = new JFrame("Search Student");
+        f.getContentPane().setBackground(Color.decode(bgcolor2));
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
@@ -39,6 +41,7 @@ public class SearchForm implements ActionListener {
 
         searchPanel = new JPanel();
         searchPanel.setBounds(170, 80, 800, 30);
+        searchPanel.setBackground(Color.decode(bgcolor2));
         searchPanel.setLayout(new GridLayout(1, 3, 50, 5));
 
         searchlabel = new JLabel("Search:", JLabel.RIGHT);
@@ -57,6 +60,7 @@ public class SearchForm implements ActionListener {
         f.add(searchPanel);
 
         tablepanel = new JPanel();
+        tablepanel.setBackground(Color.decode(bgcolor2));
         tablepanel.setBounds(0, 150, 1200, 400);
 
         tableModel = new DefaultTableModel();
@@ -83,6 +87,7 @@ public class SearchForm implements ActionListener {
         f.add(tablepanel);
 
         buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(Color.decode(bgcolor2));
         buttonsPanel.setBounds(300, 600, 600, 40);
         buttonsPanel.setLayout(new GridLayout(1, 3, 20, 5));
         delbtn = new JButton("Delete");
