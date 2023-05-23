@@ -9,6 +9,7 @@ import java.text.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
+import javax.print.FlavorException;
 import javax.swing.JFileChooser;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
@@ -49,6 +50,7 @@ public class RegForm implements ActionListener {
         JButton uploadPic;
         static File photoFile;
         static String filename;
+        ButtonGroup bg;
         Hashtable<String, String[]> subItems = new Hashtable<String, String[]>();
         Connection con = null;
         PreparedStatement pst = null;
@@ -136,7 +138,7 @@ public class RegForm implements ActionListener {
                 maleradio.setOpaque(true);
                 femaleradio.setOpaque(true);
                 genderfradio.setOpaque(true);
-                ButtonGroup bg = new ButtonGroup();
+                bg = new ButtonGroup();
                 bg.add(maleradio);
                 bg.add(femaleradio);
                 bg.add(genderfradio);
@@ -472,6 +474,7 @@ public class RegForm implements ActionListener {
                 clearbtn.setBackground(Color.decode(bgcolor));
                 clearbtn.setBorderPainted(false);
                 clearbtn.setOpaque(true);
+                clearbtn.addActionListener(this);
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
@@ -548,6 +551,33 @@ public class RegForm implements ActionListener {
                                         JOptionPane.showMessageDialog(null, "ERROR");
                                 }
                         }
+                }
+
+                if (e.getSource() == clearbtn) {
+                        sname.setText("");
+                        sphone.setText("");
+                        semail.setText("");
+                        fname.setText("");
+                        mname.setText("");
+                        gphone.setText("");
+                        spresst.setText("");
+                        spresdist.setText("");
+                        sprespin.setText("");
+                        spermst.setText("");
+                        spermdist.setText("");
+                        spermpin.setText("");
+                        reg.setText("");
+                        roll.setText("");
+                        batch.setText("");
+                        // maleradio.setEnabled(false);
+                        // femaleradio.setEnabled(false);
+                        // genderfradio.setEnabled(false);
+                        bg.clearSelection();
+                        presstatecombo.setSelectedIndex(0);
+                        permstatecombo.setSelectedIndex(0);
+                        deptComboBox.setSelectedIndex(0);
+                        courseComboBox.setModel(new DefaultComboBoxModel());
+                        courseComboBox.setSelectedIndex(0);
                 }
 
                 if (e.getSource() == submitbtn) {

@@ -8,7 +8,7 @@ import java.net.URI;
 public class MenuBar implements ActionListener {
     JMenuBar menuBar;
     JMenu fileM, stdM, helpM, ghM;
-    JMenuItem saveItem, connectItem, disconnectItem, exitItem,
+    JMenuItem connectItem, disconnectItem, exitItem,
             addItem, updateItem, searchItem, deleItem,
             infoItem, licenseItem, codeItem;
 
@@ -17,8 +17,7 @@ public class MenuBar implements ActionListener {
         fileM = new JMenu("File");
         stdM = new JMenu("Student");
         helpM = new JMenu("Help");
-        saveItem = new JMenuItem("Save");
-        saveItem.addActionListener(this);
+
         connectItem = new JMenuItem("Connect Db");
         connectItem.addActionListener(this);
         disconnectItem = new JMenuItem("Disconnect Db");
@@ -90,7 +89,6 @@ public class MenuBar implements ActionListener {
             }
         });
 
-        fileM.add(saveItem);
         fileM.add(connectItem);
         fileM.add(disconnectItem);
         fileM.add(exitItem);
@@ -107,9 +105,6 @@ public class MenuBar implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == saveItem) {
-
-        }
         if (e.getSource() == connectItem) {
             new ConnectView();
         }
@@ -117,13 +112,13 @@ public class MenuBar implements ActionListener {
 
         }
         if (e.getSource() == exitItem) {
-
+            System.exit(0);
         }
         if (e.getSource() == addItem) {
             new RegForm();
         }
         if (e.getSource() == updateItem) {
-            new SearchForm();
+            new UpdateForm();
         }
         if (e.getSource() == searchItem) {
             new SearchForm();
@@ -132,7 +127,7 @@ public class MenuBar implements ActionListener {
             new SearchForm();
         }
         if (e.getSource() == infoItem) {
-
+            new GetStarted();
         }
         if (e.getSource() == licenseItem) {
             new License();

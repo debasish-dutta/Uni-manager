@@ -43,6 +43,7 @@ public class UpdateForm implements ActionListener {
         static JComboBox<String> presstatecombo, permstatecombo;
         static JComboBox<String> deptComboBox, courseComboBox;
         JButton submitbtn, clearbtn, backbtn, uploadbtn;
+        ButtonGroup bg;
         JDatePanelImpl datePanel;
         static JDatePickerImpl datePicker;
         static File photoFile;
@@ -138,7 +139,7 @@ public class UpdateForm implements ActionListener {
                 maleradio.setOpaque(true);
                 femaleradio.setOpaque(true);
                 genderfradio.setOpaque(true);
-                ButtonGroup bg = new ButtonGroup();
+                bg = new ButtonGroup();
                 bg.add(maleradio);
                 bg.add(femaleradio);
                 bg.add(genderfradio);
@@ -550,29 +551,66 @@ public class UpdateForm implements ActionListener {
                         }
                 }
 
+                if (e.getSource() == clearbtn) {
+                        sname.setText("");
+                        date.setText("");
+                        sphone.setText("");
+                        semail.setText("");
+                        fname.setText("");
+                        mname.setText("");
+                        gphone.setText("");
+                        spresst.setText("");
+                        spresdist.setText("");
+                        sprespin.setText("");
+                        spermst.setText("");
+                        spermdist.setText("");
+                        spermpin.setText("");
+                        reg.setText("");
+                        roll.setText("");
+                        batch.setText("");
+                        // maleradio.setEnabled(false);
+                        // femaleradio.setEnabled(false);
+                        // genderfradio.setEnabled(false);
+                        bg.clearSelection();
+                        presstatecombo.setSelectedIndex(0);
+                        permstatecombo.setSelectedIndex(0);
+                        deptComboBox.setSelectedIndex(0);
+                        courseComboBox.setModel(new DefaultComboBoxModel());
+                        courseComboBox.setSelectedIndex(0);
+                        course.setText("");
+                }
+
                 if (e.getActionCommand().equals("Submit")) {
                         String adminPwd = JOptionPane.showInputDialog(null, "Enter Admin Password.", "Alert",
                                         JOptionPane.WARNING_MESSAGE);
+                        if (adminPwd.equals("123")) {
+                                int yes = JOptionPane.showConfirmDialog(null, "Are you sure", "Warning",
+                                                JOptionPane.WARNING_MESSAGE);
+
+                                if (yes == JOptionPane.YES_OPTION) {
+                                        try {
+                                                if (DBHandler.updateStudents(roll.getText())) {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "studentSuccessfullyUpdated",
+                                                                        "success",
+                                                                        JOptionPane.INFORMATION_MESSAGE);
+                                                } else {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "somethingWrongInput",
+                                                                        "error", JOptionPane.ERROR_MESSAGE);
+                                                }
+                                        } catch (HeadlessException | FileNotFoundException e1) {
+                                                e1.printStackTrace();
+                                        } catch (ParseException e1) {
+                                                e1.printStackTrace();
+                                        }
+                                }
+                        } else {
+                                JOptionPane.showMessageDialog(null, "Wrong password", "Alert",
+                                                JOptionPane.ERROR_MESSAGE);
+                        }
                 }
 
-                try {
-                        if (DBHandler.updateStudents(roll.getText())) {
-                                JOptionPane.showMessageDialog(null,
-                                                "studentSuccessfullyUpdated",
-                                                "success",
-                                                JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                                JOptionPane.showMessageDialog(null,
-                                                "somethingWrongInput",
-                                                "error", JOptionPane.ERROR_MESSAGE);
-                        }
-                } catch (HeadlessException | FileNotFoundException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                } catch (ParseException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                }
         }
 
 }
