@@ -11,6 +11,7 @@ public class GetStarted extends JFrame {
     private JPanel topicsPanel;
     private JPanel howToPanel;
     JTextArea howToTextArea;
+    String bgcolor = "#374873", bgcolor2 = "#1F2E54", bgcolor3 = "#ACB1D6";
 
     GetStarted() {
         setTitle("Getting Started");
@@ -26,12 +27,20 @@ public class GetStarted extends JFrame {
         topicsPanel = new JPanel(new GridLayout(0, 1));
         howToPanel = new JPanel(new BorderLayout());
         howToTextArea = new JTextArea("UNIMANAGER - \n Streamline the Academic Journey");
+        howToTextArea.setFont(new Font("Courier", Font.PLAIN, 18));
+        howToTextArea.setForeground(Color.decode(bgcolor));
+        howToTextArea.setLineWrap(true);
+        howToTextArea.setWrapStyleWord(true);
         howToTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(howToTextArea);
         howToPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Create topic buttons and add action listeners
         JButton topic1Button = new JButton("About the APP");
+        topic1Button.setForeground(Color.WHITE);
+        topic1Button.setBackground(Color.decode(bgcolor2));
+        topic1Button.setBorderPainted(false);
+        topic1Button.setOpaque(true);
         topic1Button.addActionListener(e -> {
             String howToContent = "The app section of UniManager is a feature that allows authorized users to edit, view, and delete student details within the system. Additionally, it provides an option to connect to a database for efficient data management."
                     + " UniManager empowers administrators and authorized users to effectively manage student details, providing them with the necessary tools for data editing, viewing, and deletion while ensuring a secure and streamlined experience through the integration with a database.\n\n"
@@ -40,6 +49,10 @@ public class GetStarted extends JFrame {
         });
 
         JButton topic2Button = new JButton("Database");
+        topic2gButton.setForeground(Color.WHITE);
+        topic2Button.setBackground(Color.decode(bgcolor2));
+        topic2Button.setBorderPainted(false);
+        topic2Button.setOpaque(true);
         topic2Button.addActionListener(e -> {
             String howToContent = "UniManager offers the capability to connect to a database, which serves as a centralized storage for student data. By connecting to a database, the application can efficiently manage large amounts of information, provide data security, and enable reliable data retrieval and storage.\n"
                     +
@@ -53,6 +66,10 @@ public class GetStarted extends JFrame {
             howToTextArea.setText(howToContent);
         });
         JButton topic3Button = new JButton("Adding Student");
+        topic3Button.setForeground(Color.WHITE);
+        topic3Button.setBackground(Color.decode(bgcolor2));
+        topic3Button.setBorderPainted(false);
+        topic3Button.setOpaque(true);
         topic3Button.addActionListener(e -> {
             String howToContent = "How to add a student\n" +
                     "Step1-Connect the database\n" +
@@ -61,6 +78,10 @@ public class GetStarted extends JFrame {
             howToTextArea.setText(howToContent);
         });
         JButton topic4Button = new JButton("Searching Student");
+        topic4Button.setForeground(Color.WHITE);
+        topic4Button.setBackground(Color.decode(bgcolor2));
+        topic4Button.setBorderPainted(false);
+        topic4Button.setOpaque(true);
         topic4Button.addActionListener(e -> {
             String howToContent = "Users can access and view the complete information of any student stored in the system. This feature allows for quick retrieval of student data, which can be helpful for various administrative purposes.\n\n"
                     +
@@ -70,6 +91,10 @@ public class GetStarted extends JFrame {
             howToTextArea.setText(howToContent);
         });
         JButton topic5Button = new JButton("Updating Student");
+        topic5Button.setForeground(Color.WHITE);
+        topic5Button.setBackground(Color.decode(bgcolor2));
+        topic5Button.setBorderPainted(false);
+        topic5Button.setOpaque(true);
         topic5Button.addActionListener(e -> {
             String howToContent = "Authorized users can modify the information of individual students. This includes fields such as name, contact details, address, course enrollment, and any other relevant information.\n\nHow to update a student\n"
                     +
@@ -82,6 +107,10 @@ public class GetStarted extends JFrame {
             howToTextArea.setText(howToContent);
         });
         JButton topic6Button = new JButton("Deleting Student");
+        topic6Button.setForeground(Color.WHITE);
+        topic6Button.setBackground(Color.decode(bgcolor2));
+        topic6Button.setBorderPainted(false);
+        topic6Button.setOpaque(true);
         topic6Button.addActionListener(e -> {
             String howToContent = "In certain situations, it may be necessary to remove a student's information from the system. The app section provides the functionality to delete student records when required, ensuring data accuracy and compliance with privacy regulations.\n\n"
                     +
@@ -92,6 +121,10 @@ public class GetStarted extends JFrame {
             howToTextArea.setText(howToContent);
         });
         JButton topic7Button = new JButton("About the Devs");
+        topic7Button.setForeground(Color.WHITE);
+        topic7Button.setBackground(Color.decode(bgcolor2));
+        topic7Button.setBorderPainted(false);
+        topic7Button.setOpaque(true);
         topic7Button.addActionListener(e -> {
             String howToContent = "How to use Topic :\n\nDev 1: ...\nDev 2: ...\nDev 3: ...\nDev 4: ...";
             howToTextArea.setText(howToContent);
