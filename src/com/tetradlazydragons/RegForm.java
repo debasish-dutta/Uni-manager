@@ -56,13 +56,13 @@ public class RegForm implements ActionListener {
         PreparedStatement pst = null;
         JFrame f = new JFrame("Student Registration");
         JPanel studentPanel, picPanel, addressPanel, coursePanel;
-        String bgcolor = "#1F2E54";
+        String bgcolor = "#1F2E54", bgcolor2 = "#ACB1D6";
 
         RegForm() {
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.getContentPane().setBackground(Color.decode(bgcolor2));
                 MenuBar menu = new MenuBar();
                 f.setJMenuBar(menu.createMenuBar());
-                f.setBackground(Color.BLACK);
 
                 head = new JLabel("NEW STUDENT REGISTRATION ");
                 head.setFont(new Font("Courier", Font.BOLD, 30));
@@ -188,14 +188,16 @@ public class RegForm implements ActionListener {
                 addressPanel.setBackground(Color.decode("#374873"));
                 addressPanel.setBounds(20, 270, 1140, 200);
 
-                addresslabel = new JLabel("Adress Details");
-                addresslabel.setBounds(100, 280, 150, 30);
+                addresslabel = new JLabel("ADDRESS DETAILS");
+                addresslabel.setFont(new Font("Courier", Font.BOLD, 20));
+                addresslabel.setBounds(100, 290, 250, 30);
                 addresslabel.setForeground(Color.WHITE);
                 f.add(addresslabel);
 
                 presaddrlabel = new JLabel("Present Address:");
+                presaddrlabel.setFont(new Font("Courier", Font.BOLD, 15));
                 presaddrlabel.setForeground(Color.WHITE);
-                presaddrlabel.setBounds(100, 330, 150, 20);
+                presaddrlabel.setBounds(100, 325, 200, 20);
                 f.add(presaddrlabel);
 
                 presstlabel = new JLabel("Street:");
@@ -241,8 +243,9 @@ public class RegForm implements ActionListener {
                 f.add(presstatecombo);
 
                 permaddrlabel = new JLabel("Permanent Address:");
+                permaddrlabel.setFont(new Font("Courier", Font.BOLD, 15));
                 permaddrlabel.setForeground(Color.WHITE);
-                permaddrlabel.setBounds(600, 330, 150, 20);
+                permaddrlabel.setBounds(600, 325, 200, 20);
                 f.add(permaddrlabel);
 
                 permstlabel = new JLabel("Street:");
@@ -278,43 +281,43 @@ public class RegForm implements ActionListener {
                 f.add(spermpin);
 
                 coursePanel = new JPanel();
-                Border blackline3 = BorderFactory.createTitledBorder("Course Details:");
-                coursePanel.setBounds(20, 460, 1140, 150);
+                coursePanel.setBounds(20, 480, 1140, 160);
                 coursePanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.WHITE));
                 coursePanel.setBackground(Color.decode("#374873"));
 
-                courseheaderlabel = new JLabel("Course Details");
+                courseheaderlabel = new JLabel("COURSE DETAILS");
+                courseheaderlabel.setFont(new Font("Courier", Font.BOLD, 20));
                 courseheaderlabel.setForeground(Color.WHITE);
-                courseheaderlabel.setBounds(100, 480, 150, 30);
+                courseheaderlabel.setBounds(100, 490, 250, 30);
                 f.add(courseheaderlabel);
 
                 reglabel = new JLabel("Registration No:");
                 reglabel.setForeground(Color.WHITE);
-                reglabel.setBounds(100, 520, 150, 20);
+                reglabel.setBounds(100, 530, 150, 20);
                 reg = new JTextField();
-                reg.setBounds(250, 520, 250, 20);
+                reg.setBounds(250, 530, 250, 20);
                 f.add(reglabel);
                 f.add(reg);
 
                 rolllabel = new JLabel("Roll No:");
                 rolllabel.setForeground(Color.WHITE);
-                rolllabel.setBounds(100, 550, 150, 20);
+                rolllabel.setBounds(100, 560, 150, 20);
                 roll = new JTextField();
-                roll.setBounds(250, 550, 250, 20);
+                roll.setBounds(250, 550, 260, 20);
                 f.add(rolllabel);
                 f.add(roll);
 
                 batchlabel = new JLabel("Batch:");
                 batchlabel.setForeground(Color.WHITE);
-                batchlabel.setBounds(100, 580, 150, 20);
+                batchlabel.setBounds(100, 590, 150, 20);
                 batch = new JTextField();
-                batch.setBounds(250, 580, 250, 20);
+                batch.setBounds(250, 590, 250, 20);
                 f.add(batchlabel);
                 f.add(batch);
 
                 deptlabel = new JLabel("Department:");
                 deptlabel.setForeground(Color.WHITE);
-                deptlabel.setBounds(600, 550, 150, 20);
+                deptlabel.setBounds(600, 560, 150, 20);
                 f.add(deptlabel);
                 String[] dept = { "Select Department", "Arabic", "Assamese", "Bengali", "Bodo",
                                 "Communication & Journalism",
@@ -337,7 +340,7 @@ public class RegForm implements ActionListener {
 
                                 "Commerce", "Business Administration", "Law" };
                 deptComboBox = new JComboBox<String>(dept);
-                deptComboBox.setBounds(800, 550, 250, 20);
+                deptComboBox.setBounds(800, 560, 250, 20);
                 // deptComboBox.setBorderPainted(false);
                 deptComboBox.setOpaque(true);
                 deptComboBox.addActionListener(this);
@@ -347,10 +350,10 @@ public class RegForm implements ActionListener {
 
                 courselabel = new JLabel("Course:");
                 courselabel.setForeground(Color.WHITE);
-                courselabel.setBounds(600, 580, 150, 20);
+                courselabel.setBounds(600, 590, 150, 20);
                 f.add(courselabel);
                 courseComboBox = new JComboBox<String>();
-                courseComboBox.setBounds(800, 580, 250, 20);
+                courseComboBox.setBounds(800, 590, 250, 20);
                 courseComboBox.setPrototypeDisplayValue("XXXXXXXXXX");
                 f.add(courseComboBox);
 
@@ -460,7 +463,7 @@ public class RegForm implements ActionListener {
                 subItems.put(dept[42], subItems42);
 
                 submitbtn = new JButton("Submit");
-                submitbtn.setBounds(500, 640, 150, 40);
+                submitbtn.setBounds(500, 660, 150, 40);
                 submitbtn.setForeground(Color.WHITE);
                 submitbtn.setBackground(Color.decode(bgcolor));
                 submitbtn.setBorderPainted(false);
@@ -469,7 +472,7 @@ public class RegForm implements ActionListener {
                 submitbtn.addActionListener(this);
 
                 clearbtn = new JButton("Clear");
-                clearbtn.setBounds(300, 640, 150, 40);
+                clearbtn.setBounds(300, 660, 150, 40);
                 clearbtn.setForeground(Color.WHITE);
                 clearbtn.setBackground(Color.decode(bgcolor));
                 clearbtn.setBorderPainted(false);
@@ -478,7 +481,7 @@ public class RegForm implements ActionListener {
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
-                backbtn.setBounds(700, 640, 150, 40);
+                backbtn.setBounds(700, 660, 150, 40);
                 backbtn.setForeground(Color.WHITE);
                 backbtn.setBackground(Color.decode(bgcolor));
                 backbtn.setBorderPainted(false);

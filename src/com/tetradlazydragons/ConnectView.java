@@ -17,19 +17,23 @@ public class ConnectView implements ActionListener {
     String useSsl;
     JButton connectBtn, backBtn;
     JFrame f = new JFrame("DataBase Connect Form");
+    String bgcolor = "#1F2E54", bgcolor2 = "#ACB1D6";
 
     ConnectView() {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.getContentPane().setBackground(Color.decode(bgcolor2));
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
 
         head = new JLabel("CONNECT DATABASE ");
         head.setFont(new Font("Courier", Font.BOLD, 30));
+        head.setForeground(Color.decode(bgcolor));
         head.setBounds(400, 20, 600, 30);
         f.add(head);
 
         hostLabel = new JLabel("host:");
         hostLabel.setBounds(50, 150, 100, 20);
+        hostLabel.setForeground(Color.decode(bgcolor));
         hostF = new JTextField();
         hostF.setBounds(200, 150, 250, 20);
         hostF.setText("localhost");
@@ -37,6 +41,7 @@ public class ConnectView implements ActionListener {
         f.add(hostF);
 
         portLabel = new JLabel("port:");
+        portLabel.setForeground(Color.decode(bgcolor));
         portLabel.setBounds(50, 180, 100, 20);
         portF = new JTextField();
         portF.setBounds(200, 180, 250, 20);
@@ -45,6 +50,7 @@ public class ConnectView implements ActionListener {
         f.add(portF);
 
         dbLabel = new JLabel("database:");
+        dbLabel.setForeground(Color.decode(bgcolor));
         dbLabel.setBounds(50, 210, 100, 20);
         dbF = new JTextField();
         dbF.setBounds(200, 210, 250, 20);
@@ -53,6 +59,7 @@ public class ConnectView implements ActionListener {
         f.add(dbF);
 
         usrLabel = new JLabel("user:");
+        usrLabel.setForeground(Color.decode(bgcolor));
         usrLabel.setBounds(50, 240, 100, 20);
         usrF = new JTextField();
         usrF.setBounds(200, 240, 250, 20);
@@ -61,6 +68,7 @@ public class ConnectView implements ActionListener {
         f.add(usrF);
 
         pwdLabel = new JLabel("password:");
+        pwdLabel.setForeground(Color.decode(bgcolor));
         pwdLabel.setBounds(50, 270, 100, 20);
         pwdF = new JTextField();
         pwdF.setBounds(200, 270, 250, 20);
@@ -79,11 +87,19 @@ public class ConnectView implements ActionListener {
 
         connectBtn = new JButton("Connect");
         connectBtn.setBounds(400, 669, 150, 40);
+        connectBtn.setForeground(Color.WHITE);
+        connectBtn.setBackground(Color.decode(bgcolor));
+        connectBtn.setBorderPainted(false);
+        connectBtn.setOpaque(true);
         f.add(connectBtn);
         connectBtn.addActionListener(this);
 
         backBtn = new JButton("Back");
         backBtn.setBounds(600, 669, 150, 40);
+        backBtn.setForeground(Color.WHITE);
+        backBtn.setBackground(Color.decode(bgcolor));
+        backBtn.setBorderPainted(false);
+        backBtn.setOpaque(true);
         f.add(backBtn);
         backBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

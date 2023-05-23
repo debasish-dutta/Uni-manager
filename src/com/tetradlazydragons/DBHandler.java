@@ -43,7 +43,7 @@ public class DBHandler {
     static {
         login = "root";
         databaseUrl = "jdbc:mysql://localhost:3306/student_management_system?useSSL=false";
-        password = "111222344";
+        password = "8145";
         studentsTable = "student_data";
     }
 
@@ -169,6 +169,7 @@ public class DBHandler {
             } else if (RegForm.femaleradio.isSelected()) {
                 sgender = "Female";
             } else if (RegForm.genderfradio.isSelected()) {
+                             
                 sgender = "Gender-Fluid";
             } else {
                 sgender = "";
