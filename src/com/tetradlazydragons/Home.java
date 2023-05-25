@@ -34,11 +34,7 @@ public class Home {
     Home() {
         JFrame f = new JFrame("Uni Manager");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        try {
-            f.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("assets/icons/unimanagerhome.jpg")))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        f.setContentPane(new JLabel(new ImageIcon("assets/icons/unimanagerhome.jpg")));
         MenuBar menu = new MenuBar();
         f.setJMenuBar(menu.createMenuBar());
 
@@ -128,6 +124,8 @@ public class Home {
         f.setSize(1200, 800);
         f.setLayout(null);
         f.setVisible(true);
+        ImageIcon myAppImage = new ImageIcon("assets/icons/dragon.png");
+        // f.setIconImage(myAppImage.getImage());
         f.setResizable(false);
     }
 

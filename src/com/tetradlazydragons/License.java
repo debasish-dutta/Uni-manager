@@ -7,7 +7,7 @@ public class License extends JFrame {
     public License() {
         // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("MIT License");
-
+        String bgcolor = "#374873", bgcolor2 = "#1F2E54", bgcolor3 = "#ACB1D6";
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int Width = 800;
         int Height = 600;
@@ -39,12 +39,14 @@ public class License extends JFrame {
                 "SOFTWARE.");
 
         textArea.setEditable(false);
-        textArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
+        textArea.setFont(new Font("Courier", Font.PLAIN, 20));
         textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
         textArea.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBounds(textAreaX, textAreaY, textAreaWidth, textAreaHeight);
+
+        textArea.setForeground(Color.decode(bgcolor));
 
         getContentPane().add(scrollPane);
         setLocationRelativeTo(null);

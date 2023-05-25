@@ -37,7 +37,7 @@ public class UpdateForm implements ActionListener {
         static JLabel piclabel, piclabel2;
         static JTextField sname, sdob, sphone, semail, fname, mname, gphone, spresst, spresdist, sprespin, spermst,
                         spermdist, date,
-                        spermpin, reg, roll,
+                        spermpin, reg, roll, deptT,
                         batch, course;
         static JRadioButton maleradio, femaleradio, genderfradio;
         static JComboBox<String> presstatecombo, permstatecombo;
@@ -342,9 +342,11 @@ public class UpdateForm implements ActionListener {
                 deptComboBox.setBounds(800, 550, 250, 20);
                 deptComboBox.setOpaque(true);
                 deptComboBox.addActionListener(this);
-
+                deptT = new JTextField();
+                deptT.setBounds(800, 550, 250, 20);
+                f.add(deptT);
                 deptComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
-                f.add(deptComboBox);
+                // f.add(deptComboBox);
 
                 courselabel = new JLabel("Course:");
                 courselabel.setForeground(Color.WHITE);
@@ -477,6 +479,7 @@ public class UpdateForm implements ActionListener {
                 clearbtn.setBackground(Color.decode(bgcolor));
                 clearbtn.setBorderPainted(false);
                 clearbtn.setOpaque(true);
+                clearbtn.addActionListener(this);
                 f.add(clearbtn);
 
                 backbtn = new JButton("Back");
@@ -499,6 +502,7 @@ public class UpdateForm implements ActionListener {
 
                 f.setSize(1200, 800);
                 f.setLayout(null);
+                f.setResizable(false);
                 f.setVisible(true);
 
         }
@@ -574,13 +578,14 @@ public class UpdateForm implements ActionListener {
                         // maleradio.setEnabled(false);
                         // femaleradio.setEnabled(false);
                         // genderfradio.setEnabled(false);
+                        course.setText("");
+                        deptT.setText("");
                         bg.clearSelection();
                         presstatecombo.setSelectedIndex(0);
                         permstatecombo.setSelectedIndex(0);
                         deptComboBox.setSelectedIndex(0);
                         courseComboBox.setModel(new DefaultComboBoxModel());
                         courseComboBox.setSelectedIndex(0);
-                        course.setText("");
                 }
 
                 if (e.getActionCommand().equals("Submit")) {
