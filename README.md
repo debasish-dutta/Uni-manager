@@ -3,6 +3,9 @@
 This is a simple student management system done using Java and Swing package.
 
 ## Features
+UniManager empowers administrators and authorized users to effectively manage student details, providing them with the necessary tools for data editing, viewing, and deletion while ensuring a secure and streamlined experience through the integration with a database.
+
+UniManagerallows authorized users to edit, view, and delete student details within the system. Additionally, it provides an option to connect to a database for efficient data management.
 
 ## Technologies and Dependencies
 
