@@ -303,7 +303,7 @@ public class RegForm implements ActionListener {
                 rolllabel.setForeground(Color.WHITE);
                 rolllabel.setBounds(100, 560, 150, 20);
                 roll = new JTextField();
-                roll.setBounds(250, 550, 260, 20);
+                roll.setBounds(250, 560, 260, 20);
                 f.add(rolllabel);
                 f.add(roll);
 
@@ -533,8 +533,8 @@ public class RegForm implements ActionListener {
                         } else {
                                 courseComboBox.setModel(new DefaultComboBoxModel((String[]) o));
                         }
-                        System.out.println("course ->" + courseComboBox.getSelectedIndex() + " "
-                                        + courseComboBox.getSelectedObjects().toString() + " ");
+                        // System.out.println("course ->" + courseComboBox.getSelectedIndex() + " "
+                        // + courseComboBox.getSelectedObjects().toString() + " ");
                 }
 
                 if (e.getSource() == uploadPic) {
@@ -557,6 +557,7 @@ public class RegForm implements ActionListener {
                 }
 
                 if (e.getSource() == clearbtn) {
+                        piclabel.setIcon(null);
                         sname.setText("");
                         sphone.setText("");
                         semail.setText("");

@@ -65,6 +65,7 @@ public class SearchForm implements ActionListener {
 
         tableModel = new DefaultTableModel();
         viewTable = new JTable(tableModel);
+
         tableModel.addColumn("Roll No");
         tableModel.addColumn("Name");
         tableModel.addColumn("Date Of Birth");

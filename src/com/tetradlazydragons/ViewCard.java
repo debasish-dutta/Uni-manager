@@ -369,7 +369,7 @@ public class ViewCard implements ActionListener {
             UpdateForm.reg.setText(studentData[8].toString());
             UpdateForm.batch.setText(studentData[14].toString());
 
-            UpdateForm.deptComboBox.setSelectedItem(studentData[15].toString());
+            UpdateForm.deptT.setText(studentData[15].toString());
             UpdateForm.course.setText(studentData[13].toString() + " " + studentData[15].toString());
             UpdateForm.date.setText(studentData[3].toString());
             UpdateForm.roll.setText(studentData[1].toString());
